@@ -7,6 +7,7 @@ Page({
   /**
    * 页面的初始数据
    */
+  
   data: {
     openid: '',
     Users: '',
@@ -15,6 +16,12 @@ Page({
     fromUidJobs: [],
     yourJobs: [],
     yourPlans: []
+  },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    this.onLoad()
   },
   onLoad: function (options) {
     if (app.globalData.openid) {
@@ -55,21 +62,21 @@ Page({
       })
     } 
     if (!this.checkObject(this.data.fromUid)) {
-      if (this.data.fromUid === this.data.openid) {
-        wx.showToast({
-          icon: 'none',
-          title: '您不能参与自己的计划',
-        })
-      } else {
-        this.setData({
-          isSharePageIn: true
-        })
-        this.onQueryFromUid()
-      }
-      // this.setData({
-      //   isSharePageIn: true
-      // })
-      // this.onQueryFromUid()
+      // if (this.data.fromUid === this.data.openid) {
+      //   wx.showToast({
+      //     icon: 'none',
+      //     title: '您不能参与自己的计划',
+      //   })
+      // } else {
+      //   this.setData({
+      //     isSharePageIn: true
+      //   })
+      //   this.onQueryFromUid()
+      // }
+      this.setData({
+        isSharePageIn: true
+      })
+      this.onQueryFromUid()
 
     }
   },
@@ -154,12 +161,9 @@ Page({
   /**
    * 选择要执行的计划
    */
-  selectStep: function (e) {
-    /**
-     * 查询是否已经接受这个任务
-     */
+  selectStep(e) {
     db.collection('Jobs').where({
-      planId: e.currentTarget.dataset.id,
+      planId: e.detail.value.pid,
       jober: this.data.openid
     }).get({
       success: res => {
@@ -172,19 +176,23 @@ Page({
             isSharePageIn: false
           })
         } else {
+          console.log("111111111"+res)
           const db = wx.cloud.database()
-          db.collection('Plans').doc(e.currentTarget.dataset.id).get().then(res => {
+          db.collection('Plans').doc(e.detail.value.pid).get().then(res => {
+            console.log(res)
             /**
              * 添加新的记录
              */
             db.collection('Jobs').add({
               data: {
-                planId: e.currentTarget.dataset.id,
+                planId: e.detail.value.pid,
                 jober: this.data.openid,
                 inviteName:res.data.inviteName,
                 inviteCount:res.data.inviteCount
               },
               success: res => {
+                this.onQueryJobs()
+                this.callPlanFuncation(e.detail.formId)
                 this.setData({
                   isSharePageIn: false
                 })
@@ -192,7 +200,6 @@ Page({
                   icon: 'none',
                   title: '接受任务成功！'
                 })
-                this.onQueryJobs()
               },
               fail: err => {
                 wx.showToast({
@@ -215,7 +222,24 @@ Page({
       }
     }) 
   },
+  callPlanFuncation(formId){
+    console.log(formId)
+    wx.cloud.callFunction({
+      name: 'openapi',
+      data: {
+        action: 'sendTemplateMessage',
+        formId: formId,
+      },
+      success: res => {
+        console.warn('[云函数] [openapi] templateMessage.send 调用成功：', res)
+      },
+      fail: err => {
+        console.error('[云函数] [openapi] templateMessage.send 调用失败：', err)
+      }
+    })
+  },
   checkObject: function (obj) {
     return obj === null || obj === undefined || obj === '' || Array.isArray(obj) ? obj.length === 0 : false || Object.keys(obj).length === 0;
   }
+
 })

@@ -10,7 +10,8 @@
     "pages/invite/invite",
     "pages/invited/invited",
     "pages/Counts/Counts",
-    "pages/Job/Job"
+    "pages/Job/Job",
+    "pages/Plan/Plan"
   ],
   "tabBar": {
     "list": [
