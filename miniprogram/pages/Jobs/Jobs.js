@@ -66,10 +66,10 @@ Page({
         })
         this.onQueryFromUid()
       }
-      this.setData({
-        isSharePageIn: true
-      })
-      this.onQueryFromUid()
+      // this.setData({
+      //   isSharePageIn: true
+      // })
+      // this.onQueryFromUid()
 
     }
   },
@@ -114,14 +114,11 @@ Page({
         ibs: this.data.openid
       }).get({
         success: res => {
-          console.log(res)
           if (!this.checkObject(res.data)) {
             this.setData({
               yourPlans: res.data
             })
           }
-          console.log(this.data.yourJobs)
-          console.log(this.data.yourPlans)
           resolve(res.data)
         },
         fail: err => {
@@ -158,7 +155,6 @@ Page({
    * 选择要执行的计划
    */
   selectStep: function (e) {
-    let plan ;
     /**
      * 查询是否已经接受这个任务
      */
@@ -176,31 +172,38 @@ Page({
             isSharePageIn: false
           })
         } else {
-          /**
-           * 添加新的记录
-           */
-          db.collection('Jobs').add({
-            data: {
-              planId: e.currentTarget.dataset.id,
-              jober: this.data.openid
-            },
-            success: res => {
-              this.setData({
-                isSharePageIn: false
-              })
-              wx.showToast({
-                icon: 'none',
-                title: '接受任务成功！'
-              })
-            },
-            fail: err => {
-              wx.showToast({
-                icon: 'none',
-                title: '接受计划失败'
-              })
-              console.error('[数据库] [新增记录] 失败：', err)
-            }
+          const db = wx.cloud.database()
+          db.collection('Plans').doc(e.currentTarget.dataset.id).get().then(res => {
+            /**
+             * 添加新的记录
+             */
+            db.collection('Jobs').add({
+              data: {
+                planId: e.currentTarget.dataset.id,
+                jober: this.data.openid,
+                inviteName:res.data.inviteName,
+                inviteCount:res.data.inviteCount
+              },
+              success: res => {
+                this.setData({
+                  isSharePageIn: false
+                })
+                wx.showToast({
+                  icon: 'none',
+                  title: '接受任务成功！'
+                })
+                this.onQueryJobs()
+              },
+              fail: err => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '接受计划失败'
+                })
+                console.error('[数据库] [新增记录] 失败：', err)
+              }
+            })
           })
+          
         }
       },
       fail: err => {

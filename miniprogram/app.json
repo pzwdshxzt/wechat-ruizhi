@@ -3,14 +3,14 @@
     "pages/Jobs/Jobs",
     "pages/index/index",
     "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/invite/invite",
     "pages/invited/invited",
-    "pages/Counts/Counts"
+    "pages/Counts/Counts",
+    "pages/Job/Job"
   ],
   "tabBar": {
     "list": [

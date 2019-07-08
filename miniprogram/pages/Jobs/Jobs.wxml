@@ -1,32 +1,61 @@
 <!--miniprogram/pages/Jobs/Jobs.wxml-->
 <!-- 简介 -->
+<view class="page__hd">
+    <view class="page__title">大家好</view>
+        <view class="page__desc">欢迎来到睿智小课堂</view>
+</view>
 <view class="guide" wx:if="{{!isSharePageIn}}">
-    <!-- 受邀 -->
-    <view wx:if = "{{yourJobs}}">
-      <view class="uploader">
-        <text class="request-text">您的任务</text>
-        <view class="list-item"  wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-          <text class="request-text">{{idx + 1}}: {{item.inviteName}}</text>
-          <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">打卡</button>
+    <view class="weui-panel">
+        <view class="weui-panel__hd">您的任务</view>
+        <view class="weui-panel__bd">
+         <view class="weui-media-box weui-media-box_small-appmsg">
+            <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__hd"><image src="{{icon20}}" style="width: 20px;height: 20px;margin-right: 5px" /></view>
+                    <view class="weui-cell__bd weui-cell_primary">
+                        <view>{{item.inviteName}}</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </view>
         </view>
-      </view>
+        </view>
     </view>
-    <!-- 邀请 -->
-  <view wx:if = "{{yourPlans}}">
-    <view class="uploader">
-      <text class="request-text">您的计划</text>
-      <view class="list-item"  wx:for="{{yourPlans}}"  wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-        <text class="request-text">{{idx + 1}}: {{itemName.inviteName}}</text>
-        <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">详情</button>
-      </view>
+
+    <view class="weui-panel">
+        <view class="weui-panel__hd">您的计划</view>
+        <view class="weui-panel__bd">
+         <view class="weui-media-box weui-media-box_small-appmsg">
+            <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourPlans}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__hd"><image src="{{icon20}}" style="width: 20px;height: 20px;margin-right: 5px" /></view>
+                    <view class="weui-cell__bd weui-cell_primary">
+                        <view>{{item.inviteName}}</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </view>
+        </view>
+        </view>
+    </view>
+    
+</view>
+<view wx:if="{{isSharePageIn}}"> 
+  <view class="weui-cells__title">你收到邀请参与计划</view>
+  <view class="weui-form-preview"  wx:for="{{fromUidJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">计划名称</view>
+            <view class="weui-form-preview__value">{{itemName.inviteName}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">计划期数</view>
+            <view class="weui-form-preview__value">{{itemName.inviteCount}}</view>
+        </view>
+    </view>
+    <view class="weui-form-preview__ft">
+        <button class="weui-form-preview__btn weui-form-preview__btn_default" data-id="{{itemName._id}}" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>
+        <button class="weui-form-preview__btn weui-form-preview__btn_primary" data-id="{{itemName._id}}" bindtap="selectStep" hover-class="weui-form-preview__btn_active">接受</button>
     </view>
   </view>
-</view>
-
-<view class="guide" wx:if="{{isSharePageIn}}">
-  <text class="request-text">你收到邀请参与计划</text>
-  <view class="list-item"  wx:for="{{fromUidJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-      <text class="request-text">{{idx + 1}}: {{itemName.inviteName}}</text>
-      <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">选择</button>
-    </view>
 </view>
