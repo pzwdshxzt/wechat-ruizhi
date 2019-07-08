@@ -1,0 +1,32 @@
+<!--miniprogram/pages/Jobs/Jobs.wxml-->
+<!-- 简介 -->
+<view class="guide" wx:if="{{!isSharePageIn}}">
+    <!-- 受邀 -->
+    <view wx:if = "{{yourJobs}}">
+      <view class="uploader">
+        <text class="request-text">您的任务</text>
+        <view class="list-item"  wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+          <text class="request-text">{{idx + 1}}: {{item.inviteName}}</text>
+          <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">打卡</button>
+        </view>
+      </view>
+    </view>
+    <!-- 邀请 -->
+  <view wx:if = "{{yourPlans}}">
+    <view class="uploader">
+      <text class="request-text">您的计划</text>
+      <view class="list-item"  wx:for="{{yourPlans}}"  wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+        <text class="request-text">{{idx + 1}}: {{itemName.inviteName}}</text>
+        <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">详情</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="guide" wx:if="{{isSharePageIn}}">
+  <text class="request-text">你收到邀请参与计划</text>
+  <view class="list-item"  wx:for="{{fromUidJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+      <text class="request-text">{{idx + 1}}: {{itemName.inviteName}}</text>
+      <button type="default" data-id="{{itemName._id}}" bindtap="selectStep">选择</button>
+    </view>
+</view>

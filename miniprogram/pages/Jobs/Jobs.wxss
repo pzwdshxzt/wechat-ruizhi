@@ -1,0 +1,6 @@
+/* miniprogram/pages/Jobs/Jobs.wxss */
+
+.select-jobs {
+  text-align: center;
+  margin: 60rpx;
+}

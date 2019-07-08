@@ -1,0 +1,6 @@
+<!--miniprogram/pages/Counts/Counts.wxml-->
+<view>
+  <stopwatch id="stopwatch" class="stopwatch" />
+  <button class="btn" wx:if="{{!started}}" bindtap="start">开始计时</button>
+  <button class="btn" wx:if="{{started}}" bindtap="stop">停止计时</button>
+</view>

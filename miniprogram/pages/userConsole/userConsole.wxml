@@ -1,0 +1,12 @@
+<!--pages/userConsole/userConsole.wxml-->
+<view class="container">
+
+  <view class="list">
+    <view class="list-item" bindtap="testCgi">
+      <text class="request-text">用户 openid 获取成功</text>
+    </view>
+    <view class="list-item" bindtap="testCgi">
+      <text class="request-text">{{openid}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,63 @@
+<!--pages/databaseGuide/databaseGuide.wxml-->
+<view class="container">
+
+  <!-- 导航 -->
+  <view class="list">
+    <view class="list-item">
+      <text class="request-text">邀请步骤</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text" wx:key="idx" wx:for="{{3}}" style="color: {{step === index + 1 ? 'red': 'black'}}">{{index + 1}} </text>
+    </view>
+    
+    <view wx:if="{{isShowJobs}}">
+      <view class="list-item">
+        <text class="request-text">已生成计划：</text>
+      </view>
+      <view class="list-item"  wx:for="{{Jobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+        <text class="request-text">{{idx + 1}}: {{itemName.inviteName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="guide" wx:if="{{step === 1}}">
+    <text class="headline">打卡计划</text>
+    <text class="p">打卡名称</text>
+    <view class="section">
+      <input auto-focus value='{{inviteName}}' placeholder="请输入打卡名称" bindinput="getInviteName" />
+    </view>
+    <text class="p">打卡期数</text>
+    <view class="section">
+      <input type="digit" type="number" value='{{inviteCount}}' bindinput="getInviteCount" placeholder="请输入数字"/>
+    </view>
+    <div class="nav" style="align-content:center">
+      <button class="next" size="mini" type="default" bindtap="oneNextStep">下一步</button>
+    </div>
+  </view>
+
+  <view class="guide" wx:if="{{step === 2}}">
+    <text class="p">打卡名称</text>
+    <view class="section">
+      <input value='{{inviteName}}' disabled='true' />
+    </view>
+    <text class="p">打卡期数</text>
+    <view class="section">
+      <input  disabled='true' value='{{inviteCount}}' />
+    </view>
+    <div class="nav">
+      <button class="prev" size="mini" type="default" bindtap="prevStep">上一步</button>
+      <button class="next" size="mini" type="default" bindtap="twoNextStep">下一步</button>
+    </div>
+  </view>
+  <!-- 结语 -->
+  <view class="guide" wx:if="{{step === 3}}">
+    <text class="headline">生成计划成功！</text>
+    <text class="p">恭喜你，赶紧邀请好友来完成挑战吧！</text>
+
+    <div class="nav">
+      <button class="prev" size="mini" type="default" bindtap="shareMenu">邀请</button>
+      <button class="next" size="mini" type="default" bindtap="goHome">回到首页</button>
+    </div>
+  </view>
+
+</view>
