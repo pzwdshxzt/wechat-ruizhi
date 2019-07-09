@@ -57,7 +57,7 @@
         </view>
         <view class="weui-form-preview__ft">
           <button class="weui-form-preview__btn weui-form-preview__btn_default" data-id="{{itemName._id}}" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>
-          <button class="weui-form-preview__btn weui-form-preview__btn_primary" form-type="submit" hover-class="weui-form-preview__btn_active" form-type="submit">接受</button>
+          <button class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" form-type="submit">接受</button>
         </view>
     </form>
   </view>

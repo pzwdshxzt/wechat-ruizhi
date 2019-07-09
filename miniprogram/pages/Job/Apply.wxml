@@ -1,0 +1,53 @@
+<view class="page__bd">
+  <view class="weui-cells__title">打卡申请</view>
+  <view class="weui-cells weui-cells_after-title">
+    <form class="list" bindsubmit="applyStep"  report-submit>
+      <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+              <view class="weui-label">日期</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+                  <view class="weui-input">{{date}}</view>
+              </picker>
+          </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+              <view class="weui-label">时间</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                  <view class="weui-input">{{time}}</view>
+              </picker>
+          </view>
+      </view>
+
+      <view class="weui-cells__title">选择完成任务数</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">打卡期数</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker bindchange="bindApplyCount" value="{{applyCount}}" range="{{applyCountList}}">
+                        <view class="weui-select weui-select_in-select-after">{{applyCountList[applyCount]}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+
+      <view class="weui-cells__title">申请备注</view>
+      <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+              <view class="weui-cell__bd">
+                  <textarea class="weui-textarea" placeholder="请输入备注信息" style="height: 3.3em" bindblur="applyTextarea"/>
+                  <view class="weui-textarea-counter">0/200</view>
+              </view>
+          </view>
+      </view>
+      <view class="weui-cells__tips">该申请将由任务发布者审批</view>
+      <button class="weui-btn" type="primary" form-type="submit">打卡申请</button>
+    </form>
+  </view>
+</view>

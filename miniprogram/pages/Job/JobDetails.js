@@ -1,18 +1,25 @@
-// pages/deployFunctions/deployFunctions.js
+// miniprogram/pages/Job/JobDetails.js
+const db = wx.cloud.database()
+const _ = db.command
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    JobDetails: { },
+    authCode: ['待审核', '已拒绝', '审核通过']
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    db.collection('JobDetails').doc(options.JobDetailsId).get().then(res => {
+      this.setData({
+        JobDetails: res.data
+      })
+    })
   },
 
   /**

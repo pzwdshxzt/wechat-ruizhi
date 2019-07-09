@@ -2,6 +2,7 @@
 const app = getApp()
 const db = wx.cloud.database()
 const _ = db.command
+const util = require('../../Utils/Util.js');
 Page({
 
   /**
@@ -56,12 +57,12 @@ Page({
   onInitData: function (options) {
     this.onQueryJobs()
     this.onQueryPlans()
-    if (!this.checkObject(options) && !this.checkObject(options.jsonStr)) {
+    if (!util.checkObject(options) && !util.checkObject(options.jsonStr)) {
       this.setData({
         fromUid: options.jsonStr
       })
     } 
-    if (!this.checkObject(this.data.fromUid)) {
+    if (!util.checkObject(this.data.fromUid)) {
       // if (this.data.fromUid === this.data.openid) {
       //   wx.showToast({
       //     icon: 'none',
@@ -92,7 +93,7 @@ Page({
         _id: _.nin(jobs)
       }).get({
         success: res => {
-          if (!this.checkObject(res.data)) {
+          if (!util.checkObject(res.data)) {
             this.setData({
               fromUidJobs: res.data
             })
@@ -121,7 +122,7 @@ Page({
         ibs: this.data.openid
       }).get({
         success: res => {
-          if (!this.checkObject(res.data)) {
+          if (!util.checkObject(res.data)) {
             this.setData({
               yourPlans: res.data
             })
@@ -144,7 +145,7 @@ Page({
         jober: this.data.openid
       }).get({
         success: res => {
-          if (!this.checkObject(res.data)) {
+          if (!util.checkObject(res.data)) {
             this.setData({
               yourJobs: res.data
             })
@@ -167,7 +168,7 @@ Page({
       jober: this.data.openid
     }).get({
       success: res => {
-        if(!this.checkObject(res.data)){
+        if(!util.checkObject(res.data)){
           wx.showToast({
             icon: 'none',
             title: '你已经接受了这个任务！'
@@ -180,6 +181,7 @@ Page({
           const db = wx.cloud.database()
           db.collection('Plans').doc(e.detail.value.pid).get().then(res => {
             console.log(res)
+            let plan = res.data
             /**
              * 添加新的记录
              */
@@ -188,11 +190,13 @@ Page({
                 planId: e.detail.value.pid,
                 jober: this.data.openid,
                 inviteName:res.data.inviteName,
-                inviteCount:res.data.inviteCount
+                inviteCount:res.data.inviteCount,
+                doneCount: 0,
+                progress: 0
               },
               success: res => {
                 this.onQueryJobs()
-                this.callPlanFuncation(e.detail.formId)
+                this.callPlanFuncation(e.detail.formId, plan.ibs)
                 this.setData({
                   isSharePageIn: false
                 })
@@ -222,13 +226,14 @@ Page({
       }
     }) 
   },
-  callPlanFuncation(formId){
+  callPlanFuncation(formId, touser){
     console.log(formId)
     wx.cloud.callFunction({
       name: 'openapi',
       data: {
-        action: 'sendTemplateMessage',
+        action: 'Invited',
         formId: formId,
+        touser: touser
       },
       success: res => {
         console.warn('[云函数] [openapi] templateMessage.send 调用成功：', res)
@@ -237,9 +242,5 @@ Page({
         console.error('[云函数] [openapi] templateMessage.send 调用失败：', err)
       }
     })
-  },
-  checkObject: function (obj) {
-    return obj === null || obj === undefined || obj === '' || Array.isArray(obj) ? obj.length === 0 : false || Object.keys(obj).length === 0;
   }
-
 })

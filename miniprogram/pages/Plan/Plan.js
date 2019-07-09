@@ -1,4 +1,7 @@
 // miniprogram/pages/Plan/Plan.js
+
+const db = wx.cloud.database()
+const _ = db.command
 Page({
 
   /**

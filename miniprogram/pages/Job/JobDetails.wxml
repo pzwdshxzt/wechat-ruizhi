@@ -1,0 +1,25 @@
+<!--miniprogram/pages/Job/Job.wxml-->
+<view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__label">打卡期数</view>
+        <view class="weui-form-preview__value_in-hd">{{JobDetails.applyCount}}</view>
+    </view>
+    <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">申请日期</view>
+            <view class="weui-form-preview__value">{{JobDetails.date}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">申请时间</view>
+            <view class="weui-form-preview__value">{{JobDetails.time}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">备注</view>
+            <view class="weui-form-preview__value">{{JobDetails.applyTextarea}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">审核状态</view>
+            <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
+        </view>
+    </view>
+</view>

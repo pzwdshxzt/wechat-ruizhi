@@ -2,19 +2,13 @@
 const db = wx.cloud.database()
 const _ = db.command
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     job:{},
     openId:'',
-    jobId: ''
+    jobId: '',
+    JobDetails: [],
+    authCode:['待审核','已拒绝','审核通过']
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     console.log(options)
     db.collection('Jobs').doc(options.JobId).get().then(res => {
@@ -22,13 +16,24 @@ Page({
         job: res.data,
         openId: options.uid
       })
+      db.collection('JobDetails').where({
+        JobId:res.data._id
+        }).get().then(res => {
+          this.setData({
+            JobDetails: res.data
+          })
+        })
+    })
+    
+  },
+  openApplyPage(){
+    wx.navigateTo({
+      url: 'Apply?JobId=' + this.data.job._id + '&uid=' + this.data.openId + '&pid=' +this.data.job.planId
     })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  trunDetails(e){
+    wx.navigateTo({
+      url: '../JobDetails/JobDetails?JobDetails=' + JSON.stringify(object)
+    })
   }
 })

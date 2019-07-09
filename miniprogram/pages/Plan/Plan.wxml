@@ -1,2 +1,18 @@
-<!--miniprogram/pages/Plan/Plan.wxml-->
-<text>miniprogram/pages/Plan/Plan.wxml</text>
+<!--miniprogram/pages/Job/Job.wxml-->
+<view class="weui-form-preview">
+    <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__label">任务名称</view>
+        <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
+    </view>
+     <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__label">任务期数</view>
+        <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
+    </view>
+    <view class="weui-cells__title">待审核信息</view>
+    <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+        <navigator url="JobDetails?JobDetailsId={{item._id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">{{item.date}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>
+        </navigator>
+    </view>
+</view>
