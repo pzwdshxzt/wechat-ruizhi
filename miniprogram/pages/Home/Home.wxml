@@ -10,7 +10,7 @@
         <view class="weui-panel__bd">
          <view class="weui-media-box weui-media-box_small-appmsg">
             <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}&planUid={{item.planUid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__hd"><icon type="info_circle" size="22"></icon></view>
                     <view class="weui-cell__bd weui-cell_primary">
                         <view>{{item.inviteName}}</view>
@@ -27,7 +27,7 @@
         <view class="weui-panel__bd">
          <view class="weui-media-box weui-media-box_small-appmsg">
             <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourPlans}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-                <navigator url="../Plan/Plan?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <navigator url="../Plan/Plan?PlanId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__hd"><icon type="info_circle" size="22"></icon></view>
                     <view class="weui-cell__bd weui-cell_primary">
                         <view>{{item.inviteName}}</view>
@@ -45,15 +45,22 @@
   <view class="weui-form-preview"  wx:for="{{fromUidJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
     <form class="list" bindsubmit="selectStep"  report-submit>
         <view class="weui-form-preview__bd">
-        <input type='hidden' name="pid" value='{{itemName._id}}'></input>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">计划名称</view>
-                <view class="weui-form-preview__value">{{itemName.inviteName}}</view>
-            </view>
-            <view class="weui-form-preview__item">
-                <view class="weui-form-preview__label">计划期数</view>
-                <view class="weui-form-preview__value">{{itemName.inviteCount}}</view>
-            </view>
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">任务编号</view>
+              <input name="pid" value='{{itemName._id}}' class="weui-form-preview__value">{{itemName._id}}</input>
+          </view>
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">计划编号</view>
+              <input name="ibs" value='{{itemName.ibs}}' class="weui-form-preview__value">{{itemName.ibs}}</input>
+          </view>
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">计划名称</view>
+              <view class="weui-form-preview__value">{{itemName.inviteName}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">计划期数</view>
+              <view class="weui-form-preview__value">{{itemName.inviteCount}}</view>
+          </view>
         </view>
         <view class="weui-form-preview__ft">
           <button class="weui-form-preview__btn weui-form-preview__btn_default" data-id="{{itemName._id}}" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>

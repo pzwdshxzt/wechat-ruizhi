@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/Jobs/Jobs",
+    "pages/Home/Home",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/chooseLib/chooseLib",
@@ -13,14 +13,14 @@
     "pages/Job/Apply",
     "pages/success/success",
     "pages/fail/fail",
-    "pages/Job/JobDetails"
+    "pages/JobDetails/JobDetails"
   ],
   "tabBar": {
     "list": [
       {
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home-active.png",
-        "pagePath": "pages/Jobs/Jobs",
+        "pagePath": "pages/Home/Home",
         "text": "首页"
       },
       {

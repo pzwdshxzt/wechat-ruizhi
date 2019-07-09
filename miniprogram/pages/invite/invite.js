@@ -90,7 +90,7 @@ Page({
     db.collection('Plans').add({
       data: {
         inviteName: this.data.inviteName,
-        inviteCount: this.data.inviteCount,
+        inviteCount: Number(this.data.inviteCount),
         ibs: this.data.openid
       },
       fail: err => {
@@ -132,7 +132,7 @@ Page({
     console.log(this.data.openid)
     return {
       title: '邀请您完成计划',
-      path: '/pages/Jobs/Jobs?jsonStr=' + this.data.openid,
+      path: '/pages/Home/Home?jsonStr=' + this.data.openid,
       success :function(res) {
         console.log('转发成功',res)
       }
@@ -144,9 +144,21 @@ Page({
     })
   },
   getInviteCount: function (e) {
-    this.setData({
-      inviteCount: e.detail.value
-    })
+    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
+    var num = e.detail.value;
+    if (!reg.test(num)) {
+      wx.showModal({
+        content: '请填写数字',
+        showCancel: false,
+        success: function (res) {
+        }
+      });
+    } else{
+      this.setData({
+        inviteCount: e.detail.value
+      })
+    }
+    
   },
   checkObject: function (obj) {
     return obj === null || obj === undefined || obj === '' || Array.isArray(obj)? obj.length === 0: false || Object.keys(obj).length === 0;

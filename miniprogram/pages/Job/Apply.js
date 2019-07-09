@@ -14,7 +14,8 @@ Page({
     applyTextarea: '',
     JobId: '',
     uid: '',
-    pid: ''
+    pid: '',
+    planUid: ''
   },
 
   /**
@@ -24,7 +25,8 @@ Page({
     this.setData({
       uid: options.uid,
       JobId: options.JobId,
-      pid: options.pid
+      pid: options.pid,
+      planUid: options.planUid
     })
   },
   bindDateChange: function (e) {
@@ -38,8 +40,9 @@ Page({
     })
   }, 
   bindApplyCount: function (e) {
+    console.log(e)
     this.setData({
-      applyCount: e.detail.value
+      applyCount: Number(e.detail.value)
     })
   }, 
   applyTextarea: function (e) {
@@ -48,7 +51,7 @@ Page({
     })
   },
   checkInfo:function(){
-    if ('0' === this.data.applyCount || util.checkObject(this.data.applyCount) ) {
+    if (0 === this.data.applyCount || util.checkObject(this.data.applyCount) ) {
       wx.showModal({
         content: '请选择打卡期数',
         showCancel: false,
@@ -68,7 +71,7 @@ Page({
     }
     return true
   },
-  applyStep: function(){
+  applyStep: function(e){
     if(this.checkInfo()){
       db.collection('JobDetails').add({
         data: {
@@ -83,11 +86,41 @@ Page({
         },
         success: res => {
           util.successPage('申请成功', '你得申请已提交，将有任务发布者进行审核，请等待!')
+          db.collection('Jobs').doc(this.data.JobId).get({
+            success: res => {
+              this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName)
+            },
+            fail: res => {
+              util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
+            }
+          })
+         
         },
         fail: err => {
           util.failPage('申请失败','你得申请由于不可抗力因素失败，请稍后再试!')
         }
       })
     }
+  },
+  callPlanFuncation(formId, touser, inviteName) {
+    console.log(formId)
+    wx.cloud.callFunction({
+      name: 'openapi',
+      data: {
+        action: 'apply',
+        formId: formId,
+        touser: touser,
+        username: '待改进',
+        date: util.formatDateTime(new Date()),
+        inviteName: inviteName,
+        inviteCount: this.data.applyCount
+      },
+      success: res => {
+        console.warn('[云函数] [openapi] templateMessage.send 调用成功：', res)
+      },
+      fail: err => {
+        console.error('[云函数] [openapi] templateMessage.send 调用失败：', err)
+      }
+    })
   }
 })

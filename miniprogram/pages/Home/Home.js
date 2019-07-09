@@ -163,6 +163,7 @@ Page({
    * 选择要执行的计划
    */
   selectStep(e) {
+    console.log(e)
     db.collection('Jobs').where({
       planId: e.detail.value.pid,
       jober: this.data.openid
@@ -177,7 +178,6 @@ Page({
             isSharePageIn: false
           })
         } else {
-          console.log("111111111"+res)
           const db = wx.cloud.database()
           db.collection('Plans').doc(e.detail.value.pid).get().then(res => {
             console.log(res)
@@ -188,11 +188,11 @@ Page({
             db.collection('Jobs').add({
               data: {
                 planId: e.detail.value.pid,
+                planUid: e.detail.value.ibs,
                 jober: this.data.openid,
-                inviteName:res.data.inviteName,
-                inviteCount:res.data.inviteCount,
-                doneCount: 0,
-                progress: 0
+                inviteName: res.data.inviteName,
+                inviteCount: res.data.inviteCount,
+                doneCount: 0
               },
               success: res => {
                 this.onQueryJobs()

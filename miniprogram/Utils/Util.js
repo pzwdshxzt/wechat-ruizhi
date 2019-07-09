@@ -20,8 +20,14 @@ const formatTime = date => {
   return [hour, minute, second].map(formatNumer).join(':')
 }
 
-const checkObject= obj => {
-    return obj === null || obj === undefined || obj === '' || Array.isArray(obj) ? obj.length === 0 : false || Object.keys(obj).length === 0;
+const checkObject = obj => {
+    if(obj instanceof Array){
+        return obj.length === 0
+    }
+    if(obj instanceof Object){
+        return Object.keys(obj).length === 0
+    }
+    return obj === null || obj === undefined || obj === '';
   }
 const formatNumer = n => {
   n = n.toString()
@@ -39,7 +45,7 @@ const failPage = (title, content) => {
 }
 const homePage = () => {
   wx.switchTab({
-    url: '../Jobs/Jobs',
+    url: '../Home/Home',
     fail: function () {
       console.info("跳转失败")
     }

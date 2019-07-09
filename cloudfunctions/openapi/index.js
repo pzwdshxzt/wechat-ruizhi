@@ -8,17 +8,22 @@ cloud.init()
  * APPLY:任务待审核
  * AUTH：任务审核完成
  */
-const { INVITE, INVITED, APPLY, AUTH } = {
-  INVITE: 'SmBlZlWAQapA1hlQqgdZ81UA_rC-_XRy-tTC_OCfbrw',
+const { INVITED, APPLY, AUTH } = {
   INVITED: 'CC9oanIQMB86kj5cE8gY6YBKwFJZe-LpZAgF-JEpXmQ',
   APPLY: '23ie9I3sjJrY-9MoDWehLWh6vTy-aJ8rTyDVFMTPsQA',
-  AUTH: 'MxXKepCWK-yLzCXe5fWW1wvX1ou9Kdp10AQXi-FLDc0'
+  AUTH: 'MxXKepCWK-yLzCXe5fWW177gE2GXWW-BmNDMw27fqME'
 }
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.action) {
     case 'Invited': {
       return sendInvited(event)
+    }
+    case 'apply': {
+      return sendApply(event)
+    }
+    case 'auth': {
+      return sendAuth(event)
     }
     case 'getWXACode': {
       return getWXACode(event)
@@ -29,14 +34,63 @@ exports.main = async (event, context) => {
   }
 }
 
+async function sendAuth(event) {
 
+  const sendResult = await cloud.openapi.templateMessage.send({
+    touser: event.touser,
+    templateId: AUTH,
+    formId: event.formId,
+    page: 'pages/Job/Job',
+    data: {
+      keyword1: {
+        value: event.inviteName,
+      },
+      keyword2: {
+        value: event.date,
+      },
+      keyword3: {
+        value: event.result,
+      },
+      keyword4: {
+        value: event.content,
+      },
+    }
+  })
+
+  return sendResult
+}
+async function sendApply(event) {
+
+  const sendResult = await cloud.openapi.templateMessage.send({
+    touser: event.touser,
+    templateId: APPLY,
+    formId: event.formId,
+    page: 'pages/Plan/Plan',
+    data: {
+      keyword1: {
+        value: event.inviteName,
+      },
+      keyword2: {
+        value: event.username,
+      },
+      keyword3: {
+        value: event.date,
+      },
+      keyword4: {
+        value: event.inviteCount,
+      },
+    }
+  })
+
+  return sendResult
+}
 async function sendInvited(event) {
 
   const sendResult = await cloud.openapi.templateMessage.send({
     touser: event.touser,
     templateId: INVITED,
     formId: event.formId,
-    page: 'pages/Plan/Plan',
+    page: 'pages/Home/Home',
     data: {
       keyword1: {
         value: '活动名称',

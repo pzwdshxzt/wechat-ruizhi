@@ -19,7 +19,7 @@
         <view class="weui-form-preview__item">
          <view class="weui-progress">
             <view class="weui-progress__bar">
-                <progress percent="{{job.progress}}" stroke-width="3" />
+                <progress percent="{{progress}}" stroke-width="3" />
             </view>
            </view>
         </view>
@@ -27,7 +27,7 @@
     </view>
     <view class="weui-cells__title">打卡记录</view>
     <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-        <navigator url="JobDetails?JobDetailsId={{item._id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <view class="weui-cell__bd">{{item.date}}</view>
             <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>
         </navigator>
