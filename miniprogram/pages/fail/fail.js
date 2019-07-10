@@ -1,4 +1,5 @@
 // miniprogram/pages/fail/fail.js
+const util = require('../../Utils/Util.js');
 Page({
 
   /**

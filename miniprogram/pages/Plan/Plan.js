@@ -29,5 +29,14 @@ Page({
         })
       })
     })
-  }
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '邀请您完成计划',
+      path: '/pages/invited/invited?planId=' + this.data.plan._id,
+      success: function (res) {
+        console.log('转发成功', res)
+      }
+    }
+  },
 })

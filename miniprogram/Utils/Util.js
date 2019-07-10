@@ -60,6 +60,21 @@ const openLoading= (title) => {
 const closeLoading = () => {
   wx.hideLoading();
 }
+
+const loginFunction = () => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        resolve(res.result)
+      },
+      fail: err => {
+        resolve()
+      }
+    })
+  })
+}
 module.exports = {
   formatDateTime: formatDateTime,
   formatDate: formatDate,
@@ -69,5 +84,6 @@ module.exports = {
   failPage: failPage,
   homePage: homePage,
   openLoading: openLoading,
-  closeLoading: closeLoading
+  closeLoading: closeLoading,
+  loginFunction: loginFunction
 }

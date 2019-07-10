@@ -1,6 +1,7 @@
 // miniprogram/pages/invite/invite.js
 const app = getApp()
-
+const util = require('../../Utils/Util.js');
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -8,12 +9,12 @@ Page({
    */
   data: {
     step: 1,
-    inviteCount: '',
+    inviteCount: 0,
     inviteName: '',
     count: null,
-    Plans: [],
     isShowPlans: false,
-    openid: ''
+    openid: '',
+    planId: ''
   },
 
   /**
@@ -22,34 +23,26 @@ Page({
   onLoad: function (options) {
     if (app.globalData.openid) {
       this.setData({
+        step: 1,
         openid: app.globalData.openid
       })
     } else {
-      wx.cloud.callFunction({
-        name: 'login',
-        data: {},
-        success: res => {
-          app.globalData.openid = res.result.openid
-          this.setData({
-            step: 1,
-            openid: res.result.openid
-          })
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '获取 openid 失败，请检查是否有部署 login 云函数',
-          })
-          console.log('[云函数] [login] 获取 openid 失败，请检查是否有部署云函数，错误信息：', err)
-        }
+      util.loginFunction().then(res => {
+        this.setData({
+          step: 1,
+          openid: res.openid
+        })
+        this.onInitData(options)
+      }).catch(err => {
+        console.log(err)
       })
     }
-    const db = wx.cloud.database()
+ 
     db.collection('Plans').where({
       ibs: this.data.openid
     }).get({
       success: res => {
-        if(!this.checkObject(res.data)){
+        if (!util.checkObject(res.data)){
           this.setData({
             Plans: res.data,
             isShowPlans: true
@@ -85,12 +78,16 @@ Page({
     })
   },
   twoNextStep: function () {  
-    const db = wx.cloud.database()
     db.collection('Plans').add({
       data: {
         inviteName: this.data.inviteName,
         inviteCount: Number(this.data.inviteCount),
         ibs: this.data.openid
+      },
+      success: res =>{
+        this.setData({
+          planId: res._id
+        })
       },
       fail: err => {
         wx.showToast({
@@ -111,18 +108,7 @@ Page({
     })
   },
   goHome: function () {
-    const pages = getCurrentPages()
-    if (pages.length === 2) {
-      wx.navigateBack()
-    } else if (pages.length === 1) {
-      wx.redirectTo({
-        url: '../index/index',
-      })
-    } else {
-      wx.reLaunch({
-        url: '../index/index',
-      })
-    }
+    util.homePage()
   },
   /**
    * 分享计划
@@ -130,7 +116,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '邀请您完成计划',
-      path: '/pages/Home/Home?jsonStr=' + this.data.openid,
+      path: '/pages/invited/invited?planId=' + this.data.planId,
       success :function(res) {
         console.log('转发成功',res)
       }
@@ -149,6 +135,9 @@ Page({
         content: '请填写数字',
         showCancel: false,
         success: function (res) {
+          this.setData({
+            inviteCount: 0
+          })
         }
       });
     } else{
@@ -157,8 +146,5 @@ Page({
       })
     }
     
-  },
-  checkObject: function (obj) {
-    return obj === null || obj === undefined || obj === '' || Array.isArray(obj)? obj.length === 0: false || Object.keys(obj).length === 0;
   }
 })

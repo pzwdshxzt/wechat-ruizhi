@@ -1,6 +1,5 @@
 <!--pages/databaseGuide/databaseGuide.wxml-->
 <view class="container">
-
   <!-- 导航 -->
   <view class="list">
     <view class="list-item">
@@ -22,13 +21,21 @@
 
   <view class="guide" wx:if="{{step === 1}}">
     <text class="headline">打卡计划</text>
-    <text class="p">打卡名称</text>
-    <view class="section">
-      <input auto-focus value='{{inviteName}}' placeholder="请输入打卡名称" bindinput="getInviteName" />
+    <view class="weui-cells__title">打卡名称</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+              <input  value='{{inviteName}}' class="weui-input" placeholder="请输入打卡名称" bindinput="getInviteName" />
+          </view>
+      </view>
     </view>
-    <text class="p">打卡期数</text>
-    <view class="section">
-      <input type="digit" type="number" value='{{inviteCount}}' bindinput="getInviteCount" placeholder="请输入数字"/>
+    <text class="weui-cells__title">打卡期数</text>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+              <input  type="digit" type="number" value='{{inviteCount}}'  bindinput="getInviteCount" class="weui-input" placeholder="请输入数字" />
+          </view>
+      </view>
     </view>
     <div class="nav" style="align-content:center">
       <button class="next" size="mini" type="default" bindtap="oneNextStep">下一步</button>

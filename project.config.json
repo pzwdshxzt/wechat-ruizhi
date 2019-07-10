@@ -7,7 +7,7 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-    "checkSiteMap":false
+		"checkSiteMap": false
 	},
 	"appid": "wx237fe6b2c2f69081",
 	"projectname": "miniprogram-test-1",

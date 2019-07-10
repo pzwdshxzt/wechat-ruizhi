@@ -1,2 +1,33 @@
-<!--miniprogram/pages/invited/invited.wxml-->
-<text>miniprogram/pages/invited/invited.wxml</text>
+
+<view wx:if="{{isSharePageIn}}">
+  <view class="page__hd">
+      <view class="page__title">你收到邀请参与计划</view>
+  </view>
+  <view class="weui-cells__title"></view>
+    <view class="weui-form-preview">
+      <form class="list" bindsubmit="acceptPlan"  report-submit>
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">计划名称</view>
+              <view class="weui-form-preview__value">{{plan.inviteName}}</view>
+          </view>
+          <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">计划期数</view>
+              <view class="weui-form-preview__value">{{plan.inviteCount}}</view>
+          </view>
+        </view>
+        <view class="weui-form-preview__ft">
+          <button class="weui-form-preview__btn weui-form-preview__btn_default" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>
+          <button class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" form-type="submit">接受</button>
+        </view>
+    </form>
+  </view>
+</view>
+<view wx:if="{{!isSharePageIn}}">
+  <view class="page__hd">
+    <view class="page__title">{{errorMsg}}</view>
+  </view>
+  <view class="button-sp-area">
+      <button class="weui-btn" type="primary" plain="true" bindtap="goHome">首页</button>
+  </view>
+</view>

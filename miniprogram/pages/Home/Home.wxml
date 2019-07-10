@@ -3,9 +3,6 @@
 <view class="page__hd">
     <view class="page__title">大家好</view>
     <view class="page__desc">欢迎来到睿智小课堂</view>
-    <loading hidden="{{showLoading}}">
-        加载中...
-    </loading>
 </view>
 <view class="guide" wx:if="{{!isSharePageIn}}">
     <view class="weui-panel">

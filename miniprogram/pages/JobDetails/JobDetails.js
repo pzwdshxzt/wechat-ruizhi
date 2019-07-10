@@ -2,6 +2,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 const util = require('../../Utils/Util.js');
+const dbConsole = require('../../Utils/DbConsole.js');
 Page({
 
   /**
@@ -36,6 +37,7 @@ Page({
     })
   },
   agreeApply:function(e){
+    util.openLoading('正在玩命申请中')
     let authFlag = 0
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
@@ -43,40 +45,31 @@ Page({
         authFlag = radioItems[i].value
       }
     }
-    db.collection('JobDetails').doc(this.data.JobDetails._id).update({
-      data: {
-        // 表示将 done 字段置为 true
-        authFlag: authFlag,
-        authApplyTextarea: this.data.applyTextarea 
-      },
-      success: res => {  
-          db.collection('Jobs').doc(this.data.JobDetails.JobId).get({
-            success: res => {
-              if (authFlag === 2) {
-                let newCount = res.data.doneCount + this.data.JobDetails.applyCount
-                db.collection('Jobs').doc(res.data._id).update({
-                  data: {
-                    doneCount: newCount
-                  }
-                }).then(
-                  util.successPage('审核成功', '你已经审核成功了')
-                )
-                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '审核通过', res.data.inviteName, res.data._id)
-              }
-              if (authFlag === 1) {
-                util.successPage('审核成功', '你已经审核成功了')
-                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
-              }          
-            },
-            fail: res => {
-              util.failPage('审核失败', '未提交数据，可以重新审核！！')
-            }
-          }) 
-      },
-      fail: res => {
-        util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
+    dbConsole.updateJobDetails(this.data.JobDetails._id, authFlag, this.data.applyTextarea).then(res =>{
+      if (authFlag === 2) {
+        db.collection('Jobs').doc((this.data.JobDetails.JobId)).get().then(jobs => {
+          let newCount = jobs.data.doneCount + this.data.JobDetails.applyCount
+          dbConsole.updateJobs(jobs.data._id, newCount).then(res => {
+            this.callPlanFuncation(this.data.JobDetails.formId, this.data.JobDetails._openid, '审核通过', jobs.data.inviteName, jobs.data._id)
+            util.successPage('审核成功', '您已经审核成功了')
+            util.closeLoading()
+          }).catch(res => {
+            console.log("error" + res)
+            console.log(res)
+            util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
+            util.closeLoading()
+          })
+        })
       }
-    })
+      if (authFlag === 1) {
+        util.successPage('审核成功', '您已经审核成功了')
+        this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
+        util.closeLoading()
+      }
+    }).catch( res => {
+      util.failPage('审核失败', '未提交数据，可以重新审核！！')
+    });    
+    
   },
   applyTextarea: function (e) {
     this.setData({

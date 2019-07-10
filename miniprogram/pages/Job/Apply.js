@@ -71,6 +71,8 @@ Page({
     return true
   },
   applyStep: function(e){
+    console.log(e)
+    util.openLoading('正在玩命申请中')
     if(this.checkInfo()){
       db.collection('JobDetails').add({
         data: {
@@ -81,22 +83,24 @@ Page({
           time: this.data.time,
           applyTextarea: this.data.applyTextarea,
           applyCount: this.data.applyCount,
-          authFlag: 0
+          authFlag: 0,
+          formId: e.detail.formId
         },
         success: res => {
-          util.successPage('申请成功', '你得申请已提交，将有任务发布者进行审核，请等待!')
-          db.collection('Jobs').doc(this.data.JobId).get({
-            success: res => {
-              this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName ,res.data.planId)
-            },
-            fail: res => {
-              util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
-            }
-          })
-         
+          util.closeLoading()
+          util.successPage('申请成功', '你得申请已提交，将有任务发布者进行审核，请等待!!')
+          // db.collection('Jobs').doc(this.data.JobId).get({
+          //   success: res => {
+          //     this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName ,res.data.planId)
+          //   },
+          //   fail: res => {
+          //     util.failPage('通知失败', '申请成功，但是通知任务发布者失败!!')
+          //   }
+          // })
         },
         fail: err => {
-          util.failPage('申请失败','你得申请由于不可抗力因素失败，请稍后再试!')
+          util.closeLoading()
+          util.failPage('申请失败','你得申请由于不可抗力因素失败，请稍后再试!!')
         }
       })
     }
