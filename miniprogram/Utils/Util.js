@@ -51,6 +51,15 @@ const homePage = () => {
     }
   })
 }
+const openLoading= (title) => {
+  wx.showLoading({
+    title: title,
+    mask: true
+  })
+}
+const closeLoading = () => {
+  wx.hideLoading();
+}
 module.exports = {
   formatDateTime: formatDateTime,
   formatDate: formatDate,
@@ -58,5 +67,7 @@ module.exports = {
   checkObject: checkObject,
   successPage: successPage,
   failPage: failPage,
-  homePage: homePage
+  homePage: homePage,
+  openLoading: openLoading,
+  closeLoading: closeLoading
 }

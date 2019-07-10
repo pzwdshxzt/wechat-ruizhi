@@ -12,11 +12,12 @@ Page({
   data: {
     openid: '',
     Users: '',
-    fromUid: 'o3qrs0HsIJbThtm9aEHDL6DPWHNE',
+    fromUid: '',
     isSharePageIn: false,
     fromUidJobs: [],
     yourJobs: [],
-    yourPlans: []
+    yourPlans: [],
+    showLoading: true
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -25,6 +26,7 @@ Page({
     this.onLoad()
   },
   onLoad: function (options) {
+    util.openLoading('数据加载中')
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid
@@ -63,23 +65,19 @@ Page({
       })
     } 
     if (!util.checkObject(this.data.fromUid)) {
-      // if (this.data.fromUid === this.data.openid) {
-      //   wx.showToast({
-      //     icon: 'none',
-      //     title: '您不能参与自己的计划',
-      //   })
-      // } else {
-      //   this.setData({
-      //     isSharePageIn: true
-      //   })
-      //   this.onQueryFromUid()
-      // }
-      this.setData({
-        isSharePageIn: true
-      })
-      this.onQueryFromUid()
-
+      if (this.data.fromUid === this.data.openid) {
+        wx.showToast({
+          icon: 'none',
+          title: '您不能参与自己的计划',
+        })
+      } else {
+        this.setData({
+          isSharePageIn: true
+        })
+        this.onQueryFromUid()
+      }
     }
+    util.closeLoading()
   },
   /**
    * 查询别人邀请的计划
@@ -163,7 +161,6 @@ Page({
    * 选择要执行的计划
    */
   selectStep(e) {
-    console.log(e)
     db.collection('Jobs').where({
       planId: e.detail.value.pid,
       jober: this.data.openid
@@ -180,7 +177,6 @@ Page({
         } else {
           const db = wx.cloud.database()
           db.collection('Plans').doc(e.detail.value.pid).get().then(res => {
-            console.log(res)
             let plan = res.data
             /**
              * 添加新的记录
@@ -227,7 +223,6 @@ Page({
     }) 
   },
   callPlanFuncation(formId, touser){
-    console.log(formId)
     wx.cloud.callFunction({
       name: 'openapi',
       data: {

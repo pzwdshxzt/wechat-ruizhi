@@ -13,14 +13,12 @@
       <button class="userinfo-nickname" bindtap="onGetOpenid">{{nickName}}</button>
     </view>
   </view>
-
   <!-- 邀请 -->
   <view class="uploader">
       <navigator url="../invite/invite" open-type="navigate" class="uploader-text">
         <text>计划邀请</text>
       </navigator>
   </view>
-
   <!-- 上传图片 -->
   <view class="uploader">
     <view class="uploader-text" bindtap="doUpload">
@@ -30,20 +28,12 @@
       <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
     </view>
   </view>
-
-  <!-- 新建云函数 -->
-  <view class="uploader">
-    <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
-      <text>快速新建云函数</text>
-    </navigator>
-  </view>
-
   <!-- 云调用 -->
-  <view class="uploader">
+  <!-- <view class="uploader">
     <navigator url="../openapi/openapi" open-type="navigate" class="uploader-text">
       <text>云调用</text>
     </navigator>
-  </view>
+  </view> -->
 
  
 

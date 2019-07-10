@@ -49,7 +49,6 @@ Page({
       ibs: this.data.openid
     }).get({
       success: res => {
-        console.log(res)
         if(!this.checkObject(res.data)){
           this.setData({
             Plans: res.data,
@@ -129,7 +128,6 @@ Page({
    * 分享计划
    */
   onShareAppMessage: function () {
-    console.log(this.data.openid)
     return {
       title: '邀请您完成计划',
       path: '/pages/Home/Home?jsonStr=' + this.data.openid,

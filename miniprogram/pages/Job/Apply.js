@@ -40,7 +40,6 @@ Page({
     })
   }, 
   bindApplyCount: function (e) {
-    console.log(e)
     this.setData({
       applyCount: Number(e.detail.value)
     })
@@ -88,7 +87,7 @@ Page({
           util.successPage('申请成功', '你得申请已提交，将有任务发布者进行审核，请等待!')
           db.collection('Jobs').doc(this.data.JobId).get({
             success: res => {
-              this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName)
+              this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName ,res.data.planId)
             },
             fail: res => {
               util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
@@ -102,8 +101,7 @@ Page({
       })
     }
   },
-  callPlanFuncation(formId, touser, inviteName) {
-    console.log(formId)
+  callPlanFuncation(formId, touser, inviteName, planId) {
     wx.cloud.callFunction({
       name: 'openapi',
       data: {
@@ -113,7 +111,8 @@ Page({
         username: '待改进',
         date: util.formatDateTime(new Date()),
         inviteName: inviteName,
-        inviteCount: this.data.applyCount
+        inviteCount: this.data.applyCount,
+        planId: planId
       },
       success: res => {
         console.warn('[云函数] [openapi] templateMessage.send 调用成功：', res)

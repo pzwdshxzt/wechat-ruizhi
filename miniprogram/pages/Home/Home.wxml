@@ -2,7 +2,10 @@
 <!-- 简介 -->
 <view class="page__hd">
     <view class="page__title">大家好</view>
-        <view class="page__desc">欢迎来到睿智小课堂</view>
+    <view class="page__desc">欢迎来到睿智小课堂</view>
+    <loading hidden="{{showLoading}}">
+        加载中...
+    </loading>
 </view>
 <view class="guide" wx:if="{{!isSharePageIn}}">
     <view class="weui-panel">
@@ -10,7 +13,7 @@
         <view class="weui-panel__bd">
          <view class="weui-media-box weui-media-box_small-appmsg">
             <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}&planUid={{item.planUid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__hd"><icon type="info_circle" size="22"></icon></view>
                     <view class="weui-cell__bd weui-cell_primary">
                         <view>{{item.inviteName}}</view>

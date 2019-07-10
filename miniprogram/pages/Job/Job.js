@@ -1,6 +1,7 @@
 // miniprogram/pages/Job/Job.js
 const db = wx.cloud.database()
 const _ = db.command
+const util = require('../../Utils/Util.js');
 Page({
   data: {
     job:{},
@@ -12,12 +13,12 @@ Page({
     planUid: ''
   },
   onLoad: function (options) {
-    console.log(options)
+    util.openLoading('数据加载中')
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
         job: res.data,
         openId: options.uid,
-        planUid: options.planUid
+        planUid: res.data.planUid
       })
       let progress = this.getPercent(res.data.doneCount, res.data.inviteCount)
       this.setData({
@@ -29,6 +30,7 @@ Page({
           this.setData({
             JobDetails: res.data
           })
+          util.closeLoading()
         })
     })  
   },
@@ -38,8 +40,6 @@ Page({
     })
   },
   getPercent: function (num, total) {
-    console.log(num)
-    console.log(total)
     num = parseFloat(num);
     total = parseFloat(total);
     if (isNaN(num) || isNaN(total)) {

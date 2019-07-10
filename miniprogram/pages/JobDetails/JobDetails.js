@@ -22,7 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    util.openLoading('数据加载中')
     db.collection('JobDetails').doc(options.JobDetailsId).get().then(res => {
       this.setData({
         JobDetails: res.data
@@ -32,6 +32,7 @@ Page({
           isAuthFlag: true
         })
       }
+      util.closeLoading()
     })
   },
   agreeApply:function(e){
@@ -60,11 +61,11 @@ Page({
                 }).then(
                   util.successPage('审核成功', '你已经审核成功了')
                 )
-                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '审核通过', res.data.inviteName)
+                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '审核通过', res.data.inviteName, res.data._id)
               }
               if (authFlag === 1) {
                 util.successPage('审核成功', '你已经审核成功了')
-                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName)
+                this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
               }          
             },
             fail: res => {
@@ -83,7 +84,6 @@ Page({
     })
   },
   radioChange: function (e) {
-    console.log(e)
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
       radioItems[i].checked = radioItems[i].value == e.detail.value;
@@ -93,14 +93,14 @@ Page({
       radioItems: radioItems
     });
   },
-  callPlanFuncation(formId, touser, result, inviteName) {
-    console.log(formId)
+  callPlanFuncation(formId, touser, result, inviteName ,JobId) {
     wx.cloud.callFunction({
       name: 'openapi',
       data: {
         action: 'auth',
         formId: formId,
         touser: touser,
+        JobId: JobId,
         inviteName: inviteName,
         date: util.formatDateTime(new Date()),
         result: result,

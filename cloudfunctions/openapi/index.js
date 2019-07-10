@@ -40,7 +40,7 @@ async function sendAuth(event) {
     touser: event.touser,
     templateId: AUTH,
     formId: event.formId,
-    page: 'pages/Job/Job',
+    page: 'pages/Job/Job?JobId='+ event.JobId + '&uid=' + event.touser,
     data: {
       keyword1: {
         value: event.inviteName,
@@ -65,7 +65,7 @@ async function sendApply(event) {
     touser: event.touser,
     templateId: APPLY,
     formId: event.formId,
-    page: 'pages/Plan/Plan',
+    page: 'pages/Plan/Plan?PlanId=' + event.planId + '&uid'+event.touser,
     data: {
       keyword1: {
         value: event.inviteName,

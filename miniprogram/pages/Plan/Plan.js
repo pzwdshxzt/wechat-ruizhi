@@ -2,6 +2,7 @@
 
 const db = wx.cloud.database()
 const _ = db.command
+const util = require('../../Utils/Util.js');
 Page({
 
   /**
@@ -13,7 +14,7 @@ Page({
     authCode: ['待审核', '已拒绝', '审核通过']
   },
   onLoad: function(options){
-    console.log(options)
+    util.openLoading('数据加载中')
     db.collection('Plans').doc(options.PlanId).get().then(res => {
       this.setData({
         plan: res.data,
@@ -22,6 +23,7 @@ Page({
       db.collection('JobDetails').where({
         planId: options.PlanId
       }).get().then(res => {
+        util.closeLoading()
         this.setData({
           authJobs: res.data
         })
