@@ -12,7 +12,7 @@ Page({
   data: {
     openid: '',
     yourJobs: [],
-    yourPlans: [],
+    yourPlans: []
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -21,6 +21,7 @@ Page({
     this.onLoad()
   },
   onLoad: function (options) {
+    util.getUserInfo()
     util.openLoading('数据加载中')
     if (app.globalData.openid) {
       this.setData({

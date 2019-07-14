@@ -5,13 +5,18 @@
         <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
         <view class="weui-form-preview__label">任务期数</view>
         <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
-    </view>
-    
+     </view>
+ 
     <view class="weui-cells__title">待审核信息</view>
-    <view class="weui-cells weui-cells_after-title" wx:for="{{authJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-        <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}&isAuthFlag=true" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <view class="weui-cell__bd">{{item.date}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>
+    <view class="weui-cells__title">{{Jobs}}</view>
+    <view class="weui-cells weui-cells_after-title" wx:for="{{Jobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+      <view class="weui-cells__title">{{item.userInfo.nickName}}</view>
+      <view class="weui-cells__title">{{item.userInfo._id}}</view>
+        <view class="weui-cells weui-cells_after-title" wx:for="{{item.userInfo.JobDetails}}" wx:key="idxa" wx:for-index="idxa" wx:for-item="jobDetail">
+        <navigator url="../JobDetails/JobDetails?JobDetailsId={{jobDetail._id}}&isAuthFlag=true" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">{{jobDetail.date}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[jobDetail.authFlag]}}</view>
         </navigator>
+      </view>
     </view>
 </view>

@@ -1,3 +1,6 @@
+const app = getApp()
+const db = wx.cloud.database()
+const _ = db.command
 const formatDateTime = date =>{
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -75,6 +78,70 @@ const loginFunction = () => {
     })
   })
 }
+const getUserInfo = () => {
+  return new Promise((resolve, reject) => {
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              app.globalData.userInfo = res.userInfo
+              resolve(res.userInfo)
+              addUserInfo(res.userInfo)
+            }
+          })
+        } else {
+          wx.navigateTo({
+            url: '../Auth/Auth'
+          })
+        }
+      }
+    })
+  })
+}
+const addUserInfo = (userInfo) => {
+  db.collection('UserInfos').where({
+    _openid: userInfo._openid
+  }).get().then(res =>{
+    if(checkObject(res.data)){
+      db.collection('UserInfos').add({
+          data: userInfo,
+          success: res => {
+          },
+          fail: err => {
+          }
+        })
+    }
+  })
+  
+}
+const compareVersion = (v1, v2) => {
+  v1 = v1.split('.')
+  v2 = v2.split('.')
+  const len = Math.max(v1.length, v2.length)
+
+  while (v1.length < len) {
+    v1.push('0')
+  }
+  while (v2.length < len) {
+    v2.push('0')
+  }
+
+  for (let i = 0; i < len; i++) {
+    const num1 = parseInt(v1[i])
+    const num2 = parseInt(v2[i])
+
+    if (num1 > num2) {
+      return 1
+    } else if (num1 < num2) {
+      return -1
+    }
+  }
+  return 0
+}
+
 module.exports = {
   formatDateTime: formatDateTime,
   formatDate: formatDate,
@@ -85,5 +152,8 @@ module.exports = {
   homePage: homePage,
   openLoading: openLoading,
   closeLoading: closeLoading,
-  loginFunction: loginFunction
+  loginFunction: loginFunction,
+  getUserInfo: getUserInfo,
+  compareVersion: compareVersion,
+  addUserInfo: addUserInfo
 }

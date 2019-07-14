@@ -3,6 +3,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 const util = require('../../Utils/Util.js');
+const dbConsole = require('../../Utils/DbConsole.js');
 Page({
 
   /**
@@ -10,24 +11,42 @@ Page({
    */
   data: {
     plan: {},
-    authJobs:[],
+    Jobs:[],
     authCode: ['待审核', '已拒绝', '审核通过']
   },
   onLoad: function(options){
     util.openLoading('数据加载中')
     db.collection('Plans').doc(options.PlanId).get().then(res => {
+     
       this.setData({
-        plan: res.data,
-        openId: options.uid
+        plan: res.data
       })
-      db.collection('JobDetails').where({
-        planId: options.PlanId
-      }).get().then(res => {
-        util.closeLoading()
-        this.setData({
-          authJobs: res.data
+      /**
+       * 查询plan
+       */
+      dbConsole.queryJobs(options.PlanId).then(res => {
+        res.forEach(obj => {
+          dbConsole.queryUserInfos(obj.jober).then(u => {
+            let userInfo = u[0]
+            if (!util.checkObject(userInfo)){
+              db.collection('JobDetails').where({
+                _openid: userInfo._openid
+              }).get().then(JobDetails => {
+                obj.userInfo.JobDetails = JobDetails.data
+              })
+              obj.userInfo = userInfo
+            }
+          })
+            this.setData({
+              Jobs: res
+            })
         })
+
       })
+      
+      console.log(this.data.Jobs)
+      util.closeLoading()
+      
     })
   },
   onShareAppMessage: function () {

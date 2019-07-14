@@ -32,7 +32,6 @@ Page({
           step: 1,
           openid: res.openid
         })
-        this.onInitData(options)
       }).catch(err => {
         console.log(err)
       })
@@ -56,6 +55,11 @@ Page({
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
+    })
+  },
+  prevStep: function (){
+    this.setData({
+      step: this.data.step - 1
     })
   },
   oneNextStep: function () {
@@ -133,13 +137,11 @@ Page({
     if (!reg.test(num)) {
       wx.showModal({
         content: '请填写数字',
-        showCancel: false,
-        success: function (res) {
-          this.setData({
-            inviteCount: 0
-          })
-        }
+        showCancel: false
       });
+      this.setData({
+        inviteCount: 0
+      })
     } else{
       this.setData({
         inviteCount: e.detail.value

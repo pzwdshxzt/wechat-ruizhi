@@ -13,7 +13,8 @@
     "pages/Job/Apply",
     "pages/success/success",
     "pages/fail/fail",
-    "pages/JobDetails/JobDetails"
+    "pages/JobDetails/JobDetails",
+    "pages/Auth/Auth"
   ],
   "tabBar": {
     "list": [
