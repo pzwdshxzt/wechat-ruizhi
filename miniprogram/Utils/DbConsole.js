@@ -9,15 +9,6 @@ const queryJobs = planId => {
     })
   })
 }
-const queryUserInfos = openId => {
-  return new Promise((resolve, reject) => {
-    db.collection('UserInfos').where({
-      _openid: openId
-    }).get().then(res => {
-      resolve(res.data)
-    })
-  })
-}
 
 const updateJobs = (_id, doneCount) => {
   return new Promise ((resolve,reject) => {
@@ -61,27 +52,45 @@ const updateJobDetails = (_id, authFlag, authApplyTextarea) => {
     })
   })
 }
-const planForEach = (res) => {
+
+const updateJobStatus = (_id, status) => {
   return new Promise((resolve, reject) => {
-    res.forEach(obj => {
-      dbConsole.queryUserInfos(obj.jober).then(u => {
-        let userInfo = u[0]
-        if (!util.checkObject(userInfo)) {
-          db.collection('JobDetails').where({
-            _openid: userInfo._openid
-          }).get().then(JobDetails => {
-            obj.userInfo.JobDetails = JobDetails.data
-          })
-          obj.userInfo = userInfo
-        }
-      })
-      resolve(res)
+    wx.cloud.callFunction({
+      name: 'dbConsole',
+      data: {
+        action: 'updateJobStatus',
+        _id: _id,
+        status: status,
+      },
+      success: res => {
+        console.log("updateJobDetails success")
+        resolve()
+      },
+      fail: res => {
+        console.log("updateJobDetails fail")
+        reject()
+      }
+    })
   })
+}
+const updatePlanStatus = (_id, status) => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'dbConsole',
+      data: {
+        action: 'updatePlanStatus',
+        _id: _id,
+        status: status,
+      }
+    }).then(res => {
+      
+    })
   })
 }
 module.exports = {
   updateJobs: updateJobs,
   updateJobDetails: updateJobDetails,
   queryJobs: queryJobs,
-  queryUserInfos: queryUserInfos
+  updateJobStatus: updateJobStatus,
+  updatePlanStatus: updatePlanStatus
 }

@@ -22,7 +22,6 @@
             <view class="weui-form-preview__label">审核状态</view>
             <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
         </view>
-        <view class="weui-cells__title" wx:if="{{JobDetails.authFlag === 0}}">可转发让申请人审批</view>
     </view>
     <view wx:if="{{isAuthFlag}}">
       <view class="weui-cells__title">审批意见</view>
@@ -30,7 +29,6 @@
           <radio-group bindchange="radioChange">
               <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
                   <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
-
                   <view class="weui-cell__bd">{{item.name}}</view>
                   <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
                       <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>

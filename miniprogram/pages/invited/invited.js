@@ -44,7 +44,8 @@ Page({
     if (!util.checkObject(options) && !util.checkObject(options.planId)) {
       db.collection('Jobs').where({
         planId: options.planId,
-        jober: this.data.openid
+        jober: this.data.openid,
+        status: 0
       }).get({
         success: res =>{
           if(util.checkObject(res.data)){

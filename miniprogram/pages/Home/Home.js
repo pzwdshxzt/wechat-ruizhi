@@ -55,7 +55,8 @@ Page({
   onQueryPlans: function () {
     return new Promise((resolve,reject) =>{
       db.collection('Plans').where({
-        ibs: this.data.openid
+        ibs: this.data.openid,
+        status: 0
       }).get({
         success: res => {
           if (!util.checkObject(res.data)) {
@@ -78,7 +79,8 @@ Page({
   onQueryJobs: function () {
     return new Promise((resolve, reject) => {
       db.collection('Jobs').where({
-        jober: this.data.openid
+        jober: this.data.openid,
+        status: 0
       }).get({
         success: res => {
           if (!util.checkObject(res.data)) {

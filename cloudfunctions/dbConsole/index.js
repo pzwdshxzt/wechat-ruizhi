@@ -26,6 +26,22 @@ exports.main = async (event, context) => {
           }
         })
       }
+      case 'updateJobStatus': {
+        return await db.collection("Jobs").doc(event._id).update({
+          data: {
+            authFlag: event.authFlag,
+            authApplyTextarea: event.authApplyTextarea
+          }
+        })
+      }
+      case 'updatePlanStatus': {
+        return await db.collection("Plans").doc(event._id).update({
+          data: {
+            authFlag: event.authFlag,
+            authApplyTextarea: event.authApplyTextarea
+          }
+        }).then(console.log)
+      }
     }
   } catch (e) {
     console.error(e)

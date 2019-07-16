@@ -7,6 +7,20 @@ Page({
    * 页面的初始数据
    */
   data: {
+    sAngle: 0,
+    eAngle: 360,
+    spaceBetween: 10,
+    buttons: [
+      {
+        openType: 'contact',
+        label: 'Contact',
+        icon: '/images/contact.png',
+      },
+      {
+        label: 'Delete Job',
+        icon: '/images/delete.png'
+      }
+    ],
     plan: {},
     Jobs: [],
     authCode: ['待审核', '已拒绝', '审核通过']
@@ -36,5 +50,39 @@ Page({
         console.log('转发成功', res)
       }
     }
+  },
+  onClick(e) {
+    console.log('onClick', e.detail)
+    if (e.detail.index === 1) {
+      wx.showModal({
+        title: '提示',
+        content: '是否真的废弃这个计划',
+        success: res => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
+  },
+  onContact(e) {
+    console.log('onContact', e)
+  },
+  onChange(e) {
+  },
+  onAngle(e) {
+    console.log(e)
+    const { value } = e.detail
+    const sAngle = value ? -90 : 0
+    const eAngle = value ? -210 : 360
+    const spaceBetween = value ? 30 : 10
+
+    this.setData({
+      sAngle,
+      eAngle,
+      spaceBetween,
+    })
   }
 })

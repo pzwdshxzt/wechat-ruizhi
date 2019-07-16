@@ -14,7 +14,7 @@ if (platform === 'devtools' && compareVersion(SDKVersion, libVersion) < 0) {
     if (wx && wx.showModal) {
         wx.showModal({
             title: '提示',
-            content: `当前基础库版本（${SDKVersion}）过低，请更新基础库版本 >=${libVersion} 后重试。`,
+          content: `当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。`,
         })
     }
 }
