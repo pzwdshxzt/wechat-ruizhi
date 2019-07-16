@@ -2,19 +2,20 @@
   "pages": [
     "pages/Home/Home",
     "pages/index/index",
+    "pages/Job/Job",
+    "pages/Plan/Plan",
     "pages/userConsole/userConsole",
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/invite/invite",
     "pages/invited/invited",
     "pages/Counts/Counts",
-    "pages/Job/Job",
-    "pages/Plan/Plan",
     "pages/Job/Apply",
     "pages/success/success",
     "pages/fail/fail",
     "pages/JobDetails/JobDetails",
-    "pages/Auth/Auth"
+    "pages/Auth/Auth",
+    "pages/Plan/Jobs"
   ],
   "tabBar": {
     "list": [

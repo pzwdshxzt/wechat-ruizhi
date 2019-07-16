@@ -20,6 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */ 
   onLoad: function(options){
+    util.getUserInfo()
     util.openLoading('数据加载中')
     if (app.globalData.openid) {
       this.setData({
@@ -85,7 +86,8 @@ Page({
         jober: this.data.openid,
         inviteName: this.data.plan.inviteName,
         inviteCount: this.data.plan.inviteCount,
-        doneCount: 0
+        doneCount: 0,
+        userInfo: app.globalData.userInfo
       },
       success: res => { 
         this.setData({
@@ -107,5 +109,8 @@ Page({
   },
   goHome(){
     util.homePage()
+  },
+  onShow:function(){
+    util.getUserInfo()
   }
 })

@@ -18,10 +18,6 @@ Page({
       { name: '同意', value: 2, checked: true }
     ]
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     util.openLoading('数据加载中')
     db.collection('JobDetails').doc(options.JobDetailsId).get().then(res => {

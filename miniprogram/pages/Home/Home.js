@@ -94,5 +94,8 @@ Page({
         }
       })
     })
+  },
+  onShow:function(){
+    util.getUserInfo()
   }
 })

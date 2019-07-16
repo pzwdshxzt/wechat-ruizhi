@@ -26,9 +26,6 @@ exports.main = async (event, context) => {
           }
         })
       }
-      default: {
-        return
-      }
     }
   } catch (e) {
     console.error(e)

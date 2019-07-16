@@ -22,6 +22,7 @@
             <view class="weui-form-preview__label">审核状态</view>
             <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
         </view>
+        <view class="weui-cells__title" wx:if="{{JobDetails.authFlag === 0}}">可转发让申请人审批</view>
     </view>
     <view wx:if="{{isAuthFlag}}">
       <view class="weui-cells__title">审批意见</view>

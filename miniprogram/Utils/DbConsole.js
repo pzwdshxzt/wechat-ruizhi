@@ -61,7 +61,24 @@ const updateJobDetails = (_id, authFlag, authApplyTextarea) => {
     })
   })
 }
-
+const planForEach = (res) => {
+  return new Promise((resolve, reject) => {
+    res.forEach(obj => {
+      dbConsole.queryUserInfos(obj.jober).then(u => {
+        let userInfo = u[0]
+        if (!util.checkObject(userInfo)) {
+          db.collection('JobDetails').where({
+            _openid: userInfo._openid
+          }).get().then(JobDetails => {
+            obj.userInfo.JobDetails = JobDetails.data
+          })
+          obj.userInfo = userInfo
+        }
+      })
+      resolve(res)
+  })
+  })
+}
 module.exports = {
   updateJobs: updateJobs,
   updateJobDetails: updateJobDetails,

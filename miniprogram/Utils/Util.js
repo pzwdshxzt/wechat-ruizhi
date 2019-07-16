@@ -1,6 +1,7 @@
 const app = getApp()
 const db = wx.cloud.database()
 const _ = db.command
+const dbConsole = require('DbConsole.js');
 const formatDateTime = date =>{
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -142,6 +143,29 @@ const compareVersion = (v1, v2) => {
   return 0
 }
 
+const planForEach = (res) => {
+  return new Promise((resolve, reject) => {
+    if(!checkObject(res)){
+      res.forEach(obj => {
+       
+          dbConsole.queryUserInfos(obj.jober).then(u => {
+            let userInfo = u[0]
+            if (!checkObject(userInfo)) {
+              db.collection('JobDetails').where({
+                _openid: userInfo._openid
+              }).get().then(JobDetails => {
+                console.log(JobDetails)
+                obj.userInfo.JobDetails = JobDetails.data
+              })
+              obj.userInfo = userInfo
+            }
+          })
+          resolve(res)
+        })
+    }
+  })
+}
+
 module.exports = {
   formatDateTime: formatDateTime,
   formatDate: formatDate,
@@ -155,5 +179,6 @@ module.exports = {
   loginFunction: loginFunction,
   getUserInfo: getUserInfo,
   compareVersion: compareVersion,
-  addUserInfo: addUserInfo
+  addUserInfo: addUserInfo,
+  planForEach: planForEach
 }
