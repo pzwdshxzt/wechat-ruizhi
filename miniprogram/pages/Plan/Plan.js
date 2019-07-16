@@ -1,6 +1,7 @@
 // miniprogram/pages/Plan/Plan.js
 const db = wx.cloud.database()
 const util = require('../../Utils/Util.js');
+const dbConsole = require('../../Utils/DbConsole.js');
 Page({
 
   /**
@@ -59,9 +60,9 @@ Page({
         content: '是否真的废弃这个计划',
         success: res => {
           if (res.confirm) {
-            console.log('用户点击确定')
-          } else if (res.cancel) {
-            console.log('用户点击取消')
+            dbConsole.updatePlanStatus(this.data.plan._id, 2).then(res => {
+              util.homePage()
+            })      
           }
         }
       })

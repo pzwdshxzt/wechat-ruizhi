@@ -1,6 +1,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 const util = require('../../Utils/Util.js');
+const dbConsole = require('../../Utils/DbConsole.js');
 Page({
   data: {
     sAngle: 0,
@@ -21,8 +22,7 @@ Page({
     jobId: '',
     JobDetails: [],
     progress: 0,
-    status: 0,
-    statusCode: ['进行中','已完成','废弃','计划废弃'],
+    statusCode: ['进行中','已完成','放弃','计划废弃'],
     authCode:['待审核','已拒绝','审核通过'],
     planUid: ''
   },
@@ -65,10 +65,12 @@ Page({
     if (e.detail.index === 1) {
       wx.showModal({
         title: '提示',
-        content: '是否真的废弃这个任务计划',
+        content: '是否真的放弃这个任务计划',
         success: res =>{
           if (res.confirm) {
-            console.log('用户点击确定')
+            dbConsole.updateJobStatus(this.data.job._id,2).then(res =>{
+              util.homePage()
+            })       
           } 
         }
       })

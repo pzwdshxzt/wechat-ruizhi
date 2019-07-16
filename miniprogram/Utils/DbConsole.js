@@ -60,7 +60,7 @@ const updateJobStatus = (_id, status) => {
       data: {
         action: 'updateJobStatus',
         _id: _id,
-        status: status,
+        status: status
       },
       success: res => {
         console.log("updateJobDetails success")
@@ -80,10 +80,12 @@ const updatePlanStatus = (_id, status) => {
       data: {
         action: 'updatePlanStatus',
         _id: _id,
-        status: status,
+        status: status
       }
     }).then(res => {
-      
+      console.log(res)
+    }).catch(res => {
+      console.log(res)
     })
   })
 }

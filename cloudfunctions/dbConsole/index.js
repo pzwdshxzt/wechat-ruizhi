@@ -29,18 +29,25 @@ exports.main = async (event, context) => {
       case 'updateJobStatus': {
         return await db.collection("Jobs").doc(event._id).update({
           data: {
-            authFlag: event.authFlag,
-            authApplyTextarea: event.authApplyTextarea
+            status: event.status
           }
         })
       }
       case 'updatePlanStatus': {
         return await db.collection("Plans").doc(event._id).update({
           data: {
-            authFlag: event.authFlag,
-            authApplyTextarea: event.authApplyTextarea
+            status: event.status
           }
-        }).then(console.log)
+        }).then(res =>{
+          db.collection("Jobs").where({
+            planId: event._id 
+          })
+          .update({
+            data: {
+              status: 3
+            }
+          })
+        })
       }
     }
   } catch (e) {
