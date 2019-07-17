@@ -13,7 +13,34 @@
       <button class="userinfo-nickname" bindtap="onGetOpenid">{{nickName}}</button>
     </view>
   </view>
-  <!-- 邀请 -->
+ 
+  <view class="section panel">
+	  <text class="section_title">工作时长(分钟)</text>
+    
+	    <slider 
+	    	bindchange="changeWorkTime" 
+	    	show-value="true" 
+	    	min="1"
+	    	max="60"
+	    	value="{{workTime}}"
+	    	left-icon="cancel" 
+	    	right-icon="success_no_circle"/>
+	</view>
+
+	<view class="section panel">
+	  <text class="section_title">休息时长(分钟)</text>
+	  <view class="section_body">
+	    <slider 
+	    	bindchange="changeRestTime" 
+	    	show-value="true" 
+	    	min="5"
+	    	max="60"
+	    	value="{{restTime}}"
+	    	left-icon="cancel" 
+	    	right-icon="success_no_circle"/>
+	  </view>
+   </view>
+    <!-- 邀请 -->
   <view class="uploader">
       <navigator url="../invite/invite" open-type="navigate" class="uploader-text">
         <text>计划邀请</text>

@@ -142,5 +142,16 @@ Page({
       }
     })
   },
-
+  changeWorkTime: function (e) {
+    wx.setStorage({
+      key: 'workTime',
+      data: e.detail.value
+    })
+  },
+  changeRestTime: function (e) {
+    wx.setStorage({
+      key: 'restTime',
+      data: e.detail.value
+    })
+  }
 })

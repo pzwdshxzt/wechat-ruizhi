@@ -173,11 +173,16 @@ const planForEach = (res) => {
 const getRandInt = (min,max) => {
   return min + Math.floor(Math.random() * (max - min));
 }
-
+const formatTimeV2 = (time, format) => {
+  let temp = '0000000000' + time
+  let len = format.length
+  return temp.substr(-len)
+}
 module.exports = {
   formatDateTime: formatDateTime,
   formatDate: formatDate,
   formatTime: formatTime,
+  formatTimeV2: formatTimeV2,
   checkObject: checkObject,
   successPage: successPage,
   failPage: failPage,

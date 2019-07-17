@@ -11,7 +11,7 @@
          <view class="weui-media-box weui-media-box_small-appmsg">
             <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
                 <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__hd"><icon type="info_circle" size="22"></icon></view>
+                    <view class="weui-cell__hd"><icon type="info" size="22"></icon></view>
                     <view class="weui-cell__bd weui-cell_primary">
                         <view>{{item.inviteName}}</view>
                     </view>
@@ -28,7 +28,7 @@
          <view class="weui-media-box weui-media-box_small-appmsg">
             <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourPlans}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
                 <navigator url="../Plan/Plan?PlanId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__hd"><icon type="info_circle" size="22"></icon></view>
+                    <view class="weui-cell__hd"><icon type="info" size="22"></icon></view>
                     <view class="weui-cell__bd weui-cell_primary">
                         <view>{{item.inviteName}}</view>
                     </view>

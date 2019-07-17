@@ -1,6 +1,6 @@
 <wux-fab-button 
       position="bottomRight" 
-      theme="balanced" 
+      theme="calm" 
       direction="vertical" 
       reverse="{{ reverse }}" 
       spaceBetween="{{ spaceBetween }}" 
