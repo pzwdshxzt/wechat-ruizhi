@@ -88,7 +88,8 @@ Page({
         inviteName: this.data.plan.inviteName,
         inviteCount: this.data.plan.inviteCount,
         doneCount: 0,
-        userInfo: app.globalData.userInfo
+        userInfo: app.globalData.userInfo,
+        status: 0
       },
       success: res => { 
         this.setData({

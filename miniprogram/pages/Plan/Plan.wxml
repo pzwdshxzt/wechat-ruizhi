@@ -18,6 +18,8 @@
         <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
         <view class="weui-form-preview__label">任务期数</view>
         <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
+        <view class="weui-form-preview__label">任务状态</view>
+        <view class="weui-form-preview__value_in-hd">{{statusCode[plan.status]}}</view>
      </view>
     <view class="weui-cells__title">任务执行人</view>
     <view class="weui-cells weui-cells_after-title" wx:for="{{Jobs}}" wx:key="_id" wx:for-index="">

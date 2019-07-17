@@ -24,7 +24,8 @@ Page({
     ],
     plan: {},
     Jobs: [],
-    authCode: ['待审核', '已拒绝', '审核通过']
+    authCode: ['待审核', '已拒绝', '审核通过'],
+    statusCode: ['进行中', '计划废弃']
   },
   onLoad: function(options){
     util.openLoading('数据加载中')
@@ -60,7 +61,8 @@ Page({
         content: '是否真的废弃这个计划',
         success: res => {
           if (res.confirm) {
-            dbConsole.updatePlanStatus(this.data.plan._id, 2).then(res => {
+            dbConsole.updatePlanStatus(this.data.plan._id, 1).then(res => {
+              console.log(res)
               util.homePage()
             })      
           }

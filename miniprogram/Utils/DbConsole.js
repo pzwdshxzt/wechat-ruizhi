@@ -83,9 +83,11 @@ const updatePlanStatus = (_id, status) => {
         status: status
       }
     }).then(res => {
-      console.log(res)
+      console.log("updatePlanStatus success")
+      resolve(res)
     }).catch(res => {
-      console.log(res)
+      console.log("updatePlanStatus fail")
+      reject(res)
     })
   })
 }

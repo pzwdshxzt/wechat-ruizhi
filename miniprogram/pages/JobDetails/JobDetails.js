@@ -49,9 +49,10 @@ Page({
             this.callPlanFuncation(this.data.JobDetails.formId, this.data.JobDetails._openid, '审核通过', jobs.data.inviteName, jobs.data._id)
             util.successPage('审核成功', '您已经审核成功了')
             util.closeLoading()
+            if(newCount >= jobs.data.inviteCount){
+              dbConsole.updateJobStatus(jobs.data._id, 1)
+            }
           }).catch(res => {
-            console.log("error" + res)
-            console.log(res)
             util.failPage('审核失败', '但是数据已经提交,未更新总数！！')
             util.closeLoading()
           })

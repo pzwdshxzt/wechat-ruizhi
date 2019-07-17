@@ -13,6 +13,7 @@ Page({
     JobDetails: [],
     progress: 0,
     authCode: ['待审核', '已拒绝', '审核通过'],
+    statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
     planUid: ''
   },
 

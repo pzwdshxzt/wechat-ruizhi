@@ -61,19 +61,25 @@ Page({
     return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
   },
   onClick(e) {
-    console.log('onClick', e.detail)
     if (e.detail.index === 1) {
-      wx.showModal({
-        title: '提示',
-        content: '是否真的放弃这个任务计划',
-        success: res =>{
-          if (res.confirm) {
-            dbConsole.updateJobStatus(this.data.job._id,2).then(res =>{
-              util.homePage()
-            })       
-          } 
-        }
-      })
+      if (this.data.job.status === 1) {
+        wx.showModal({
+          title: '提示',
+          content: '该计划已完成不能删除'
+        })
+      } else {
+        wx.showModal({
+          title: '提示',
+          content: '是否真的放弃这个任务计划',
+          success: res =>{
+            if (res.confirm) {
+                dbConsole.updateJobStatus(this.data.job._id, 2).then(res => {
+                  util.homePage()
+                })  
+            } 
+          }
+        })
+      }
     }
   },
   onContact(e) {

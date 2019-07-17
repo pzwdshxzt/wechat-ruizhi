@@ -15,7 +15,8 @@ Page({
     JobId: '',
     uid: '',
     pid: '',
-    planUid: ''
+    planUid: '',
+    inputNum: 0
   },
 
   /**
@@ -45,7 +46,9 @@ Page({
     })
   }, 
   applyTextarea: function (e) {
+    console.log(e)
     this.setData({
+      inputNum: e.detail.value.length,
       applyTextarea: e.detail.value
     })
   },

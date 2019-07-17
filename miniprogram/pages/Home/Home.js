@@ -80,7 +80,7 @@ Page({
     return new Promise((resolve, reject) => {
       db.collection('Jobs').where({
         jober: this.data.openid,
-        status: 0
+        status: _.in([0, 1])
       }).get({
         success: res => {
           if (!util.checkObject(res.data)) {

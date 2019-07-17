@@ -86,7 +86,8 @@ Page({
       data: {
         inviteName: this.data.inviteName,
         inviteCount: Number(this.data.inviteCount),
-        ibs: this.data.openid
+        ibs: this.data.openid,
+        status: 0
       },
       success: res =>{
         this.setData({
