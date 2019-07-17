@@ -38,15 +38,15 @@ exports.main = async (event, context) => {
           data: {
             status: event.status
           }
-        }).then(res =>{
-          db.collection("Jobs").where({
-            planId: event._id 
-          })
-          .update({
+        })
+      }
+      case 'updateJobsAllStatus': {
+        return await db.collection('Jobs').where({
+          planId: _.eq(event._id)
+        }).update({
             data: {
-              status: 3
+              status: event.status
             }
-          })
         })
       }
     }

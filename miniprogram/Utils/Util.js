@@ -167,6 +167,12 @@ const planForEach = (res) => {
     }
   })
 }
+/**
+ * 获取范围随机数
+ */
+const getRandInt = (min,max) => {
+  return min + Math.floor(Math.random() * (max - min));
+}
 
 module.exports = {
   formatDateTime: formatDateTime,
@@ -182,5 +188,6 @@ module.exports = {
   getUserInfo: getUserInfo,
   compareVersion: compareVersion,
   addUserInfo: addUserInfo,
-  planForEach: planForEach
+  planForEach: planForEach,
+  getRandInt: getRandInt
 }

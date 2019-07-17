@@ -16,7 +16,8 @@ Page({
     radioItems: [
       { name: '拒绝', value: 1 },
       { name: '同意', value: 2, checked: true }
-    ]
+    ],
+    inputNum: 0
   },
   onLoad: function (options) {
     util.openLoading('数据加载中')
@@ -70,6 +71,7 @@ Page({
   },
   applyTextarea: function (e) {
     this.setData({
+      inputNum: e.detail.value.length,
       applyTextarea: e.detail.value
     })
   },

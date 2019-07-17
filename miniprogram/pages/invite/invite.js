@@ -120,10 +120,11 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '邀请您完成计划',
       path: '/pages/invited/invited?planId=' + this.data.planId,
-      success :function(res) {
-        console.log('转发成功',res)
+      desc: '快来完成我发布的计划吧',
+      imageUrl: '/images/share_' + util.getRandInt(0,4) + '.png',
+      success: function (res) {
+        console.log('转发成功', res)
       }
     }
   },

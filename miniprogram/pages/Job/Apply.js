@@ -56,18 +56,14 @@ Page({
     if (0 === this.data.applyCount || util.checkObject(this.data.applyCount) ) {
       wx.showModal({
         content: '请选择打卡期数',
-        showCancel: false,
-        success: function (res) {
-        }
+        showCancel: false
       });
       return false
     }
     if (util.checkObject(this.data.applyTextarea)){
       wx.showModal({
         content: '请填写备注',
-        showCancel: false,
-        success: function (res) {
-        }
+        showCancel: false
       });
       return false
     }
@@ -106,6 +102,8 @@ Page({
           util.failPage('申请失败','你得申请由于不可抗力因素失败，请稍后再试!!')
         }
       })
+    } else {
+      util.closeLoading()
     }
   },
   callPlanFuncation(formId, touser, inviteName, planId) {

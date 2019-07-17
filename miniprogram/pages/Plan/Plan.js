@@ -20,6 +20,11 @@ Page({
       {
         label: 'Delete Job',
         icon: '/images/delete.png'
+      },
+      {
+        openType: 'share',
+        label: 'Share Job',
+        icon: '/images/share.png'
       }
     ],
     plan: {},
@@ -46,15 +51,15 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '邀请您完成计划',
       path: '/pages/invited/invited?planId=' + this.data.plan._id,
+      desc: '快来完成我发布的计划吧',
+      imageUrl: '/images/share_' + util.getRandInt(0, 4) +'.png',
       success: function (res) {
         console.log('转发成功', res)
       }
     }
   },
   onClick(e) {
-    console.log('onClick', e.detail)
     if (e.detail.index === 1) {
       wx.showModal({
         title: '提示',
@@ -71,7 +76,6 @@ Page({
     }
   },
   onContact(e) {
-    console.log('onContact', e)
   },
   onChange(e) {
   },

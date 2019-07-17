@@ -45,7 +45,7 @@
           <view class="weui-cell">
               <view class="weui-cell__bd">
                   <textarea class="weui-textarea" placeholder="请输入审批原因" style="height: 3.3em" bindblur="applyTextarea"/>
-                  <view class="weui-textarea-counter">0/200</view>
+                  <view class="weui-textarea-counter">{{inputNum}}/140</view>
               </view>
           </view>
       </view>

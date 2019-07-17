@@ -73,6 +73,26 @@ const updateJobStatus = (_id, status) => {
     })
   })
 }
+const updateJobsAllStatus = (_id, status) => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'dbConsole',
+      data: {
+        action: 'updateJobsAllStatus',
+        _id: _id,
+        status: status
+      }
+    }).then(res => {
+      console.log("updateJobsAllStatus success")
+      
+      resolve(res)
+
+    }).catch(res => {
+      console.log("updateJobsAllStatus fail")
+      reject(res)
+    })
+  })
+}
 const updatePlanStatus = (_id, status) => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
@@ -83,14 +103,19 @@ const updatePlanStatus = (_id, status) => {
         status: status
       }
     }).then(res => {
+      console.log(_id)
       console.log("updatePlanStatus success")
-      resolve(res)
+      updateJobsAllStatus(_id, 3).then(res =>{
+        resolve(res)
+      })
+      
     }).catch(res => {
       console.log("updatePlanStatus fail")
       reject(res)
     })
   })
 }
+
 module.exports = {
   updateJobs: updateJobs,
   updateJobDetails: updateJobDetails,
