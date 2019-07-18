@@ -8,13 +8,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    step: 1,
-    inviteCount: 0,
+    
+    inviteCount: '',
     inviteName: '',
-    count: null,
-    isShowPlans: false,
     openid: '',
-    planId: ''
+    show: 1,
+    content: '',
+    contentCount: 0,
+    award: '',
+    awardCount: 0,
+    type: 0,
+    types: ["打卡"],
+    isAgree: false,
+    showTopTips: false,
+    errorMsg: '输入有误'
   },
 
   /**
@@ -23,110 +30,33 @@ Page({
   onLoad: function (options) {
     if (app.globalData.openid) {
       this.setData({
-        step: 1,
         openid: app.globalData.openid
       })
     } else {
       util.loginFunction().then(res => {
         this.setData({
-          step: 1,
           openid: res.openid
         })
       }).catch(err => {
         console.log(err)
       })
     }
- 
-    db.collection('Plans').where({
-      ibs: this.data.openid
-    }).get({
-      success: res => {
-        if (!util.checkObject(res.data)){
-          this.setData({
-            Plans: res.data,
-            isShowPlans: true
-          })
-        }
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
-  },
-  prevStep: function (){
-    this.setData({
-      step: this.data.step - 1
-    })
-  },
-  oneNextStep: function () {
-    if(this.data.inviteName === ''){
-      wx.showToast({
-        title: '请输入打卡计划',  
-        icon: 'none'
-      })
-      return  
-    }
-    if(this.data.inviteCount === ''){
-      wx.showToast({
-        title: '请输入打卡期数',
-        icon: 'none'
-      })
-      return  
-    }
-    this.setData({
-      step: this.data.step + 1
-    })
-  },
-  twoNextStep: function () {  
-    db.collection('Plans').add({
-      data: {
-        inviteName: this.data.inviteName,
-        inviteCount: Number(this.data.inviteCount),
-        ibs: this.data.openid,
-        status: 0
-      },
-      success: res =>{
-        this.setData({
-          planId: res._id
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '添加计划失败'
-        })
-        console.error('[数据库] [新增记录] 失败：', err)
-      }
-    })
-    this.setData({
-      step: this.data.step + 1
-    })
-  },
-  shareMenu: function () {
-    wx.showToast({
-      title: '点击右上角分享给好友',
-      icon: 'none'
-    })
   },
   goHome: function () {
     util.homePage()
   },
-  /**
-   * 分享计划
-   */
-  onShareAppMessage: function () {
-    return {
-      path: '/pages/invited/invited?planId=' + this.data.planId,
-      desc: '快来完成我发布的计划吧',
-      imageUrl: '/images/share_' + util.getRandInt(0,4) + '.png',
-      success: function (res) {
-        console.log('转发成功', res)
-      }
-    }
+
+  getContent: function (e) {
+    this.setData({
+      content: e.detail.value,
+      contentCount: e.detail.value.length
+    })
+  },
+  getAward: function (e) {
+    this.setData({
+      award: e.detail.value,
+      awardCount: e.detail.value.length
+    })
   },
   getInviteName: function (e) {
     this.setData({
@@ -142,13 +72,103 @@ Page({
         showCancel: false
       });
       this.setData({
-        inviteCount: 0
+        inviteCount: ''
       })
     } else{
       this.setData({
         inviteCount: e.detail.value
       })
     }
-    
+  },
+  
+  bindTypeCodeChange: function (e) {
+    this.setData({
+      type: e.detail.value
+    })
+  },
+  bindAgreeChange: function (e) {
+    this.setData({
+      isAgree: !!e.detail.value.length
+    });
+  },
+  checkInfo: function () {
+    if (this.data.inviteName === '') {
+      this.showTopTips('请输入计划名称')
+      return true
+    }
+    if (this.data.inviteCount === 0 || this.data.inviteCount === '') {
+      this.showTopTips('请输入计划期数')
+      return true
+    }
+    if (!this.data.isAgree) {
+      this.showTopTips('请同意相关条款')
+      return true
+    }
+    if (!this.data.award) {
+      this.showTopTips('请填写完成后的奖励')
+      return true
+    }
+    if (!this.data.content) {
+      this.showTopTips('请填写任务说明')
+      return true
+    }
+    return false
+  },
+  sumbitPlan:function (){
+    if(!this.checkInfo()){
+      db.collection('Plans').add({
+        data: {
+          inviteName: this.data.inviteName,
+          inviteCount: Number(this.data.inviteCount),
+          ibs: this.data.openid,
+          status: 0,
+          show: this.data.show,
+          content: this.data.content,
+          award: this.data.award,
+          type: Number(this.data.type)
+        },
+        success: res => {
+          wx.navigateTo({
+            url: 'success?planId=' + res._id
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '添加计划失败'
+          })
+          console.error('[数据库] [新增记录] 失败：', err)
+        }
+      })
+    }
+  },
+  /**
+   * 1.展示
+   * 0.不展示
+   */
+  showPlan: function (e){
+    if(e.detail.value){
+      this.setData({
+        show: 1
+      })
+    } else {
+      this.setData({
+        show: 0
+      })
+    }
+    console.log(e)
+  },
+  showTopTips: function (msg) {
+    var that = this;
+    this.setData({
+      showTopTips: true,
+      errorMsg: msg
+    });
+    setTimeout(function () {
+      that.setData({
+        showTopTips: false,
+        errorMsg: '输入错误'
+      });
+    }, 3000);
   }
 })

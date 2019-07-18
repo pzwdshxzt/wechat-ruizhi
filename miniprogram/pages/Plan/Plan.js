@@ -18,19 +18,25 @@ Page({
         icon: '/images/contact.png',
       },
       {
-        label: 'Delete Job',
+        label: 'Delete Plan',
         icon: '/images/delete.png'
       },
       {
         openType: 'share',
-        label: 'Share Job',
+        label: 'Share Plan',
         icon: '/images/share.png'
+      },
+      {
+        label: 'Change Show',
+        icon: '/images/change.png'
       }
     ],
     plan: {},
     Jobs: [],
     authCode: ['待审核', '已拒绝', '审核通过'],
-    statusCode: ['进行中', '计划废弃']
+    statusCode: ['进行中', '计划废弃'],
+    typeCode: ['打卡'],
+    showCode: ['否','是']
   },
   onLoad: function(options){
     util.openLoading('数据加载中')
@@ -70,6 +76,24 @@ Page({
               console.log(res)
               util.homePage()
             })      
+          }
+        }
+      })
+    }
+    if (e.detail.index === 3) {
+      wx.showModal({
+        title: '提示',
+        content: ' 是否要改变计划展示状态，现在状态为：'+this.data.showCode[this.data.plan.show] ,
+        success: res => {
+          if (res.confirm) {
+            let show_num = 1
+            if(this.data.plan.show){
+              show_num = 0
+            }
+            dbConsole.updatePlanShow(this.data.plan._id, show_num).then(res => {
+              console.log(res)
+              util.homePage()
+            })
           }
         }
       })

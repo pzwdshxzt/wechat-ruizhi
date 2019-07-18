@@ -24,7 +24,7 @@
         <view class="weui-form-preview__item">
          <view class="weui-progress">
             <view class="weui-progress__bar">
-                <progress percent="{{progress}}" stroke-width="3" />
+                <progress  color="white" activeColor="#1589eb" percent="{{progress}}" stroke-width="3" />
             </view>
            </view>
         </view>

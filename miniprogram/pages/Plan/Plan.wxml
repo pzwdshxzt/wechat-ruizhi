@@ -1,34 +1,34 @@
-<wux-fab-button 
-      position="bottomRight" 
-      theme="calm" 
-      direction="vertical" 
-      reverse="{{ reverse }}" 
-      spaceBetween="{{ spaceBetween }}" 
-      sAngle="{{ sAngle }}" 
-      eAngle="{{ eAngle }}" 
-      buttons="{{ buttons }}" 
-      bind:change="onChange" 
-      bind:click="onClick" 
-      bind:contact="onContact" 
-      bind:getuserinfo="onGotUserInfo" />
-      
+<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
+  bind:getuserinfo="onGotUserInfo" />
+
 <view class="weui-form-preview">
-    <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__label">任务名称</view>
-        <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
-        <view class="weui-form-preview__label">任务期数</view>
-        <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
-        <view class="weui-form-preview__label">任务状态</view>
-        <view class="weui-form-preview__value_in-hd">{{statusCode[plan.status]}}</view>
-     </view>
-    <view class="weui-cells__title">任务执行人</view>
-    <view class="weui-cells weui-cells_after-title" wx:for="{{Jobs}}" wx:key="_id" wx:for-index="">
-          <navigator url="Jobs?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <view class="weui-cell__hd">
-                  <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
-              </view>
-              <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
-              <view class="weui-cell__ft weui-cell__ft_in-access">查询申请记录</view>
-          </navigator>
+  <view class="weui-form-preview__hd">
+    <view class="weui-form-preview__label">计划名称</view>
+    <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
+    <view class="weui-form-preview__label">计划期数</view>
+    <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
+  </view>
+  <view class="weui-form-preview__bd">
+    <view class="weui-form-preview__label">计划状态</view>
+    <view class="weui-form-preview__value">{{statusCode[plan.status]}}</view>
+    <view class="weui-form-preview__label">计划类型</view>
+    <view class="weui-form-preview__value">{{typeCode[plan.type]}}</view>
+    <view class="weui-form-preview__label">计划说明</view>
+    <view class="weui-form-preview__value">{{plan.content}}</view>
+    <view class="weui-form-preview__label">计划奖励</view>
+    <view class="weui-form-preview__value">{{plan.award}}</view>
+    <view class="weui-form-preview__label">是否展示</view>
+    <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
+  </view>
+  <view class="weui-cells__title">任务执行人</view>
+  <view class="weui-cells weui-cells_after-title" wx:for="{{Jobs}}" wx:key="_id" wx:for-index="">
+    <navigator url="Jobs?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
       </view>
+      <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">查询申请记录</view>
+    </navigator>
+  </view>
+
 </view>

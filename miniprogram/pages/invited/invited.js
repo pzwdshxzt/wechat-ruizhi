@@ -13,7 +13,7 @@ Page({
     openid: '',
     plan: {},
     isSharePageIn: false,
-    errorMsg: '你已经接受了该计划!'
+    errorMsg: '你已经接受了该计划!',
   },
 
   /**

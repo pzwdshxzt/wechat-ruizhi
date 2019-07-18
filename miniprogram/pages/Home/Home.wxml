@@ -1,10 +1,15 @@
 <!--miniprogram/pages/Jobs/Jobs.wxml-->
 <!-- 简介 -->
-<view class="page__hd">
-    <view class="page__title">大家好</view>
-    <view class="page__desc">欢迎来到睿智小课堂</view>
+<view class="swiper_hd">
+    <swiper class='u-wrp-bnr' indicator-dots='true' autoplay='true' interval='3000' duration='1000' circular='true'>
+      <block wx:for="{{bnrUrl}}" wx:for-index="index" wx:key="index">
+        <swiper-item>
+          <image src='{{item.url}}' class='u-img-slide' mode='aspectFill'></image>
+        </swiper-item>
+      </block>
+    </swiper>
 </view>
-<view class="guide" wx:if="{{!isSharePageIn}}">
+<view class="guide">
     <view class="weui-panel">
         <view class="weui-panel__hd">您的任务</view>
         <view class="weui-panel__bd">
@@ -40,32 +45,4 @@
     </view>
     
 </view>
-<view wx:if="{{isSharePageIn}}"> 
-  <view class="weui-cells__title">你收到邀请参与计划</view>
-  <view class="weui-form-preview"  wx:for="{{fromUidJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-    <form class="list" bindsubmit="selectStep"  report-submit>
-        <view class="weui-form-preview__bd">
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">任务编号</view>
-              <input name="pid" value='{{itemName._id}}' class="weui-form-preview__value">{{itemName._id}}</input>
-          </view>
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">计划编号</view>
-              <input name="ibs" value='{{itemName.ibs}}' class="weui-form-preview__value">{{itemName.ibs}}</input>
-          </view>
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">计划名称</view>
-              <view class="weui-form-preview__value">{{itemName.inviteName}}</view>
-          </view>
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">计划期数</view>
-              <view class="weui-form-preview__value">{{itemName.inviteCount}}</view>
-          </view>
-        </view>
-        <view class="weui-form-preview__ft">
-          <button class="weui-form-preview__btn weui-form-preview__btn_default" data-id="{{itemName._id}}" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>
-          <button class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" form-type="submit">接受</button>
-        </view>
-    </form>
-  </view>
-</view>
+

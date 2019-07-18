@@ -40,6 +40,13 @@ exports.main = async (event, context) => {
           }
         })
       }
+      case 'updatePlanShow': {
+        return await db.collection("Plans").doc(event._id).update({
+          data: {
+            show: event.show
+          }
+        })
+      }
       case 'updateJobsAllStatus': {
         return await db.collection('Jobs').where({
           planId: _.eq(event._id)

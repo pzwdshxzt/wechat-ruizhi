@@ -10,9 +10,19 @@ Page({
    */
   
   data: {
+    
     openid: '',
     yourJobs: [],
-    yourPlans: []
+    yourPlans: [],
+    "bnrUrl": [{
+      "url": "/images/share_0.png"
+    }, {
+        "url": "/images/share_1.png"
+    }, {
+        "url": "/images/share_2.png"
+    }, {
+        "url": "/images/share_3.png"
+    }]
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

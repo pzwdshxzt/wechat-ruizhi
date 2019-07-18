@@ -7,3 +7,18 @@
 .weui-form-preview{
     margin-bottom: 25px;
 }
+.u-wrp-bnr {
+  width: 100%;
+  height: 200px;
+  display: block;
+  position: relative;
+  background: #f0f0f0;
+}
+.u-img-slide {
+  width: 100%;
+  height: inherit;
+  border-radius:10px
+}
+.swiper_hd {
+  padding: 20px;
+}

@@ -115,11 +115,30 @@ const updatePlanStatus = (_id, status) => {
     })
   })
 }
+const updatePlanShow = (_id, show) => {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'dbConsole',
+      data: {
+        action: 'updatePlanShow',
+        _id: _id,
+        show: show
+      }
+    }).then(res => {
+      console.log("updatePlanShow success")
+      resolve(res)
+    }).catch(res => {
+      console.log("updatePlanShow fail")
+      reject(res)
+    })
+  })
+}
 
 module.exports = {
   updateJobs: updateJobs,
   updateJobDetails: updateJobDetails,
   queryJobs: queryJobs,
   updateJobStatus: updateJobStatus,
-  updatePlanStatus: updatePlanStatus
+  updatePlanStatus: updatePlanStatus,
+  updatePlanShow: updatePlanShow
 }
