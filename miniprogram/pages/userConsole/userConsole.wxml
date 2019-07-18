@@ -1,9 +1,0 @@
-<!--pages/userConsole/userConsole.wxml-->
-<view class="container">
-
-  <view class="list">
-    <view class="list-item" bindtap="testCgi">
-      <text class="request-text">{{openid}}</text>
-    </view>
-  </view>
-</view>

@@ -1,67 +1,75 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!-- 用户 openid -->
-  <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-    ></button>
-    <view>
-      <button class="userinfo-nickname" bindtap="onGetOpenid">{{nickName}}</button>
-    </view>
-  </view>
- 
-  <view class="section panel">
-	  <text class="section_title">工作时长(分钟)</text>
-    
-	    <slider 
-	    	bindchange="changeWorkTime" 
-	    	show-value="true" 
-	    	min="1"
-	    	max="60"
-	    	value="{{workTime}}"
-	    	left-icon="cancel" 
-	    	right-icon="success_no_circle"/>
-	</view>
 
-	<view class="section panel">
-	  <text class="section_title">休息时长(分钟)</text>
-	  <view class="section_body">
-	    <slider 
-	    	bindchange="changeRestTime" 
-	    	show-value="true" 
-	    	min="5"
-	    	max="60"
-	    	value="{{restTime}}"
-	    	left-icon="cancel" 
-	    	right-icon="success_no_circle"/>
-	  </view>
-   </view>
-    <!-- 邀请 -->
-  <view class="uploader">
-      <navigator url="../invite/invite" open-type="navigate" class="uploader-text">
-        <text>计划邀请</text>
-      </navigator>
-  </view>
-  <!-- 上传图片 -->
-  <view class="uploader">
-    <view class="uploader-text" bindtap="doUpload">
-      <text>上传图片</text>
+  <view class="page__bd page__bd_spacing">
+        <view class="kind-list">
+                <view class="kind-list__item">
+                    <view class="weui-flex kind-list__item-hd">
+                    <button 
+                        open-type="getUserInfo" 
+                        bindgetuserinfo="onGetUserInfo"
+                        class="userinfo-avatar"
+                        style="background-image: url({{avatarUrl}})"
+                      ></button>
+                        <view class="weui-flex__item"><button class="userinfo-nickname" bindtap="onGetOpenid">{{nickName}}</button></view>
+                    </view>
+                    <view wx:if="{{imgUrl}}">
+                      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+                    </view>
+                </view>
+                <view class="kind-list__item">
+                    <view class="weui-flex kind-list__item-hd" bindtap="kindToggle">
+                        <view class="weui-flex__item">工作时间</view>
+                        <image class="kind-list__img" src="/images/worktime.png"></image>
+                       
+                    </view>
+                     <slider
+                          selected-color="#1589eb"
+                          color="#fff" 
+                          bindchange="changeWorkTime" 
+                          show-value="true" 
+                          min="1"
+                          max="60"
+                          value="{{workTime}}"
+                          left-icon="cancel" 
+                          right-icon="success_no_circle"/>
+                </view>
+                <view class="kind-list__item">
+                    <view class="weui-flex kind-list__item-hd" bindtap="kindToggle">
+                        <view class="weui-flex__item">休息时间</view>
+                        <image class="kind-list__img" src="/images/resttime.png"></image>
+                    </view>
+                    <slider 
+                            selected-color="#1589eb"
+                            color="#fff" 
+                            bindchange="changeRestTime" 
+                            show-value="true" 
+                            min="1"
+                            max="60"
+                            value="{{restTime}}"
+                            left-icon="cancel" 
+                            right-icon="success_no_circle"/>
+                </view>
+                <view class="kind-list__item">
+                  <navigator url="../invite/invite" open-type="navigate" class="uploader-text"> 
+                    <view class="weui-flex kind-list__item-hd" >
+                        <view class="weui-flex__item">计划邀请</view>
+                        <image class="kind-list__img" src="/images/invite.png"></image>
+                    </view>
+                  </navigator>
+                </view>
+                <view class="kind-list__item">
+                    <view class="weui-flex kind-list__item-hd" bindtap="doUpload">
+                        <view class="weui-flex__item">上传图片</view>
+                        <image class="kind-list__img" src="/images/upload.png"></image>
+                    </view>
+                    <view wx:if="{{imgUrl}}">
+                      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+                    </view>
+                </view>
+        </view>
     </view>
-    <view class="uploader-container" wx:if="{{imgUrl}}">
-      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
-    </view>
-  </view>
-  <!-- 云调用 -->
-  <!-- <view class="uploader">
-    <navigator url="../openapi/openapi" open-type="navigate" class="uploader-text">
-      <text>云调用</text>
-    </navigator>
-  </view> -->
-
  
 
 

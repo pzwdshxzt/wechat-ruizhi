@@ -37,6 +37,9 @@ Page({
   },
 
   startTimer: function (e) {
+    wx.hideTabBar({
+      aniamtion: true
+    })
     let startTime = Date.now()
     let isRuning = this.data.isRuning
     let timerType = e.target.dataset.type
@@ -83,7 +86,9 @@ Page({
   },
 
   stopTimer: function () {
-    // reset circle progress
+    wx.showTabBar({
+      aniamtion: true
+    })
     this.setData({
       leftDeg: initDeg.left,
       rightDeg: initDeg.right

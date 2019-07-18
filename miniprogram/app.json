@@ -4,7 +4,6 @@
     "pages/index/index",
     "pages/Job/Job",
     "pages/Plan/Plan",
-    "pages/userConsole/userConsole",
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/invite/invite",
@@ -21,29 +20,33 @@
     "list": [
       {
         "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png",
+        "selectedIconPath": "images/home_active.png",
         "pagePath": "pages/Home/Home",
         "text": "首页"
       },
       {
         "iconPath": "images/time.png",
-        "selectedIconPath": "images/time-active.png",
+        "selectedIconPath": "images/time_active.png",
         "pagePath": "pages/Timer/Timer",
         "text": "计时器"
       },
       {
-        "iconPath": "images/user.png",
-        "selectedIconPath": "images/user-active.png",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me_active.png",
         "pagePath": "pages/index/index",
         "text": "我的"
       }
-    ]
+    ],
+    "selectedColor": "#3197ed",
+    "borderStyle": "white",
+    "position": "bottom",
+    "backgroundColor": "#fff"
   },
   "window": {
     "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#3197ed",
-    "navigationBarTitleText": "睿智",
+    "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true
   },
