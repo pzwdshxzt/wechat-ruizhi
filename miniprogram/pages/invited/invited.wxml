@@ -1,33 +1,35 @@
+<view class="container">
+  <view class="page__bd">
+    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+    <form class="list" bindsubmit="acceptPlan" report-submit>
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__label">计划名称</view>
+        <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
+        <view class="weui-form-preview__label">计划期数</view>
+        <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__label">计划状态</view>
+        <view class="weui-form-preview__value">{{statusCode[plan.status]}}</view>
+        <view class="weui-form-preview__label">计划类型</view>
+        <view class="weui-form-preview__value">{{typeCode[plan.type]}}</view>
+        <view class="weui-form-preview__label">计划说明</view>
+        <view class="weui-form-preview__value">{{plan.content}}</view>
+        <view class="weui-form-preview__label">计划奖励</view>
+        <view class="weui-form-preview__value">{{plan.award}}</view>
+        <view class="weui-form-preview__label">限制人数</view>
+        <view class="weui-form-preview__value">{{plan.inviteLimitCount === 0 ? '无限制':plan.inviteLimitCount}}</view>
+        <view class="weui-form-preview__label">是否展示</view>
+        <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
 
-<view wx:if="{{isSharePageIn}}">
-  <view class="page__hd">
-      <view class="page__title">你收到邀请参与计划</view>
-  </view>
-  <view class="weui-cells__title"></view>
-    <view class="weui-form-preview">
-      <form class="list" bindsubmit="acceptPlan"  report-submit>
-        <view class="weui-form-preview__bd">
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">计划名称</view>
-              <view class="weui-form-preview__value">{{plan.inviteName}}</view>
+
+        <view class="button-sp-area">
+          <view wx:if="{{isSharePageIn}}">
+            <button class="weui-btn" style="background-color:#1589eb;color:white" form-type="submit">接受</button>
           </view>
-          <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">计划期数</view>
-              <view class="weui-form-preview__value">{{plan.inviteCount}}</view>
-          </view>
+            <button class="weui-btn" bindtap="cancelStep">返回</button>
         </view>
-        <view class="weui-form-preview__ft">
-          <button class="weui-form-preview__btn weui-form-preview__btn_default" bindtap="cancelStep" hover-class="weui-form-preview__btn_active">忽视</button>
-          <button class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" form-type="submit">接受</button>
-        </view>
+      </view>
     </form>
-  </view>
-</view>
-<view wx:if="{{!isSharePageIn}}">
-  <view class="page__hd">
-    <view class="page__title">{{errorMsg}}</view>
-  </view>
-  <view class="button-sp-area">
-      <button class="weui-btn" type="primary" plain="true" bindtap="goHome">首页</button>
   </view>
 </view>

@@ -13,10 +13,11 @@ Page({
     applyCountList: [0,1,2,3,4,5],
     applyTextarea: '',
     JobId: '',
-    uid: '',
     pid: '',
     planUid: '',
-    inputNum: 0
+    inputNum: 0,
+    isAgree: false,
+    errorMsg: '输入有误'
   },
 
   /**
@@ -24,7 +25,6 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      uid: options.uid,
       JobId: options.JobId,
       pid: options.pid,
       planUid: options.planUid
@@ -54,31 +54,28 @@ Page({
   },
   checkInfo:function(){
     if (0 === this.data.applyCount || util.checkObject(this.data.applyCount) ) {
-      wx.showModal({
-        content: '请选择打卡期数',
-        showCancel: false
-      });
-      return false
+        this.showTopTips('请选择打卡期数')
+        return true
     }
     if (util.checkObject(this.data.applyTextarea)){
-      wx.showModal({
-        content: '请填写备注',
-        showCancel: false
-      });
-      return false
+        this.showTopTips('请填写备注')
+        return true
     }
-    return true
+    if (!this.data.isAgree) {
+      this.showTopTips('请同意相关条款')
+      return true
+    }
+    return false
   },
   applyStep: function(e){
     console.log(e)
     util.openLoading('正在玩命申请中')
-    if(this.checkInfo()){
+    if(!this.checkInfo()){
       db.collection('JobDetails').add({
         data: {
           JobId: this.data.JobId,
-          applyId:this.data.uid,
           planId: this.data.pid,
-          date: this.data.date,
+          date: this.data.date, 
           time: this.data.time,
           applyTextarea: this.data.applyTextarea,
           applyCount: this.data.applyCount,
@@ -106,25 +103,22 @@ Page({
       util.closeLoading()
     }
   },
-  callPlanFuncation(formId, touser, inviteName, planId) {
-    wx.cloud.callFunction({
-      name: 'openapi',
-      data: {
-        action: 'apply',
-        formId: formId,
-        touser: touser,
-        username: '待改进',
-        date: util.formatDateTime(new Date()),
-        inviteName: inviteName,
-        inviteCount: this.data.applyCount,
-        planId: planId
-      },
-      success: res => {
-        console.warn('[云函数] [openapi] templateMessage.send 调用成功：', res)
-      },
-      fail: err => {
-        console.error('[云函数] [openapi] templateMessage.send 调用失败：', err)
-      }
-    })
+  bindAgreeChange: function (e) {
+    this.setData({
+      isAgree: !!e.detail.value.length
+    });
+  },
+  showTopTips: function (msg) {
+    var that = this;
+    this.setData({
+      showTopTips: true,
+      errorMsg: msg
+    });
+    setTimeout(function () {
+      that.setData({
+        showTopTips: false,
+        errorMsg: '输入错误'
+      });
+    }, 3000);
   }
 })

@@ -2,14 +2,15 @@ const app = getApp()
 const db = wx.cloud.database()
 const _ = db.command
 const dbConsole = require('DbConsole.js');
-const formatDateTime = date =>{
+
+const formatDateTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-  return [year,month,day].map(formatNumer).join('-') + ' ' + [hour,minute,second].map(formatNumer).join(':')
+  return [year, month, day].map(formatNumer).join('-') + ' ' + [hour, minute, second].map(formatNumer).join(':')
 }
 const formatDate = date => {
   const year = date.getFullYear()
@@ -23,39 +24,38 @@ const formatTime = date => {
   const second = date.getSeconds()
   return [hour, minute, second].map(formatNumer).join(':')
 }
-
 const checkObject = obj => {
-    if(obj instanceof Array){
-        return obj.length === 0
-    }
-    if(obj instanceof Object){
-        return Object.keys(obj).length === 0
-    }
-    return obj === null || obj === undefined || obj === '';
+  if (obj instanceof Array) {
+    return obj.length === 0
   }
+  if (obj instanceof Object) {
+    return Object.keys(obj).length === 0
+  }
+  return obj === undefined || obj === null || obj === '';
+}
 const formatNumer = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-const successPage = (title,content) => {
-  wx.navigateTo({
-    url: '../success/success?title='+title+'&content='+content
+const successPage = (title, content) => {
+  wx.reLaunch({
+    url: '../success/success?title=' + title + '&content=' + content
   })
 }
 const failPage = (title, content) => {
-  wx.navigateTo({
+  wx.reLaunch({
     url: '../fail/fail?title=' + title + '&content=' + content
   })
 }
 const homePage = () => {
   wx.switchTab({
     url: '../Home/Home',
-    fail: function () {
+    fail: function() {
       console.info("跳转失败")
     }
   })
 }
-const openLoading= (title) => {
+const openLoading = (title) => {
   wx.showLoading({
     title: title,
     mask: true
@@ -81,7 +81,7 @@ const loginFunction = () => {
 }
 const getUserInfo = () => {
   return new Promise((resolve, reject) => {
-    if (checkObject(app.globalData.userInfo)){
+    if (checkObject(app.globalData.userInfo)) {
       // 获取用户信息
       wx.getSetting({
         success: res => {
@@ -107,18 +107,16 @@ const getUserInfo = () => {
 const addUserInfo = (userInfo) => {
   db.collection('UserInfos').where({
     _openid: userInfo._openid
-  }).get().then(res =>{
-    if(checkObject(res.data)){
+  }).get().then(res => {
+    if (checkObject(res.data)) {
       db.collection('UserInfos').add({
-          data: userInfo,
-          success: res => {
-          },
-          fail: err => {
-          }
-        })
+        data: userInfo,
+        success: res => {},
+        fail: err => {}
+      })
     }
   })
-  
+
 }
 const compareVersion = (v1, v2) => {
   v1 = v1.split('.')
@@ -147,30 +145,30 @@ const compareVersion = (v1, v2) => {
 
 const planForEach = (res) => {
   return new Promise((resolve, reject) => {
-    if(!checkObject(res)){
+    if (!checkObject(res)) {
       res.forEach(obj => {
-       
-          dbConsole.queryUserInfos(obj.jober).then(u => {
-            let userInfo = u[0]
-            if (!checkObject(userInfo)) {
-              db.collection('JobDetails').where({
-                _openid: userInfo._openid
-              }).get().then(JobDetails => {
-                console.log(JobDetails)
-                obj.userInfo.JobDetails = JobDetails.data
-              })
-              obj.userInfo = userInfo
-            }
-          })
-          resolve(res)
+
+        dbConsole.queryUserInfos(obj.jober).then(u => {
+          let userInfo = u[0]
+          if (!checkObject(userInfo)) {
+            db.collection('JobDetails').where({
+              _openid: userInfo._openid
+            }).get().then(JobDetails => {
+              console.log(JobDetails)
+              obj.userInfo.JobDetails = JobDetails.data
+            })
+            obj.userInfo = userInfo
+          }
         })
+        resolve(res)
+      })
     }
   })
 }
 /**
  * 获取范围随机数
  */
-const getRandInt = (min,max) => {
+const getRandInt = (min, max) => {
   return min + Math.floor(Math.random() * (max - min));
 }
 const formatTimeV2 = (time, format) => {
@@ -178,7 +176,28 @@ const formatTimeV2 = (time, format) => {
   let len = format.length
   return temp.substr(-len)
 }
+
+const getTimeStamp = () => {
+  return Date.parse(new Date())
+}
+/**
+ * 2010年12月23日 10:53
+ */
+const timeStampToTimeV1 = (timeStamp) => {
+  return new Date(parseInt(timeStamp) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+}
+const timeStampToTimeV2 = (timeStamp) => {
+  return new Date(parseInt(timeStamp) * 1000).toLocaleString().substr(0, 17)
+}
+/**
+ * 2010-10-20 10:00:00
+ */
+const timeStampToTimeV3 = (timeStamp) => {
+  return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+}
+
 module.exports = {
+  getTimeStamp: getTimeStamp,
   formatDateTime: formatDateTime,
   formatDate: formatDate,
   formatTime: formatTime,
@@ -194,5 +213,8 @@ module.exports = {
   compareVersion: compareVersion,
   addUserInfo: addUserInfo,
   planForEach: planForEach,
-  getRandInt: getRandInt
+  getRandInt: getRandInt,
+  timeStampToTimeV1: timeStampToTimeV1,
+  timeStampToTimeV2: timeStampToTimeV2,
+  timeStampToTimeV3: timeStampToTimeV3
 }

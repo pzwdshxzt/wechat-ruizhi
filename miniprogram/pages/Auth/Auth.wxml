@@ -8,7 +8,7 @@
     <view class="button-sp-area">
       <button open-type="getUserInfo" 
               bindgetuserinfo="onGetUserInfo" 
-              class="weui-btn" type="primary" plain="true">授权</button>
+              class="weui-btn" style="background-color:#1589eb;color:white" plain="true">授权</button>
     </view>
   </view>
  </view>

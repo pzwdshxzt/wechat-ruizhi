@@ -9,7 +9,7 @@
         </view>
         <view class="weui-msg__opr-area">
             <view class="weui-btn-area">
-                <button bindtap="backTohome" class="weui-btn" type="primary">返回首页</button>
+                <button style="background-color:#1589eb;color:white"  bindtap="backTohome" class="weui-btn" type="primary">返回首页</button>
                 <!-- <button class="weui-btn" type="default">辅助操作</button> -->
             </view>
         </view>

@@ -8,29 +8,21 @@ Page({
   /**
    * 页面的初始数据
    */
-  
+
   data: {
-    
+
     openid: '',
     yourJobs: [],
     yourPlans: [],
-    "bnrUrl": [{
-      "url": "/images/share_0.png"
-    }, {
-        "url": "/images/share_1.png"
-    }, {
-        "url": "/images/share_2.png"
-    }, {
-        "url": "/images/share_3.png"
-    }]
+    otherPlans: []
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.onLoad()
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     util.getUserInfo()
     util.openLoading('数据加载中')
     if (app.globalData.openid) {
@@ -52,18 +44,19 @@ Page({
   /**
    * 数据初始化
    */
-  onInitData: function (options) {
-    this.onQueryJobs()
-    .then(this.onQueryPlans())
-    .then(res =>{
-      util.closeLoading()
-    })
+  onInitData: function(options) {
+    this.onQueryOtherPlans()
+      .then(this.onQueryJobs())
+      .then(this.onQueryPlans())
+      .then(res => {
+        util.closeLoading()
+      })
   },
   /**
    * 查询自己的计划
    */
-  onQueryPlans: function () {
-    return new Promise((resolve,reject) =>{
+  onQueryPlans: function() {
+    return new Promise((resolve, reject) => {
       db.collection('Plans').where({
         ibs: this.data.openid,
         status: 0
@@ -86,7 +79,7 @@ Page({
   /**
    * 查询自己的任务
    */
-  onQueryJobs: function () {
+  onQueryJobs: function() {
     return new Promise((resolve, reject) => {
       db.collection('Jobs').where({
         jober: this.data.openid,
@@ -107,7 +100,33 @@ Page({
       })
     })
   },
-  onShow:function(){
+  /**
+   * 查询别人的计划轮播展示
+   */
+  onQueryOtherPlans: function() {
+    return new Promise((resolve, reject) => {
+      db.collection('Plans').where({
+        show: 1,
+        status: 0
+      }).orderBy('updateTime', 'desc').limit(4).get({
+        success: res => {
+          this.setData({
+            otherPlans: res.data
+          })
+          resolve(res.data)
+        },
+        fail: err => {
+          console.error('[数据库] [查询记录] 失败：', err)
+          reject('error')
+        }
+      })
+    })
+  },
+  onShow: function() {
     util.getUserInfo()
+  },
+  bindchangePlan: function(e) {
+  },
+  gotoAcctepPlan: function(e) {
   }
 })

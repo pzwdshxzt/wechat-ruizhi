@@ -14,7 +14,8 @@ exports.main = async (event, context) => {
       case 'updateJobs': {
         return await db.collection("Jobs").doc(event._id).update({
           data: {
-            doneCount: event.doneCount
+            doneCount: event.doneCount,
+            updateTime: event.updateTime
           }
         })
       }
@@ -22,28 +23,32 @@ exports.main = async (event, context) => {
         return await db.collection("JobDetails").doc(event._id).update({
           data: {
             authFlag: event.authFlag,
-            authApplyTextarea: event.authApplyTextarea
+            authApplyTextarea: event.authApplyTextarea,
+            updateTime: event.updateTime
           }
         })
       }
       case 'updateJobStatus': {
         return await db.collection("Jobs").doc(event._id).update({
           data: {
-            status: event.status
+            status: event.status,
+            updateTime: event.updateTime
           }
         })
       }
       case 'updatePlanStatus': {
         return await db.collection("Plans").doc(event._id).update({
           data: {
-            status: event.status
+            status: event.status,
+            updateTime: event.updateTime
           }
         })
       }
       case 'updatePlanShow': {
         return await db.collection("Plans").doc(event._id).update({
           data: {
-            show: event.show
+            show: event.show,
+            updateTime: event.updateTime
           }
         })
       }
@@ -52,6 +57,7 @@ exports.main = async (event, context) => {
           planId: _.eq(event._id)
         }).update({
             data: {
+              updateTime: event.updateTime,
               status: event.status
             }
         })

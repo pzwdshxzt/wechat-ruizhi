@@ -1,59 +1,65 @@
 <!--miniprogram/pages/Job/Job.wxml-->
 <view class="weui-form-preview  page">
-  <form bindsubmit="agreeApply"  report-submit>
+  <form bindsubmit="agreeApply" report-submit>
     <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__label">打卡期数</view>
-        <view class="weui-form-preview__value_in-hd">{{JobDetails.applyCount}}</view>
+      <view class="weui-form-preview__label">打卡期数</view>
+      <view class="weui-form-preview__value_in-hd">{{JobDetails.applyCount}}</view>
     </view>
     <view class="weui-form-preview__bd">
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">申请日期</view>
-            <view class="weui-form-preview__value">{{JobDetails.date}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">申请时间</view>
-            <view class="weui-form-preview__value">{{JobDetails.time}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">备注</view>
-            <view class="weui-form-preview__value">{{JobDetails.applyTextarea}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">审核状态</view>
-            <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
-        </view>
-        <view class="weui-form-preview__item" wx:if="{{JobDetails.authFlag !== 0}}">
-            <view class="weui-form-preview__label">审核意见</view>
-            <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
-        </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">申请日期</view>
+        <view class="weui-form-preview__value">{{JobDetails.date}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">申请时间</view>
+        <view class="weui-form-preview__value">{{JobDetails.time}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">备注</view>
+        <view class="weui-form-preview__value">{{JobDetails.applyTextarea}}</view>
+      </view>
+      <view class="weui-form-preview__item">
+        <view class="weui-form-preview__label">审核状态</view>
+        <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
+      </view>
+      <view class="weui-form-preview__item" wx:if="{{JobDetails.authFlag !== 0}}">
+        <view class="weui-form-preview__label">审核意见</view>
+        <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
+      </view>
     </view>
     <view wx:if="{{isAuthFlag}}">
       <view class="weui-cells__title">审批意见</view>
       <view class="weui-cells weui-cells_after-title">
-          <radio-group bindchange="radioChange">
-              <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
-                  <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
-                  <view class="weui-cell__bd">{{item.name}}</view>
-                  <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-                      <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                  </view>
-              </label>
-          </radio-group>
+        <radio-group bindchange="radioChange">
+          <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+            <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+            <view class="weui-cell__bd">{{item.name}}</view>
+            <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+            </view>
+          </label>
+        </radio-group>
       </view>
       <view class="weui-cells__title">审批原因</view>
       <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell">
-              <view class="weui-cell__bd">
-                  <textarea class="weui-textarea" placeholder="请输入审批原因" style="height: 3.3em" bindblur="applyTextarea"/>
-                  <view class="weui-textarea-counter">{{inputNum}}/140</view>
-              </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入审批原因" style="height: 3.3em" bindblur="applyTextarea" />
+            <view class="weui-textarea-counter">{{inputNum}}/140</view>
           </view>
-      </view>
-
-      <view class="weui-btn-area">
-            <button class="weui-btn" type="primary"form-type="submit">确定</button>
         </view>
       </view>
+      <view class="weui-cells__tips">审批结果将会通知申请人</view>
+      <view class="weui-btn-area">
+        <button class="weui-btn" style="background-color:#1589eb;color:white" form-type="submit">同意</button>
+      </view>
+    </view>
 
+    <view class="page__ft">
+      <view class="weui-footer__links">
+        <navigator url="" class="weui-footer__link">睿智小程序</navigator>
+      </view>
+      <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
+    </view>
   </form>
 </view>

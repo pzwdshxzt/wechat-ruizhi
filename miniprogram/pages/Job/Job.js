@@ -49,7 +49,7 @@ Page({
   },
   openApplyPage(){
     wx.navigateTo({
-      url: 'Apply?JobId=' + this.data.job._id + '&uid=' + this.data.openId + '&pid=' + this.data.job.planId + '&planUid='+ this.data.planUid
+      url: 'Apply?JobId=' + this.data.job._id + '&pid=' + this.data.job.planId + '&planUid='+ this.data.planUid
     })
   },
   getPercent: function (num, total) {
@@ -100,4 +100,9 @@ Page({
       spaceBetween,
     })
   },
+  gotoPlanDetails: function () {
+    wx.navigateTo({
+      url: 'ShowPlanDetails?PlanId=' + this.data.job.planId,
+    })
+  }
 })

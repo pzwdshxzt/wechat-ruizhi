@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/Home/Home",
     "pages/index/index",
     "pages/Job/Job",
@@ -17,7 +16,8 @@
     "pages/Auth/Auth",
     "pages/Plan/Jobs",
     "pages/invite/showInfo",
-    "pages/invite/success"
+    "pages/invite/success",
+    "pages/Job/ShowPlanDetails"
   ],
   "tabBar": {
     "list": [

@@ -1,48 +1,56 @@
 <!--miniprogram/pages/Jobs/Jobs.wxml-->
 <!-- 简介 -->
 <view class="swiper_hd">
-    <swiper class='u-wrp-bnr' indicator-dots='true' autoplay='true' interval='3000' duration='1000' circular='true'>
-      <block wx:for="{{bnrUrl}}" wx:for-index="index" wx:key="index">
-        <swiper-item>
-          <image src='{{item.url}}' class='u-img-slide' mode='aspectFill'></image>
-        </swiper-item>
-      </block>
-    </swiper>
+  <swiper bindchange="bindchangePlan" class='u-wrp-bnr' autoplay='true' interval='3000' duration='1000' circular='true'>
+    <block wx:for="{{otherPlans}}"  wx:key="index">
+      <swiper-item>
+          <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
+            <image mode="aspectFit" src='/images/share_{{index}}.png' />
+            <view class="swiper-item demo-text-1">
+              <text>{{item.inviteName}}</text>
+             </view>
+          </navigator>
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
 <view class="guide">
-    <view class="weui-panel">
-        <view class="weui-panel__hd">您的任务</view>
-        <view class="weui-panel__bd">
-         <view class="weui-media-box weui-media-box_small-appmsg">
-            <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-                <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__hd"><icon type="info" size="22"></icon></view>
-                    <view class="weui-cell__bd weui-cell_primary">
-                        <view>{{item.inviteName}}</view>
-                    </view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </navigator>
+  <view class="weui-panel">
+    <view class="weui-panel__hd">您的任务</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_small-appmsg">
+        <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourJobs}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+          <navigator url="../Job/Job?JobId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__hd">
+              <icon type="circle" size="22" color="#1589eb"></icon>
             </view>
+            <view class="weui-cell__bd weui-cell_primary">
+              <view>{{item.inviteName}}</view>
+            </view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </navigator>
         </view>
-        </view>
+      </view>
     </view>
+  </view>
 
-    <view class="weui-panel">
-        <view class="weui-panel__hd">您的计划</view>
-        <view class="weui-panel__bd">
-         <view class="weui-media-box weui-media-box_small-appmsg">
-            <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourPlans}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-                <navigator url="../Plan/Plan?PlanId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__hd"><icon type="info" size="22"></icon></view>
-                    <view class="weui-cell__bd weui-cell_primary">
-                        <view>{{item.inviteName}}</view>
-                    </view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </navigator>
+  <view class="weui-panel">
+    <view class="weui-panel__hd">您的计划</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_small-appmsg">
+        <view class="weui-cells weui-cells_in-small-appmsg" wx:for="{{yourPlans}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+          <navigator url="../Plan/Plan?PlanId={{item._id}}&uid={{openid}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__hd">
+              <icon type="circle" size="22" color="#1589eb"></icon>
             </view>
+            <view class="weui-cell__bd weui-cell_primary">
+              <view>{{item.inviteName}}</view>
+            </view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </navigator>
         </view>
-        </view>
+      </view>
     </view>
-    
+  </view>
+
 </view>
-

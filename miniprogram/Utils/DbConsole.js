@@ -1,5 +1,8 @@
 const db = wx.cloud.database()
 const _ = db.command
+const getTimeStamp = () => {
+  return Date.parse(new Date())
+}
 const queryJobs = planId => {
   return new Promise((resolve, reject) => {
     db.collection('Jobs').where({
@@ -11,13 +14,14 @@ const queryJobs = planId => {
 }
 
 const updateJobs = (_id, doneCount) => {
-  return new Promise ((resolve,reject) => {
+  return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'dbConsole',
       data: {
         action: 'updateJobs',
         _id: _id,
-        doneCount: doneCount
+        doneCount: doneCount,
+        updateTime: getTimeStamp()
       },
       success: res => {
         console.log("updateJobs success")
@@ -39,7 +43,8 @@ const updateJobDetails = (_id, authFlag, authApplyTextarea) => {
         action: 'updateJobDetails',
         _id: _id,
         authFlag: authFlag,
-        authApplyTextarea: authApplyTextarea
+        authApplyTextarea: authApplyTextarea,
+        updateTime: getTimeStamp()
       },
       success: res => {
         console.log("updateJobDetails success")
@@ -60,7 +65,8 @@ const updateJobStatus = (_id, status) => {
       data: {
         action: 'updateJobStatus',
         _id: _id,
-        status: status
+        status: status,
+        updateTime: getTimeStamp()
       },
       success: res => {
         console.log("updateJobDetails success")
@@ -80,11 +86,12 @@ const updateJobsAllStatus = (_id, status) => {
       data: {
         action: 'updateJobsAllStatus',
         _id: _id,
-        status: status
+        status: status,
+        updateTime: getTimeStamp()
       }
     }).then(res => {
       console.log("updateJobsAllStatus success")
-      
+
       resolve(res)
 
     }).catch(res => {
@@ -100,15 +107,16 @@ const updatePlanStatus = (_id, status) => {
       data: {
         action: 'updatePlanStatus',
         _id: _id,
-        status: status
+        status: status,
+        updateTime: getTimeStamp()
       }
     }).then(res => {
       console.log(_id)
       console.log("updatePlanStatus success")
-      updateJobsAllStatus(_id, 3).then(res =>{
+      updateJobsAllStatus(_id, 3).then(res => {
         resolve(res)
       })
-      
+
     }).catch(res => {
       console.log("updatePlanStatus fail")
       reject(res)
@@ -122,7 +130,8 @@ const updatePlanShow = (_id, show) => {
       data: {
         action: 'updatePlanShow',
         _id: _id,
-        show: show
+        show: show,
+        updateTime: getTimeStamp()
       }
     }).then(res => {
       console.log("updatePlanShow success")

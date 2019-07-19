@@ -8,7 +8,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
     inviteCount: '',
     inviteName: '',
     openid: '',
@@ -21,13 +20,14 @@ Page({
     types: ["打卡"],
     isAgree: false,
     showTopTips: false,
-    errorMsg: '输入有误'
+    errorMsg: '输入有误',
+    inviteLimitCount: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (app.globalData.openid) {
       this.setData({
         openid: app.globalData.openid
@@ -42,56 +42,66 @@ Page({
       })
     }
   },
-  goHome: function () {
+  goHome: function() {
     util.homePage()
   },
 
-  getContent: function (e) {
+  getContent: function(e) {
     this.setData({
       content: e.detail.value,
       contentCount: e.detail.value.length
     })
   },
-  getAward: function (e) {
+  getAward: function(e) {
     this.setData({
       award: e.detail.value,
       awardCount: e.detail.value.length
     })
   },
-  getInviteName: function (e) {
+  getInviteName: function(e) {
     this.setData({
       inviteName: e.detail.value
     })
   },
-  getInviteCount: function (e) {
+  getInviteCount: function(e) {
     var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
     var num = e.detail.value;
     if (!reg.test(num)) {
-      wx.showModal({
-        content: '请填写数字',
-        showCancel: false
-      });
+      this.showTopTips('请填写数字')
       this.setData({
         inviteCount: ''
-      })
-    } else{
+      })  
+    } else {
       this.setData({
         inviteCount: e.detail.value
       })
     }
   },
-  
-  bindTypeCodeChange: function (e) {
+  getInviteLimitCount: function(e) {
+    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
+    var num = e.detail.value;
+    if (!reg.test(num)) {
+      this.showTopTips('请填写数字')
+      this.setData({
+        inviteLimitCount: ''
+      })
+    } else {
+      this.setData({
+        inviteLimitCount: e.detail.value
+      })
+    }
+  },
+  bindTypeCodeChange: function(e) {
     this.setData({
       type: e.detail.value
     })
   },
-  bindAgreeChange: function (e) {
+  bindAgreeChange: function(e) {
     this.setData({
       isAgree: !!e.detail.value.length
     });
   },
-  checkInfo: function () {
+  checkInfo: function() {
     if (this.data.inviteName === '') {
       this.showTopTips('请输入计划名称')
       return true
@@ -114,8 +124,8 @@ Page({
     }
     return false
   },
-  sumbitPlan:function (){
-    if(!this.checkInfo()){
+  sumbitPlan: function() {
+    if (!this.checkInfo()) {
       db.collection('Plans').add({
         data: {
           inviteName: this.data.inviteName,
@@ -125,10 +135,13 @@ Page({
           show: this.data.show,
           content: this.data.content,
           award: this.data.award,
-          type: Number(this.data.type)
+          type: Number(this.data.type),
+          inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
+          createTime: util.getTimeStamp(),
+          updateTime: util.getTimeStamp()
         },
         success: res => {
-          wx.navigateTo({
+          wx.reLaunch({
             url: 'success?planId=' + res._id
           })
         },
@@ -146,8 +159,8 @@ Page({
    * 1.展示
    * 0.不展示
    */
-  showPlan: function (e){
-    if(e.detail.value){
+  showPlan: function(e) {
+    if (e.detail.value) {
       this.setData({
         show: 1
       })
@@ -156,15 +169,14 @@ Page({
         show: 0
       })
     }
-    console.log(e)
   },
-  showTopTips: function (msg) {
+  showTopTips: function(msg) {
     var that = this;
     this.setData({
       showTopTips: true,
       errorMsg: msg
     });
-    setTimeout(function () {
+    setTimeout(function() {
       that.setData({
         showTopTips: false,
         errorMsg: '输入错误'

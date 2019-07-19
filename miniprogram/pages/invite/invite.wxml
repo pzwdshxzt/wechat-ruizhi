@@ -12,99 +12,109 @@
     </view>
   </view>
   <view class="page__bd">
-   <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
-  <!-- 结语 -->
-  <view class="guide" wx:if="{{step === 3}}">
-    <text class="headline">生成计划成功！</text>
-    <text class="p">恭喜你，赶紧邀请好友来完成挑战吧！</text>
+    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+    <!-- 结语 -->
+    <view class="guide" wx:if="{{step === 3}}">
+      <text class="headline">生成计划成功！</text>
+      <text class="p">恭喜你，赶紧邀请好友来完成挑战吧！</text>
 
-    <div class="nav">
-      <button class="prev" size="mini" type="default" bindtap="shareMenu">邀请</button>
-      <button class="next" size="mini" type="default" bindtap="goHome">回到首页</button>
-    </div>
-  </view>
-
-  <view class="weui-cells__title">计划名称</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__bd">
-        <input value='{{inviteName}}' bindinput="getInviteName" class="weui-input" placeholder="请输入计划名称" />
-      </view>
-    </view>
-  </view>
-
-  <view class="weui-cells__title">计划信息</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">计划期数</view>
-      </view>
-      <view class="weui-cell__bd">
-        <input type="digit" type="number" value='{{inviteCount}}' bindinput="getInviteCount" class="weui-input" placeholder="请输入计划期数" />
-      </view>
+      <div class="nav">
+        <button class="prev" size="mini" type="default" bindtap="shareMenu">邀请</button>
+        <button class="next" size="mini" type="default" bindtap="goHome">回到首页</button>
+      </div>
     </view>
 
-  </view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_select">
-      <view class="weui-cell__hd weui-cell__hd_in-select-after">
-        <view class="weui-label">完成类型</view>
-      </view>
-      <view class="weui-cell__bd">
-        <picker bindchange="bindTypeCodeChange" value="{{type}}" range="{{types}}">
-          <view class="weui-select weui-select_in-select-after">{{types[type]}}</view>
-        </picker>
-      </view>
-    </view>
-  </view>
-  <view class="weui-cells__title">是否展示给其他人参与(不展示可转发)</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd">展示</view>
-      <view class="weui-cell__ft">
-        <switch checked bindchange="showPlan" color="#1589eb" />
-      </view>
-    </view>
-  </view>
-  <view class="weui-cells__title">计划说明</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <textarea class="weui-textarea" value='{{content}}' bindinput="getContent" placeholder="请输入计划说明" style="height: 3.3em" />
-        <view class="weui-textarea-counter">{{contentCount}}/140</view>
-      </view>
-    </view>
-  </view>
-  <view class="weui-cells__title">完成奖励</view>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <textarea class="weui-textarea"  value='{{award}}' bindinput="getAward" placeholder="请输入完成后的奖励" style="height: 3.3em" />
-        <view class="weui-textarea-counter">{{awardCount}}/140</view>
-      </view>
-    </view>
-  </view>
-  <checkbox-group bindchange="bindAgreeChange">
-    <label class="weui-agree" for="weuiAgree">
-      <view class="weui-agree__text">
-        <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
-        <view class="weui-agree__checkbox-icon">
-          <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
+    <view class="weui-cells__title">计划名称</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <input value='{{inviteName}}' bindinput="getInviteName" class="weui-input" placeholder="请输入计划名称" />
         </view>
-        阅读并同意
-        <navigator url="showInfo" class="weui-agree__link">《相关条款》</navigator>
       </view>
-    </label>
-  </checkbox-group>
-
-  <view class="weui-btn-area">
-    <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="sumbitPlan">确定</button>
-  </view>
-  <view class="page__ft">
-    <view class="weui-footer__links">
-      <navigator url="" class="weui-footer__link">睿智小程序</navigator>
     </view>
-    <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
+
+    <view class="weui-cells__title">计划信息</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划期数</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input type="digit" type="number" value='{{inviteCount}}' bindinput="getInviteCount" class="weui-input" placeholder="请输入计划期数" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">此计划最多多少人参加(0或者不写将没有限制)</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划人数</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input type="digit" type="number" value='{{inviteLimitCount}}' bindinput="getInviteLimitCount" class="weui-input" placeholder="请输入计划人数" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">完成类型</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="bindTypeCodeChange" value="{{type}}" range="{{types}}">
+            <view class="weui-select weui-select_in-select-after">{{types[type]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">是否展示给其他人参与(不展示可转发)</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">展示</view>
+        <view class="weui-cell__ft">
+          <switch checked bindchange="showPlan" color="#1589eb" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">计划说明</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" value='{{content}}' bindinput="getContent" placeholder="请输入计划说明" style="height: 3.3em" />
+          <view class="weui-textarea-counter">{{contentCount}}/140</view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">完成奖励</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" value='{{award}}' bindinput="getAward" placeholder="请输入完成后的奖励" style="height: 3.3em" />
+          <view class="weui-textarea-counter">{{awardCount}}/140</view>
+        </view>
+      </view>
+    </view>
+    <checkbox-group bindchange="bindAgreeChange">
+      <label class="weui-agree" for="weuiAgree">
+        <view class="weui-agree__text">
+          <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
+          <view class="weui-agree__checkbox-icon">
+            <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
+          </view>
+          阅读并同意
+          <navigator url="showInfo" class="weui-agree__link">《相关条款》</navigator>
+        </view>
+      </label>
+    </checkbox-group>
+
+    <view class="weui-btn-area">
+      <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="sumbitPlan">确定</button>
+    </view>
+    <view class="page__ft">
+      <view class="weui-footer__links">
+        <navigator url="" class="weui-footer__link">睿智小程序</navigator>
+      </view>
+      <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
+    </view>
   </view>
- </view>
 </view>
