@@ -10,28 +10,27 @@ Page({
    */
 
   data: {
-
     openid: '',
     yourJobs: [],
     yourPlans: [],
     otherPlans: []
   },
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
+  
   onPullDownRefresh: function() {
-    this.onLoad()
+    this.onInitData()
   },
   onLoad: function(options) {
-    util.getUserInfo()
     util.openLoading('数据加载中')
-    if (app.globalData.openid) {
+    if (app.globalData.openid && app.globalData.userInfo !== {}) {
       this.setData({
         openid: app.globalData.openid
       })
       this.onInitData(options)
     } else {
       util.loginFunction().then(res => {
+        util.getUserInfo().then(userInfo => {
+          util.addUserInfo(res.openid,userInfo)
+        })
         this.setData({
           openid: res.openid
         })
@@ -41,6 +40,7 @@ Page({
       })
     }
   },
+
   /**
    * 数据初始化
    */

@@ -15,7 +15,8 @@ App({
     }
 
     this.globalData = {
-      userInfo: {}
+      userInfo: {},
+      imgSrc: ''
     }
     let workTime = wx.getStorageSync('workTime')
     let restTime = wx.getStorageSync('restTime')

@@ -80,7 +80,9 @@ Page({
           applyTextarea: this.data.applyTextarea,
           applyCount: this.data.applyCount,
           authFlag: 0,
-          formId: e.detail.formId
+          formId: e.detail.formId,
+          createTime: util.getTimeStamp(),
+          updateTime: util.getTimeStamp()
         },
         success: res => {
           util.closeLoading()

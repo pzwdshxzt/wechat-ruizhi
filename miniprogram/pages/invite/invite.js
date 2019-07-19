@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    files: '',
     inviteCount: '',
     inviteName: '',
     openid: '',
@@ -182,5 +183,36 @@ Page({
         errorMsg: '输入错误'
       });
     }, 3000);
+  },
+  chooseImage: function(e) {
+    var that = this;
+    wx.navigateTo({
+      url: 'cropper',
+    })
+  },
+  previewImage: function(e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: [this.data.files] // 需要预览的图片http链接列表
+    })
+  },
+  onShow: function() {
+    if (app.globalData.imgSrc) {
+      let path =  util.getTimeStamp  + '.png'
+      wx.cloud.uploadFile({
+        cloudPath: path,
+        filePath: app.globalData.imgSrc,
+        success(res) {
+          console.log(res)
+          this.setData({
+            files: res.fileID
+          })
+        },
+        fail(res){
+          console.log(res)
+        }
+      })
+      app.globalData.imgSrc = ''
+    }
   }
 })

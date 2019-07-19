@@ -67,15 +67,6 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells__title">是否展示给其他人参与(不展示可转发)</view>
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">展示</view>
-        <view class="weui-cell__ft">
-          <switch checked bindchange="showPlan" color="#1589eb" />
-        </view>
-      </view>
-    </view>
     <view class="weui-cells__title">计划说明</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
@@ -91,6 +82,36 @@
         <view class="weui-cell__bd">
           <textarea class="weui-textarea" value='{{award}}' bindinput="getAward" placeholder="请输入完成后的奖励" style="height: 3.3em" />
           <view class="weui-textarea-counter">{{awardCount}}/140</view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">是否展示给其他人参与(不展示可转发)</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">展示</view>
+        <view class="weui-cell__ft">
+          <switch checked bindchange="showPlan" color="#1589eb" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells" wx:if="{{show === 1}}">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__hd">
+              <view class="weui-uploader__title">首页展示上传</view>
+            </view>
+            <view class="weui-uploader__bd">
+              <block id="123132131">
+                <view  bindtap="previewImage" wx:if="{{files}}">
+                  <image class="weui-uploader__img" src="{{files}}" mode="aspectFill" />
+                </view>
+              </block>
+              <view class="weui-uploader__input-box" wx:if="{{!files}}">
+                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+              </view>
+            </view>
+          </view>
         </view>
       </view>
     </view>

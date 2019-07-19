@@ -91,7 +91,6 @@ const getUserInfo = () => {
               success: res => {
                 app.globalData.userInfo = res.userInfo
                 resolve(res.userInfo)
-                addUserInfo(res.userInfo)
               }
             })
           } else {
@@ -104,15 +103,19 @@ const getUserInfo = () => {
     }
   })
 }
-const addUserInfo = (userInfo) => {
+const addUserInfo = (openid,userInfo) => {
   db.collection('UserInfos').where({
-    _openid: userInfo._openid
+    _openid: openid
   }).get().then(res => {
     if (checkObject(res.data)) {
       db.collection('UserInfos').add({
         data: userInfo,
-        success: res => {},
-        fail: err => {}
+        success: res => {
+          console.log(res)
+        },
+        fail: err => {
+          console.log(err)
+        }
       })
     }
   })
