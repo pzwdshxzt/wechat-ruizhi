@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/invite/invite",
     "pages/Home/Home",
     "pages/index/index",
     "pages/Job/Job",
@@ -8,6 +7,7 @@
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/invited/invited",
+    "pages/invite/invite",
     "pages/Timer/Timer",
     "pages/Job/Apply",
     "pages/success/success",

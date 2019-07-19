@@ -1,22 +1,17 @@
 /* miniprogram/pages/Jobs/Jobs.wxss */
 
-.select-jobs {
-  text-align: center;
-  margin: 60rpx;
-}
-
 .weui-form-preview {
   margin-bottom: 25px;
 }
 swiper{
-  height: 180px
+  height: 180px;
 }
 image{
   width: 100%
 }
 .swiper_hd {
   padding: 20px;
-  height: 180px;
+
 }
 
 .demo-text-1{

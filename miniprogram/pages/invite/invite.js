@@ -123,36 +123,51 @@ Page({
       this.showTopTips('请填写任务说明')
       return true
     }
+    if (!this.data.files) {
+      this.showTopTips('请上传首页轮播图片')
+      return true
+    }
     return false
   },
   sumbitPlan: function() {
     if (!this.checkInfo()) {
-      db.collection('Plans').add({
-        data: {
-          inviteName: this.data.inviteName,
-          inviteCount: Number(this.data.inviteCount),
-          ibs: this.data.openid,
-          status: 0,
-          show: this.data.show,
-          content: this.data.content,
-          award: this.data.award,
-          type: Number(this.data.type),
-          inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
-          createTime: util.getTimeStamp(),
-          updateTime: util.getTimeStamp()
-        },
-        success: res => {
+      let path = 'banner-' + util.getTimeStamp() + '.png'
+      wx.cloud.uploadFile({
+        cloudPath: path,
+        filePath: this.data.files,
+      }).then(res => {
+        this.setData({
+          files: res.fileID
+        })
+        console.log(res.fileID)
+        db.collection('Plans').add({
+          data: {
+            inviteName: this.data.inviteName,
+            inviteCount: Number(this.data.inviteCount),
+            ibs: this.data.openid,
+            status: 0,
+            show: this.data.show,
+            content: this.data.content,
+            award: this.data.award,
+            type: Number(this.data.type),
+            inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
+            createTime: util.getTimeStamp(),
+            updateTime: util.getTimeStamp(),
+            banner_url: res.fileID
+          }
+        }).then(res => {
           wx.reLaunch({
             url: 'success?planId=' + res._id
           })
-        },
-        fail: err => {
+        }).catch(res => {
           wx.showToast({
             icon: 'none',
             title: '添加计划失败'
           })
           console.error('[数据库] [新增记录] 失败：', err)
-        }
+        })
+      }).catch(res => {
+        console.log(res)
       })
     }
   },
@@ -198,19 +213,8 @@ Page({
   },
   onShow: function() {
     if (app.globalData.imgSrc) {
-      let path =  util.getTimeStamp  + '.png'
-      wx.cloud.uploadFile({
-        cloudPath: path,
-        filePath: app.globalData.imgSrc,
-        success(res) {
-          console.log(res)
-          this.setData({
-            files: res.fileID
-          })
-        },
-        fail(res){
-          console.log(res)
-        }
+      this.setData({
+        files: app.globalData.imgSrc
       })
       app.globalData.imgSrc = ''
     }

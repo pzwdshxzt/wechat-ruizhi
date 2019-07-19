@@ -94,7 +94,7 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells" wx:if="{{show === 1}}">
+    <view class="weui-cells">
       <view class="weui-cell">
         <view class="weui-cell__bd">
           <view class="weui-uploader">
