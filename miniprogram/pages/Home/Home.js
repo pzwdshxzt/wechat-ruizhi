@@ -15,36 +15,14 @@ Page({
     yourPlans: [],
     otherPlans: []
   },
-  
+
   onPullDownRefresh: function() {
     this.onInitData()
   },
-  onLoad: function(options) {
-    util.openLoading('数据加载中')
-    if (app.globalData.openid && app.globalData.userInfo !== {}) {
-      this.setData({
-        openid: app.globalData.openid
-      })
-      this.onInitData(options)
-    } else {
-      util.loginFunction().then(res => {
-        util.getUserInfo().then(userInfo => {
-          util.addUserInfo(res.openid,userInfo)
-        })
-        this.setData({
-          openid: res.openid
-        })
-        this.onInitData(options)
-      }).catch(err => {
-        console.log(err)
-      })
-    }
-  },
-
   /**
    * 数据初始化
    */
-  onInitData: function(options) {
+  onInitData: function() {
     this.onQueryOtherPlans()
       .then(this.onQueryJobs())
       .then(this.onQueryPlans())
@@ -123,10 +101,24 @@ Page({
     })
   },
   onShow: function() {
-    util.getUserInfo()
-  },
-  bindchangePlan: function(e) {
-  },
-  gotoAcctepPlan: function(e) {
+    util.openLoading('数据加载中')
+    if (app.globalData.openid && app.globalData.userInfo !== {}) {
+      this.setData({
+        openid: app.globalData.openid
+      })
+      this.onInitData()
+    } else {
+      util.loginFunction().then(res => {
+        util.getUserInfo().then(userInfo => {
+          util.addUserInfo(res.openid, userInfo)
+        })
+        this.setData({
+          openid: res.openid
+        })
+        this.onInitData()
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   }
 })

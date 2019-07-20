@@ -10,7 +10,7 @@ Page({
     date: util.formatDate(new Date()),
     time: util.formatTime(new Date()),
     applyCount: 0,
-    applyCountList: [0,1,2,3,4,5],
+    applyCountList: [0, 1, 2, 3, 4, 5],
     applyTextarea: '',
     JobId: '',
     pid: '',
@@ -23,43 +23,43 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       JobId: options.JobId,
       pid: options.pid,
       planUid: options.planUid
     })
   },
-  bindDateChange: function (e) {
+  bindDateChange: function(e) {
     this.setData({
       date: e.detail.value
     })
   },
-  bindTimeChange: function (e) {
+  bindTimeChange: function(e) {
     this.setData({
       time: e.detail.value
     })
-  }, 
-  bindApplyCount: function (e) {
+  },
+  bindApplyCount: function(e) {
     this.setData({
       applyCount: Number(e.detail.value)
     })
-  }, 
-  applyTextarea: function (e) {
+  },
+  applyTextarea: function(e) {
     console.log(e)
     this.setData({
       inputNum: e.detail.value.length,
       applyTextarea: e.detail.value
     })
   },
-  checkInfo:function(){
-    if (0 === this.data.applyCount || util.checkObject(this.data.applyCount) ) {
-        this.showTopTips('请选择打卡期数')
-        return true
+  checkInfo: function() {
+    if (0 === this.data.applyCount || util.checkObject(this.data.applyCount)) {
+      this.showTopTips('请选择打卡期数')
+      return true
     }
-    if (util.checkObject(this.data.applyTextarea)){
-        this.showTopTips('请填写备注')
-        return true
+    if (util.checkObject(this.data.applyTextarea)) {
+      this.showTopTips('请填写备注')
+      return true
     }
     if (!this.data.isAgree) {
       this.showTopTips('请同意相关条款')
@@ -67,15 +67,15 @@ Page({
     }
     return false
   },
-  applyStep: function(e){
+  applyStep: function(e) {
     console.log(e)
     util.openLoading('正在玩命申请中')
-    if(!this.checkInfo()){
+    if (!this.checkInfo()) {
       db.collection('JobDetails').add({
         data: {
           JobId: this.data.JobId,
           planId: this.data.pid,
-          date: this.data.date, 
+          date: this.data.date,
           time: this.data.time,
           applyTextarea: this.data.applyTextarea,
           applyCount: this.data.applyCount,
@@ -98,25 +98,25 @@ Page({
         },
         fail: err => {
           util.closeLoading()
-          util.failPage('申请失败','你得申请由于不可抗力因素失败，请稍后再试!!')
+          util.failPage('申请失败', '你得申请由于不可抗力因素失败，请稍后再试!!')
         }
       })
     } else {
       util.closeLoading()
     }
   },
-  bindAgreeChange: function (e) {
+  bindAgreeChange: function(e) {
     this.setData({
       isAgree: !!e.detail.value.length
     });
   },
-  showTopTips: function (msg) {
+  showTopTips: function(msg) {
     var that = this;
     this.setData({
       showTopTips: true,
       errorMsg: msg
     });
-    setTimeout(function () {
+    setTimeout(function() {
       that.setData({
         showTopTips: false,
         errorMsg: '输入错误'

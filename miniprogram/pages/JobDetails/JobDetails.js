@@ -9,17 +9,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    JobDetails: { },
+    JobDetails: {},
     authCode: ['待审核', '已拒绝', '审核通过'],
     isAuthFlag: false,
     applyTextarea: '',
-    radioItems: [
-      { name: '拒绝', value: 1 },
-      { name: '同意', value: 2, checked: true }
+    radioItems: [{
+        name: '拒绝',
+        value: 1
+      },
+      {
+        name: '同意',
+        value: 2,
+        checked: true
+      }
     ],
     inputNum: 0
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     util.openLoading('数据加载中')
     db.collection('JobDetails').doc(options.JobDetailsId).get().then(res => {
       this.setData({
@@ -33,16 +39,16 @@ Page({
       util.closeLoading()
     })
   },
-  agreeApply:function(e){
+  agreeApply: function(e) {
     util.openLoading('正在玩命申请中')
     let authFlag = 0
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
-      if (radioItems[i].checked){
+      if (radioItems[i].checked) {
         authFlag = radioItems[i].value
       }
     }
-    dbConsole.updateJobDetails(this.data.JobDetails._id, authFlag, this.data.applyTextarea).then(res =>{
+    dbConsole.updateJobDetails(this.data.JobDetails._id, authFlag, this.data.applyTextarea).then(res => {
       if (authFlag === 2) {
         db.collection('Jobs').doc((this.data.JobDetails.JobId)).get().then(jobs => {
           let newCount = jobs.data.doneCount + this.data.JobDetails.applyCount
@@ -50,7 +56,7 @@ Page({
             this.callPlanFuncation(this.data.JobDetails.formId, this.data.JobDetails._openid, '审核通过', jobs.data.inviteName, jobs.data._id)
             util.successPage('审核成功', '您已经审核成功了')
             util.closeLoading()
-            if(newCount >= jobs.data.inviteCount){
+            if (newCount >= jobs.data.inviteCount) {
               dbConsole.updateJobStatus(jobs.data._id, 1)
             }
           }).catch(res => {
@@ -64,18 +70,18 @@ Page({
         this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
         util.closeLoading()
       }
-    }).catch( res => {
+    }).catch(res => {
       util.failPage('审核失败', '未提交数据，可以重新审核！！')
-    });    
-    
+    });
+
   },
-  applyTextarea: function (e) {
+  applyTextarea: function(e) {
     this.setData({
       inputNum: e.detail.value.length,
       applyTextarea: e.detail.value
     })
   },
-  radioChange: function (e) {
+  radioChange: function(e) {
     var radioItems = this.data.radioItems;
     for (var i = 0, len = radioItems.length; i < len; ++i) {
       radioItems[i].checked = radioItems[i].value == e.detail.value;
@@ -85,7 +91,7 @@ Page({
       radioItems: radioItems
     });
   },
-  callPlanFuncation(formId, touser, result, inviteName ,JobId) {
+  callPlanFuncation(formId, touser, result, inviteName, JobId) {
     wx.cloud.callFunction({
       name: 'openapi',
       data: {

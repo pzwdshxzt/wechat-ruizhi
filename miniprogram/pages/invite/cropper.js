@@ -3,17 +3,17 @@ const app = getApp()
 Page({
   data: {
     src: '',
-    width: 300,//宽度
-    height: 200,//高度
+    width: 300, //宽度
+    height: 200, //高度
     max_width: 600,
     max_height: 400,
-    disable_rotate: true,//是否禁用旋转
-    disable_ratio: true,//锁定比例
-    limit_move: true,//是否限制移动
+    disable_rotate: true, //是否禁用旋转
+    disable_ratio: true, //锁定比例
+    limit_move: true, //是否限制移动
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.cropper = this.selectComponent("#image-cropper");
-    this.cropper.upload();//上传图片
+    this.cropper.upload(); //上传图片
   },
   cropperload(e) {
     console.log('cropper加载完成');

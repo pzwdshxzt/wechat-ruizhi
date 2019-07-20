@@ -57,7 +57,7 @@ Page({
     }
   },
 
-  checkInfo: function (options){
+  checkInfo: function(options) {
     db.collection('Jobs').where({
       planId: options.planId,
       jober: this.data.openid,
@@ -80,12 +80,12 @@ Page({
       util.closeLoading()
       this.showTopTips('系统异常QAQ')
     })
-    if (this.data.plan.inviteLimitCount !== 0){
+    if (this.data.plan.inviteLimitCount !== 0) {
       db.collection('Jobs').where({
         planId: options.planId
       }).get().then(res => {
         let newCount = res.data.length + 1
-        if (this.data.plan.inviteLimitCount < newCount){
+        if (this.data.plan.inviteLimitCount < newCount) {
           this.setData({
             isSharePageIn: false
           })
@@ -93,7 +93,7 @@ Page({
         }
       })
     }
-    
+
   },
   /**
    * 选择要执行的计划
@@ -133,7 +133,7 @@ Page({
     util.getUserInfo()
   },
   cancelStep: function() {
-     util.homePage()
+    util.homePage()
   },
   showTopTips: function(msg) {
     var that = this;

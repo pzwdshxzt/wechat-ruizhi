@@ -7,8 +7,7 @@ Page({
     sAngle: 0,
     eAngle: 360,
     spaceBetween: 10,
-    buttons:[
-      {
+    buttons: [{
         openType: 'contact',
         label: 'Contact',
         icon: '/images/contact.png',
@@ -18,15 +17,15 @@ Page({
         icon: '/images/delete.png'
       }
     ],
-    job:{},
+    job: {},
     jobId: '',
     JobDetails: [],
     progress: 0,
-    statusCode: ['进行中','已完成','放弃','计划废弃'],
-    authCode:['待审核','已拒绝','审核通过'],
+    statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
+    authCode: ['待审核', '已拒绝', '审核通过'],
     planUid: ''
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     util.openLoading('数据加载中')
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
@@ -38,21 +37,21 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-        JobId:res.data._id
-        }).get().then(res => {
-          this.setData({
-            JobDetails: res.data
-          })
-          util.closeLoading()
+        JobId: res.data._id
+      }).get().then(res => {
+        this.setData({
+          JobDetails: res.data
         })
-    })  
-  },
-  openApplyPage(){
-    wx.navigateTo({
-      url: 'Apply?JobId=' + this.data.job._id + '&pid=' + this.data.job.planId + '&planUid='+ this.data.planUid
+        util.closeLoading()
+      })
     })
   },
-  getPercent: function (num, total) {
+  openApplyPage() {
+    wx.navigateTo({
+      url: 'Apply?JobId=' + this.data.job._id + '&pid=' + this.data.job.planId + '&planUid=' + this.data.planUid
+    })
+  },
+  getPercent: function(num, total) {
     num = parseFloat(num);
     total = parseFloat(total);
     if (isNaN(num) || isNaN(total)) {
@@ -71,12 +70,12 @@ Page({
         wx.showModal({
           title: '提示',
           content: '是否真的放弃这个任务计划',
-          success: res =>{
+          success: res => {
             if (res.confirm) {
-                dbConsole.updateJobStatus(this.data.job._id, 2).then(res => {
-                  util.homePage()
-                })  
-            } 
+              dbConsole.updateJobStatus(this.data.job._id, 2).then(res => {
+                util.homePage()
+              })
+            }
           }
         })
       }
@@ -85,11 +84,12 @@ Page({
   onContact(e) {
     console.log('onContact', e)
   },
-  onChange(e) {
-  },
+  onChange(e) {},
   onAngle(e) {
     console.log(e)
-    const { value } = e.detail
+    const {
+      value
+    } = e.detail
     const sAngle = value ? -90 : 0
     const eAngle = value ? -210 : 360
     const spaceBetween = value ? 30 : 10
@@ -100,7 +100,7 @@ Page({
       spaceBetween,
     })
   },
-  gotoPlanDetails: function () {
+  gotoPlanDetails: function() {
     wx.navigateTo({
       url: 'ShowPlanDetails?PlanId=' + this.data.job.planId,
     })

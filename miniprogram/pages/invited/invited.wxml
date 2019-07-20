@@ -27,7 +27,7 @@
           <view wx:if="{{isSharePageIn}}">
             <button class="weui-btn" style="background-color:#1589eb;color:white" form-type="submit">接受</button>
           </view>
-            <button class="weui-btn" bindtap="cancelStep">返回</button>
+          <button class="weui-btn" bindtap="cancelStep">返回</button>
         </view>
       </view>
     </form>

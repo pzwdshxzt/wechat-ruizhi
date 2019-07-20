@@ -20,7 +20,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     util.openLoading('数据加载中')
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
@@ -39,9 +39,9 @@ Page({
         })
         util.closeLoading()
       })
-    })  
+    })
   },
-  getPercent: function (num, total) {
+  getPercent: function(num, total) {
     num = parseFloat(num);
     total = parseFloat(total);
     if (isNaN(num) || isNaN(total)) {

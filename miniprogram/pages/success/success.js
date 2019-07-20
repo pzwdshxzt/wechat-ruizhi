@@ -6,15 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title:'交易成功',
+    title: '交易成功',
     content: '该交易已提交成功！'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    if (!util.checkObject(options.title)){
+  onLoad: function(options) {
+    if (!util.checkObject(options.title)) {
       this.setData({
         title: options.title
       })
@@ -25,8 +25,8 @@ Page({
       })
     }
   },
-  backTohome:function(){
+  backTohome: function() {
     util.homePage()
   }
-  
+
 })

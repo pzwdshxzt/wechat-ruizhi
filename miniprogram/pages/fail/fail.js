@@ -13,7 +13,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options)
     if (!util.checkObject(options.title)) {
       this.setData({
@@ -26,7 +26,7 @@ Page({
       })
     }
   },
-  backTohome: function () {
+  backTohome: function() {
     util.homePage()
   }
 })

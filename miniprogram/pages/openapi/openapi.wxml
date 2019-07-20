@@ -1,6 +1,6 @@
 <view class="container">
 
-  
+
   <form class="list" bindsubmit="submitTemplateMessageForm" report-submit>
     <button class="list-item" form-type="submit">
       <text>发送模板消息</text>

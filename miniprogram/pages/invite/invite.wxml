@@ -103,7 +103,7 @@
             </view>
             <view class="weui-uploader__bd">
               <block id="123132131">
-                <view  bindtap="previewImage" wx:if="{{files}}">
+                <view bindtap="previewImage" wx:if="{{files}}">
                   <image class="weui-uploader__img" src="{{files}}" mode="aspectFill" />
                 </view>
               </block>

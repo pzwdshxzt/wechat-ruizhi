@@ -38,12 +38,12 @@ Page({
                 nickName: res.userInfo.nickName
               })
             }
-          }) 
-        } 
+          })
+        }
       }
     })
   },
-  getUserInfoFun: function () {
+  getUserInfoFun: function() {
     var context = this;
     const version = wx.getSystemInfoSync().SDKVersion
 
@@ -94,20 +94,20 @@ Page({
   },
 
   // 上传图片
-  doUpload: function () {
+  doUpload: function() {
     // 选择图片
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
+      success: function(res) {
 
         wx.showLoading({
           title: '上传中',
         })
 
         const filePath = res.tempFilePaths[0]
-        
+
         // 上传图片
         const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
         wx.cloud.uploadFile({
@@ -119,7 +119,7 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            
+
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
@@ -142,13 +142,13 @@ Page({
       }
     })
   },
-  changeWorkTime: function (e) {
+  changeWorkTime: function(e) {
     wx.setStorage({
       key: 'workTime',
       data: e.detail.value
     })
   },
-  changeRestTime: function (e) {
+  changeRestTime: function(e) {
     wx.setStorage({
       key: 'restTime',
       data: e.detail.value

@@ -14,7 +14,7 @@
   align-items: center;
   text-align: center;
   background-color: #3197ed;
-  transition: all .5s;
+  transition: all 0.5s;
   z-index: 1;
   padding: 10px 0;
 }
@@ -27,7 +27,7 @@
   width: 150px;
   height: 150px;
   text-align: center;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .timer_progress {
@@ -36,7 +36,7 @@
   width: 75px;
   height: 150px;
   overflow: hidden;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .timer_progress_mask {
@@ -46,7 +46,7 @@
   bottom: 0;
   right: 0;
   border: 3px solid #1589eb;
-  opacity: .5;
+  opacity: 0.5;
   border-radius: 50%;
 }
 
@@ -65,7 +65,7 @@
   height: 150px;
   border: 3px solid transparent;
   border-radius: 50%;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .timer_circle--left {
@@ -86,7 +86,7 @@
   font-size: 40px;
   color: #fff;
   font-weight: lighter;
-  transition: font-size .3s;
+  transition: font-size 0.3s;
 }
 
 .timer_taskName {
@@ -119,7 +119,7 @@
   align-items: center;
   flex: 1;
   padding-top: 40px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .timer .timer_ctrl {
@@ -133,10 +133,9 @@
   height: 80px;
   margin: 0 20px;
   border-radius: 50%;
-  transition: all .7s;
+  transition: all 0.7s;
   background-color: #1589eb;
 }
-
 
 /*runing style*/
 
@@ -172,43 +171,20 @@
 }
 
 .timer--runing .timer_ctrl {
-  background-color: #208DEA;
+  background-color: #208dea;
   height: 30px;
   margin-bottom: 30px;
   border: 1px dashed #dedede;
   border-radius: 20px;
 }
-.container,
-input,
-button {
+
+.container, input, button {
   font: 14px "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
-view,
-sroll-view,
-swiper,
-icon,
-text,
-progress,
-button,
-checkbox,
-form,
-input,
-label,
-input,
-picker,
-radio,
-slider,
-switch,
-action-sheet,
-modal,
-toast,
-loading,
-navigator,
-audio,
-image,
-video,
-map,
-canvas {
+
+view, sroll-view, swiper, icon, text, progress, button, checkbox, form, input,
+label, input, picker, radio, slider, switch, action-sheet, modal, toast, loading,
+navigator, audio, image, video, map, canvas {
   box-sizing: border-box;
 }
 
@@ -217,12 +193,10 @@ page {
 }
 
 .hide {
-  display: none!important;
+  display: none !important;
 }
 
-.container,
-input,
-button {
+.container, input, button {
   font: 14px "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
 
@@ -236,21 +210,22 @@ button {
   border-radius: 3px;
   padding: 5px 10px;
 }
-.nodata{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
+
+.nodata {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.nodata_img{
-	display: block;
-	width: 45px;
-	height: 45px;
+.nodata_img {
+  display: block;
+  width: 45px;
+  height: 45px;
 }
 
-.nodata_text{
-	color:#dedede;
-	font-size: 12px;
-	padding-left: 10px;
+.nodata_text {
+  color: #dedede;
+  font-size: 12px;
+  padding-left: 10px;
 }

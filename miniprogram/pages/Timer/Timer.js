@@ -25,7 +25,7 @@ Page({
     rightDeg: initDeg.right
   },
 
-  onShow: function () {
+  onShow: function() {
     if (this.data.isRuning) return
     let workTime = util.formatTimeV2(wx.getStorageSync('workTime'), 'HH')
     let restTime = util.formatTimeV2(wx.getStorageSync('restTime'), 'HH')
@@ -36,10 +36,10 @@ Page({
     })
   },
 
-  startTimer: function (e) {
-    wx.hideTabBar({
-      aniamtion: true
-    })
+  startTimer: function(e) {
+    // wx.hideTabBar({
+    //   aniamtion: true
+    // })
     let startTime = Date.now()
     let isRuning = this.data.isRuning
     let timerType = e.target.dataset.type
@@ -48,7 +48,7 @@ Page({
     let logName = this.logName || defaultLogName[timerType]
 
     if (!isRuning) {
-      this.timer = setInterval((function () {
+      this.timer = setInterval((function() {
         this.updateTimer()
         this.startNameAnimation()
       }).bind(this), 1000)
@@ -74,7 +74,7 @@ Page({
     }
   },
 
-  startNameAnimation: function () {
+  startNameAnimation: function() {
     let animation = wx.createAnimation({
       duration: 450
     })
@@ -85,10 +85,11 @@ Page({
     })
   },
 
-  stopTimer: function () {
-    wx.showTabBar({
-      aniamtion: true
-    })
+  stopTimer: function() {
+    console.log('stop function')
+    // wx.showTabBar({
+    //   aniamtion: true
+    // })
     this.setData({
       leftDeg: initDeg.left,
       rightDeg: initDeg.right
@@ -98,7 +99,7 @@ Page({
     this.timer && clearInterval(this.timer)
   },
 
-  updateTimer: function () {
+  updateTimer: function() {
     let log = this.data.log
     let now = Date.now()
     let remainingTime = Math.round((log.endTime - now) / 1000)
@@ -136,8 +137,7 @@ Page({
       })
     }
   },
-
-  changeLogName: function (e) {
+  changeLogName: function(e) {
     this.logName = e.detail.value
   },
 })

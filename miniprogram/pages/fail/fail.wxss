@@ -4,6 +4,7 @@
   text-align: center;
   margin: 60rpx;
 }
-.weui-form-preview{
-    margin-bottom: 25px;
+
+.weui-form-preview {
+  margin-bottom: 25px;
 }

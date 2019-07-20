@@ -14,26 +14,26 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       planId: options.planId
     })
   },
-  backTohome: function () {
+  backTohome: function() {
     util.homePage()
   },
-  shareMenu: function () {
+  shareMenu: function() {
     wx.showToast({
       title: '点击右上角分享给好友',
       icon: 'none'
     })
   },
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
       path: '/pages/invited/invited?planId=' + this.data.planId,
       desc: '快来完成我发布的计划吧',
       imageUrl: '/images/share_' + util.getRandInt(0, 4) + '.png',
-      success: function (res) {
+      success: function(res) {
         console.log('转发成功', res)
       }
     }

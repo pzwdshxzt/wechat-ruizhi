@@ -1,39 +1,39 @@
 <!--miniprogram/pages/Plan/Jobs.wxml-->
 <!--miniprogram/pages/Job/Job.wxml-->
 <view class="weui-form-preview">
-    <view class="weui-form-preview__hd">
-        <view class="weui-form-preview__label">任务名称</view>
-        <view class="weui-form-preview__value_in-hd">{{job.inviteName}}</view>
+  <view class="weui-form-preview__hd">
+    <view class="weui-form-preview__label">任务名称</view>
+    <view class="weui-form-preview__value_in-hd">{{job.inviteName}}</view>
+  </view>
+  <view class="weui-form-preview__bd">
+    <view class="weui-form-preview__item">
+      <view class="weui-form-preview__label">已打卡期数</view>
+      <view class="weui-form-preview__value">{{job.doneCount}}</view>
     </view>
-    <view class="weui-form-preview__bd">
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">已打卡期数</view>
-            <view class="weui-form-preview__value">{{job.doneCount}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">任务期数</view>
-            <view class="weui-form-preview__value">{{job.inviteCount}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-            <view class="weui-form-preview__label">任务状态</view>
-            <view class="weui-form-preview__value">{{statusCode[job.status]}}</view>
-        </view>
-        <view class="weui-form-preview__item">
-          <view class="weui-form-preview__label">任务进度</view>
-        </view>
-        <view class="weui-form-preview__item">
-         <view class="weui-progress">
-            <view class="weui-progress__bar">
-                <progress  color="white" activeColor="#1589eb" percent="{{progress}}" stroke-width="3" />
-            </view>
-           </view>
-        </view>
+    <view class="weui-form-preview__item">
+      <view class="weui-form-preview__label">任务期数</view>
+      <view class="weui-form-preview__value">{{job.inviteCount}}</view>
     </view>
-    <view class="weui-cells__title">打卡记录</view>
-    <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
-        <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}&isAuthFlag=true" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <view class="weui-cell__bd">{{item.date}}</view>
-            <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>
-        </navigator>
+    <view class="weui-form-preview__item">
+      <view class="weui-form-preview__label">任务状态</view>
+      <view class="weui-form-preview__value">{{statusCode[job.status]}}</view>
     </view>
+    <view class="weui-form-preview__item">
+      <view class="weui-form-preview__label">任务进度</view>
+    </view>
+    <view class="weui-form-preview__item">
+      <view class="weui-progress">
+        <view class="weui-progress__bar">
+          <progress color="white" activeColor="#1589eb" percent="{{progress}}" stroke-width="3" />
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-cells__title">打卡记录</view>
+  <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+    <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}&isAuthFlag=true" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">{{item.date}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>
+    </navigator>
+  </view>
 </view>

@@ -30,7 +30,7 @@
       </view>
     </view>
     <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="openApplyPage" wx:if="{{job.status === 0}}">打卡申请</button>
-    <button class="weui-btn" bindtap="gotoPlanDetails" >查看计划详情</button>
+    <button class="weui-btn" bindtap="gotoPlanDetails">查看计划详情</button>
 
   </view>
   <view class="weui-cells__title">打卡记录</view>

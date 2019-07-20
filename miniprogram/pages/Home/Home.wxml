@@ -1,15 +1,15 @@
 <!--miniprogram/pages/Jobs/Jobs.wxml-->
 <!-- 简介 -->
 <view class="swiper_hd">
-  <swiper bindchange="bindchangePlan"  autoplay='true' interval='3000' duration='1000' circular='true'>
-    <block wx:for="{{otherPlans}}"  wx:key="index">
+  <swiper autoplay='true' interval='3000' duration='1000' circular='true'>
+    <block wx:for="{{otherPlans}}" wx:key="index">
       <swiper-item class='banner-show'>
-          <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
-            <image  mode="aspectFit" src='{{item.banner_url}}' />
-            <view class="swiper-item demo-text-1">
-              <text>{{item.inviteName}}</text>
-             </view>
-          </navigator>
+        <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
+          <image mode="aspectFit" src='{{item.banner_url}}' />
+          <view class="swiper-item demo-text-1">
+            <text>{{item.inviteName}}</text>
+          </view>
+        </navigator>
       </swiper-item>
     </block>
   </swiper>

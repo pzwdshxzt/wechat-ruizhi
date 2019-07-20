@@ -1,25 +1,25 @@
 <view class="page">
-    <view class="weui-msg">
-        <view class="weui-msg__icon-area">
-            <icon type="success" color="#1589eb" size="93"></icon>
-        </view>
-        <view class="weui-msg__text-area">
-            <view class="weui-msg__title">{{title}}</view>
-            <view class="weui-msg__desc">{{content}}</view>
-        </view>
-        <view class="weui-msg__opr-area">
-            <view class="weui-btn-area">
-                <button style="background-color:#1589eb;color:white"  bindtap="backTohome" class="weui-btn" type="primary">返回首页</button>
-                <!-- <button class="weui-btn" type="default">辅助操作</button> -->
-            </view>
-        </view>
-        <view class="weui-msg__extra-area">
-            <view class="weui-footer">
-                <view class="weui-footer__links">
-                    <navigator url="" class="weui-footer__link">睿智小程序</navigator>
-                </view>
-                <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
-            </view>
-        </view>
+  <view class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="success" color="#1589eb" size="93"></icon>
     </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">{{title}}</view>
+      <view class="weui-msg__desc">{{content}}</view>
+    </view>
+    <view class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button style="background-color:#1589eb;color:white" bindtap="backTohome" class="weui-btn" type="primary">返回首页</button>
+        <!-- <button class="weui-btn" type="default">辅助操作</button> -->
+      </view>
+    </view>
+    <view class="weui-msg__extra-area">
+      <view class="weui-footer">
+        <view class="weui-footer__links">
+          <navigator url="" class="weui-footer__link">睿智小程序</navigator>
+        </view>
+        <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
+      </view>
+    </view>
+  </view>
 </view>

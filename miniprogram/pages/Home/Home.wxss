@@ -3,26 +3,25 @@
 .weui-form-preview {
   margin-bottom: 25px;
 }
-swiper{
+
+swiper {
   height: 180px;
 }
-image{
-  width: 100%
+
+image {
+  width: 100%;
 }
+
 .swiper_hd {
   padding: 20px;
-
 }
 
-.demo-text-1{
+.demo-text-1 {
   position: fixed;
   left: 12%;
   top: 80%;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #fff;
   font-size: 36rpx;
 }
-
-
-
