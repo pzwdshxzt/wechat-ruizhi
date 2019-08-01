@@ -127,19 +127,21 @@ Page({
   },
   chooseImage: function (e) {
     var that = this;
-    let path = 'apply-' + util.getTimeStamp() + util.getRandInt(10000000,99999999) + '.png'
+    
     wx.chooseImage({
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
-        console.log(res.tempFilePaths)
-        wx.cloud.uploadFile({
-          cloudPath: path,
-          filePath: res.tempFilePaths[0],
-        }).then(res =>{
-          that.setData({
-            files: that.data.files.concat(res.fileID)
-          });
+        res.tempFilePaths.map(file =>{
+          let path = 'apply-' + util.getTimeStamp() + util.getRandInt(10000000, 99999999) + '.png'
+          wx.cloud.uploadFile({
+            cloudPath: path,
+            filePath: file,
+          }).then(res => {
+            that.setData({
+              files: that.data.files.concat(res.fileID)
+            });
+          })
         })
       }
     })
