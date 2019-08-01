@@ -22,4 +22,5 @@
     <view class="weui-form-preview__label">是否展示</view>
     <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
   </view>
+  
 </view>

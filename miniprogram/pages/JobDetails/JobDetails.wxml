@@ -27,6 +27,18 @@
         <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
       </view>
     </view>
+
+
+    <view style="text-align:center">
+        <view wx:if="{{JobDetails.files.length !== 0}}">
+          <view class="weui-cells__title">附件图片</view>
+        </view>
+        <block  wx:for="{{JobDetails.files}}" wx:key="index">
+            <image mode="aspectFit" src='{{item}}' />
+        </block>
+    </view>
+
+
     <view wx:if="{{isAuthFlag}}">
       <view class="weui-cells__title">审批意见</view>
       <view class="weui-cells weui-cells_after-title">

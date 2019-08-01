@@ -19,6 +19,9 @@ Page({
   onPullDownRefresh: function() {
     this.onInitData()
   },
+  onLoad:function(){
+    util.openLoading('数据加载中')
+  },
   /**
    * 数据初始化
    */
@@ -101,7 +104,7 @@ Page({
     })
   },
   onShow: function() {
-    util.openLoading('数据加载中')
+    
     if (app.globalData.openid && app.globalData.userInfo !== {}) {
       this.setData({
         openid: app.globalData.openid

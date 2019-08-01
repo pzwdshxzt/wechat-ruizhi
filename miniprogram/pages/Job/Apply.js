@@ -17,7 +17,8 @@ Page({
     planUid: '',
     inputNum: 0,
     isAgree: false,
-    errorMsg: '输入有误'
+    errorMsg: '输入有误',
+    files: []
   },
 
   /**
@@ -82,7 +83,8 @@ Page({
           authFlag: 0,
           formId: e.detail.formId,
           createTime: util.getTimeStamp(),
-          updateTime: util.getTimeStamp()
+          updateTime: util.getTimeStamp(),
+          files: this.data.files
         },
         success: res => {
           util.closeLoading()
@@ -122,5 +124,30 @@ Page({
         errorMsg: '输入错误'
       });
     }, 3000);
+  },
+  chooseImage: function (e) {
+    var that = this;
+    let path = 'apply-' + util.getTimeStamp() + util.getRandInt(10000000,99999999) + '.png'
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        console.log(res.tempFilePaths)
+        wx.cloud.uploadFile({
+          cloudPath: path,
+          filePath: res.tempFilePaths[0],
+        }).then(res =>{
+          that.setData({
+            files: that.data.files.concat(res.fileID)
+          });
+        })
+      }
+    })
+  },
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.files // 需要预览的图片http链接列表
+    })
   }
 })
