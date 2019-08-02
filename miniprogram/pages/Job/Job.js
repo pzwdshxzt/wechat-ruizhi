@@ -23,10 +23,19 @@ Page({
     progress: 0,
     statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
     authCode: ['待审核', '已拒绝', '审核通过'],
-    planUid: ''
+    planUid: '',
+    jobDetailsTotalCount: 0,
+    isloadmore: false
   },
   onLoad: function(options) {
     util.openLoading('数据加载中')
+    db.collection('JobDetails').where({
+      JobId: options.JobId
+    }).count().then(res => {
+      this.setData({
+        jobDetailsTotalCount: res.total
+      })
+    })
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
         job: res.data,
@@ -37,13 +46,16 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-        JobId: res.data._id
-      }).get().then(res => {
-        this.setData({
-          JobDetails: res.data
+          JobId: res.data._id
+        }).orderBy('date', 'desc')
+        .orderBy('time', 'desc')
+        .limit(10)
+        .get().then(res => {
+          this.setData({
+            JobDetails: res.data
+          })
+          util.closeLoading()
         })
-        util.closeLoading()
-      })
     })
   },
   openApplyPage() {
@@ -104,5 +116,43 @@ Page({
     wx.navigateTo({
       url: 'ShowPlanDetails?PlanId=' + this.data.job.planId,
     })
+  },
+  onReachBottom: function() {
+    console.log('111111111111')
+    this.setData({
+      isloadmore: true
+    })
+    var that = this;
+    if (this.data.JobDetails.length < this.data.jobDetailsTotalCount) {
+      console.log('in')
+      db.collection('JobDetails')
+        .where({
+          JobId: this.data.job._id
+        })
+        .orderBy('date', 'desc')
+        .orderBy('time', 'desc')
+        .skip(this.data.JobDetails.length)
+        .limit(10)
+        .get().then(res => {
+          console.log(res)
+          if (res.data.length > 0) {
+            var jobDetails = {};
+            jobDetails = that.data.JobDetails.concat(res.data);
+            that.setData({
+              JobDetails: jobDetails,
+            })
+          }
+          this.setData({
+            isloadmore: false
+          })
+        }).catch(res => {
+          console.log("======" + res);
+        })
+    } else {
+      console.log('empty')
+      this.setData({
+        isloadmore: false
+      })
+    }
   }
 })

@@ -50,9 +50,8 @@ Page({
       this.setData({
         Jobs: res.data
       })
+      util.closeLoading()
     })
-
-    util.closeLoading()
   },
   onShareAppMessage: function() {
     return {

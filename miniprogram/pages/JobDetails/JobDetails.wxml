@@ -30,7 +30,7 @@
 
 
     <view style="text-align:center">
-        <view wx:if="{{JobDetails.files.length !== 0}}">
+        <view wx:if="{{JobDetails.files && JobDetails.files.length !== 0}}">
           <view class="weui-cells__title">附件图片</view>
         </view>
         <block  wx:for="{{JobDetails.files}}" wx:key="index">

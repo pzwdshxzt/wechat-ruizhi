@@ -63,6 +63,7 @@ const openLoading = (title) => {
 }
 const closeLoading = () => {
   wx.hideLoading();
+  wx.stopPullDownRefresh();
 }
 
 const loginFunction = () => {
