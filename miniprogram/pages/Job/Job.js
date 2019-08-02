@@ -118,13 +118,11 @@ Page({
     })
   },
   onReachBottom: function() {
-    console.log('111111111111')
     this.setData({
       isloadmore: true
     })
     var that = this;
     if (this.data.JobDetails.length < this.data.jobDetailsTotalCount) {
-      console.log('in')
       db.collection('JobDetails')
         .where({
           JobId: this.data.job._id
@@ -149,7 +147,6 @@ Page({
           console.log("======" + res);
         })
     } else {
-      console.log('empty')
       this.setData({
         isloadmore: false
       })
