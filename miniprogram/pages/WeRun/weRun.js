@@ -1,48 +1,5 @@
 const util = require('../../Utils/Util.js');
 import F2 from '@antv/wx-f2';
-let chart = null;
-
-function initChart(canvas, width, height, F2) { // 使用 F2 绘制图表
-  const data = [
-    // { year: '1951 年', sales: 38 },
-    // { year: '1952 年', sales: 52 },
-    // { year: '1956 年', sales: 61 },
-    // { year: '1957 年', sales: 145 },
-    // { year: '1958 年', sales: 48 },
-    // { year: '1959 年', sales: 38 },
-    // { year: '1960 年', sales: 38 },
-    // { year: '1962 年', sales: 38 },
-  ];
-  chart = new F2.Chart({
-    el: canvas,
-    width,
-    height
-  });
-
-  chart.source(data, {
-    step: {
-      tickCount: 5
-    },
-    date: {
-      tickCount: 10
-    }
-  });
-  chart.tooltip({
-    showItemMarker: false,
-    onShow(ev) {
-      const {
-        items
-      } = ev;
-      items[0].name = null;
-      items[0].name = items[0].title + '号';
-      items[0].value = items[0].value + '步';
-    }
-  });
-  chart.interval().position('date*step');
-  chart.render();
-  return chart;
-}
-
 let selectChart = null;
 
 function selectInitChart(canvas, width, height, F2) {
@@ -56,7 +13,7 @@ function selectInitChart(canvas, width, height, F2) {
 
   selectChart.source(data, {
     date: {
-      tickCount: 10
+      tickCount: 5
     },
     step: {
       tickCount: 5
@@ -85,22 +42,20 @@ function selectInitChart(canvas, width, height, F2) {
     snap: true,
     showXTip: true,
     showYTip: true,
+    showCrosshairs: true,
     crosshairsType: 'xy',
     crosshairsStyle: {
       lineDash: [2]
     },
     onShow(ev) {
-      const {
-        items
-      } = ev;
-      items[0].name = null;
+      const items = ev.items;
       items[0].name = items[0].title + '号';
       items[0].value = items[0].value + '步';
     }
   });
-
-  selectChart.area().position('date*step').color('#ccc');
-  selectChart.line().position('date*step').color('blue');
+  // selectChart.touchStart()
+  selectChart.area().position('date*step');
+  selectChart.line().position('date*step').color('#3197ed');
   selectChart.render();
   return selectChart;
 }
@@ -110,9 +65,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // opts: {
-    //   onInit: initChart
-    // },
     selectOpts: {
       onInit: selectInitChart
     },
@@ -155,7 +107,6 @@ Page({
           that.setData({
             stepInfoList: res.result
           })
-          // chart.changeData(res.result)
           selectChart.changeData(res.result)
         })
       }

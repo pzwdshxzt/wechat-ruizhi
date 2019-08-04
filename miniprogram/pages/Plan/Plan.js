@@ -14,20 +14,20 @@ Page({
     buttons: [{
         openType: 'contact',
         label: 'Contact',
-        icon: '/images/contact.png',
+        icon: '/images/icon/contact.png',
       },
       {
         label: 'Delete Plan',
-        icon: '/images/delete.png'
+        icon: '/images/icon/delete.png'
       },
       {
         openType: 'share',
         label: 'Share Plan',
-        icon: '/images/share.png'
+        icon: '/images/icon/share.png'
       },
       {
         label: 'Change Show',
-        icon: '/images/change.png'
+        icon: '/images/icon/change.png'
       }
     ],
     plan: {},

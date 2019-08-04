@@ -42,7 +42,7 @@ page {
   font-size: 14px;
 }
 .UCenter-bg {
-  background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/home.png?sign=beed2cea8973d5eb6a0e8aa42621a0a8&t=1564805277);
+  background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/home.png?sign=4ac31df4f80d2afd2a639fa6625bdccb&t=1564919045);
   background-size: cover;
   height: 200rpx;
   display: flex;
@@ -52,7 +52,7 @@ page {
   position: relative;
   flex-direction: column;
   align-items: center;
-  color: #fff;
+  /* color: #fff; */
   font-weight: 300;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }

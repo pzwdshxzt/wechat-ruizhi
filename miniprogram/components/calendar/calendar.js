@@ -10,21 +10,24 @@ Component({
     todayIndex: 0
   },
   lifetimes: {
-    attached: function () {
+    ready: function () {
       let now = new Date();
       let year = new Date().getFullYear();
       let month = new Date().getMonth() + 1;
-      this.dateInit();
+      this.dateInit()
       this.setData({
         year: year,
         month: month,
         isToday: '' + year + month + now.getDate()
       })
+    },
+    show: function(e) {
+      console.log(e)
     }
   },
   
   methods: {
-    dateInit: function (setYear, setMonth) {
+    dateInit: function(setYear, setMonth) {
       //全部时间的月份都是按0~11基准，显示月份才+1
       let dateArr = []; //需要遍历的日历数组数据
       let arrLen = 0; //dateArr的数组长度
@@ -33,7 +36,7 @@ Component({
       let nextYear = 0;
       let month = setMonth || now.getMonth(); //没有+1方便后面计算当月总天数
       let nextMonth = (month + 1) > 11 ? 1 : (month + 1);
-      let startWeek = new Date(year + ',' + (month + 1) + ',' + 1).getDay(); //目标月1号对应的星期
+      let startWeek = new Date(year + '' + (month + 1) + '' + 1).getDay(); //目标月1号对应的星期
       let dayNums = new Date(year, nextMonth, 0).getDate(); //获取目标月有多少天
       let obj = {};
       let num = 0;
@@ -64,7 +67,7 @@ Component({
       let nowWeek = nowDate.getDay();
       let getYear = setYear || nowYear;
       let getMonth = setMonth >= 0 ? (setMonth + 1) : nowMonth;
-      if (nowYear == getYear && nowMonth == getMonth) {
+      if (nowYear === getYear && nowMonth === getMonth) {
         this.setData({
           isTodayWeek: true,
           todayIndex: nowWeek
@@ -77,9 +80,9 @@ Component({
       }
     },
     /**
-   * 上月切换
-   */
-    lastMonth: function () {
+     * 上月切换
+     */
+    lastMonth: function() {
       //全部时间的月份都是按0~11基准，显示月份才+1
       let year = this.data.month - 2 < 0 ? this.data.year - 1 : this.data.year;
       let month = this.data.month - 2 < 0 ? 11 : this.data.month - 2;
@@ -92,7 +95,7 @@ Component({
     /**
      * 下月切换
      */
-    nextMonth: function () {
+    nextMonth: function() {
       //全部时间的月份都是按0~11基准，显示月份才+1
       let year = this.data.month > 11 ? this.data.year + 1 : this.data.year;
       let month = this.data.month > 11 ? 0 : this.data.month;
@@ -102,9 +105,9 @@ Component({
       })
       this.dateInit(year, month);
     },
-    lookHuoDong: function (e) {
+    lookHuoDong: function(e) {
       console.log(e)
     }
   }
-  
+
 })

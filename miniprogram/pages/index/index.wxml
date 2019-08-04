@@ -2,7 +2,8 @@
 <scroll-view scroll-y class="scrollPage">
   <view class="UCenter-bg index">
     <image src="{{avatarUrl}}" class="cu-avatar round  png" mode="widthFix"></image>
-    <view class="text-xl">{{nickName}}
+    <view class="text-xl text-white">
+      {{nickName}}
       <!-- <text class="text-df">{{userInfo.language}}</text> -->
     </view>
     <!-- <view class="margin-top-sm">

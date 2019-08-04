@@ -74,6 +74,6 @@ page {
   right: 15px;
 }
 .index {
-   /* background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/index.png?sign=53bec78c8e20fd4c63fb6a49fdb9fd9b&t=1564898453); */
+   background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/123.png?sign=475493af5c56a5939549810daba382fc&t=1564918517);
    height: 400rpx;
 }

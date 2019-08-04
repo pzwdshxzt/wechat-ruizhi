@@ -10,11 +10,11 @@ Page({
     buttons: [{
         openType: 'contact',
         label: 'Contact',
-        icon: '/images/contact.png',
+        icon: '/images/icon/contact.png',
       },
       {
         label: 'Delete Job',
-        icon: '/images/delete.png'
+        icon: '/images/icon/delete.png'
       }
     ],
     job: {},

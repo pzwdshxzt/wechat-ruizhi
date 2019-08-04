@@ -3,8 +3,8 @@
 .icon {
   height: 70rpx;
   width: 70rpx;
-  color: #69f;
-  border: 4rpx solid #69f;
+  color: #3197ed;
+  border: 4rpx solid #3197ed;
   border-radius: 50%;
   text-align: center;
 }
@@ -17,7 +17,7 @@
   margin: 10rpx auto;
   justify-content: space-between;
   font-size: 20pt;
-  color: #69f;
+  color: #3197ed;
   padding: 10rpx 40rpx ;
 }
 
@@ -67,7 +67,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  border-bottom: 2px solid #69f;
+  border-bottom: 2px solid #3197ed;
 }
 
 .date-box {
@@ -97,6 +97,6 @@
   border-radius: 50%;
   text-align: center;
   color: #fff;
-  background-color: #f93;
+  background-color: #3197ed;
   margin: 0 auto;
 }
