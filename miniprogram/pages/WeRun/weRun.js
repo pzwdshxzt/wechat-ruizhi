@@ -55,6 +55,10 @@ function selectInitChart(canvas, width, height, F2) {
   });
   // selectChart.touchStart()
   selectChart.area().position('date*step');
+  selectChart.point().position('date*step').style({
+    stroke: '#fff',
+    lineWidth: 1
+  });
   selectChart.line().position('date*step').color('#3197ed');
   selectChart.render();
   return selectChart;
@@ -82,17 +86,16 @@ Page({
         const encryptedData = res.encryptedData
         // 或拿 cloudID 通过云调用直接获取开放数据
         const cloudID = res.cloudID
-        console.log(res)
-        wx.cloud.callFunction({
-          name: 'openapi',
-          data: {
-            action: 'getWeRunData',
-            weRunData: wx.cloud.CloudID(cloudID), // 这个 CloudID 值到云函数端会被替换
-          }
-        }).then(res => {
-          console.log(res.result)
-          console.log(util.timeStampToTimeV3(res.result.timestamp))
-        })
+        // wx.cloud.callFunction({
+        //   name: 'openapi',
+        //   data: {
+        //     action: 'getWeRunData',
+        //     weRunData: wx.cloud.CloudID(cloudID), // 这个 CloudID 值到云函数端会被替换
+        //   }
+        // }).then(res => {
+        //   console.log(res.result)
+        //   console.log(util.timeStampToTimeV3(res.result.timestamp))
+        // })
         wx.cloud.callFunction({
           name: 'openapi',
           data: {
