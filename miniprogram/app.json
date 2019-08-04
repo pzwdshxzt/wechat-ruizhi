@@ -1,5 +1,6 @@
 {
   "pages": [
+      "pages/WeRun/weRun",
     "pages/Home/Home",
     "pages/index/index",
     "pages/Job/Job",
@@ -18,25 +19,32 @@
     "pages/invite/showInfo",
     "pages/invite/success",
     "pages/Job/ShowPlanDetails",
+ 
     "pages/invite/cropper"
   ],
   "tabBar": {
     "list": [
       {
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home_active.png",
+        "iconPath": "/images/tarbar/home.png",
+        "selectedIconPath": "/images/tarbar/home_active.png",
         "pagePath": "pages/Home/Home",
         "text": "首页"
       },
       {
-        "iconPath": "images/time.png",
-        "selectedIconPath": "images/time_active.png",
+        "iconPath": "/images/tarbar/time.png",
+        "selectedIconPath": "/images/tarbar/time_active.png",
+        "pagePath": "pages/WeRun/weRun",
+        "text": "运动"
+      },
+      {
+        "iconPath": "/images/tarbar/time.png",
+        "selectedIconPath": "images/tarbar/time_active.png",
         "pagePath": "pages/Timer/Timer",
         "text": "计时器"
       },
       {
-        "iconPath": "images/me.png",
-        "selectedIconPath": "images/me_active.png",
+        "iconPath": "/images/tarbar/me.png",
+        "selectedIconPath": "/images/tarbar/me_active.png",
         "pagePath": "pages/index/index",
         "text": "我的"
       }
@@ -52,8 +60,12 @@
     "navigationBarBackgroundColor": "#3197ed",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
+    "navigationStyle": "custom",
     "enablePullDownRefresh": true
   },
   "sitemapLocation": "sitemap.json",
-  "cloud": true
+  "cloud": true,
+  "usingComponents": {
+    "cu-custom": "/style/colorui/components/cu-custom"
+  }
 }

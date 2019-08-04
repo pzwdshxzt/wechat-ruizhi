@@ -16,6 +16,12 @@ const { INVITED, APPLY, AUTH } = {
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.action) {
+    case 'getWeRunData': {
+      return getWeRunData(event)
+    }
+    case 'getWeRunAllData': {
+      return getWeRunAllData(event)
+    }
     case 'Invited': {
       return sendInvited(event)
     }
@@ -28,10 +34,21 @@ exports.main = async (event, context) => {
     case 'getWXACode': {
       return getWXACode(event)
     }
+    
     default: {
       return
     }
   }
+}
+
+async function getWeRunAllData(event) {
+  let stepInfoList = event.weRunData.data.stepInfoList
+  return stepInfoList
+}
+async function getWeRunData(event) {
+  let stepInfoList = event.weRunData.data.stepInfoList
+  
+  return stepInfoList[stepInfoList.length -1]
 }
 
 async function sendAuth(event) {

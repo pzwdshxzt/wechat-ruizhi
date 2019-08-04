@@ -13,13 +13,14 @@ Page({
     openid: '',
     yourJobs: [],
     yourPlans: [],
-    otherPlans: []
+    otherPlans: [],
+    ColorList: app.globalData.ColorList,
   },
 
   onPullDownRefresh: function() {
     this.onInitData()
   },
-  onLoad:function(){
+  onLoad: function() {
     util.openLoading('数据加载中')
   },
   /**
@@ -44,6 +45,12 @@ Page({
       }).get({
         success: res => {
           if (!util.checkObject(res.data)) {
+            let dataList = this.data.ColorList;
+            let length = this.data.ColorList.length
+            res.data.map(data =>{
+              data.colorName = dataList[util.getRandInt(0, length)].name
+              data.text = data.inviteName.substring(0,1)
+            })
             this.setData({
               yourPlans: res.data
             })
@@ -104,7 +111,7 @@ Page({
     })
   },
   onShow: function() {
-    
+
     if (app.globalData.openid && app.globalData.userInfo !== {}) {
       this.setData({
         openid: app.globalData.openid
@@ -123,5 +130,46 @@ Page({
         console.log(err)
       })
     }
+  },
+  // ListTouch触摸开始
+  ListTouchStart(e) {
+    this.setData({
+      ListTouchStart: e.touches[0].pageX
+    })
+  },
+
+  // ListTouch计算方向
+  ListTouchMove(e) {
+    this.setData({
+      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+    })
+  },
+
+  // ListTouch计算滚动
+  ListTouchEnd(e) {
+    if (this.data.ListTouchDirection == 'left') {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    } else {
+      this.setData({
+        modalName: null
+      })
+    }
+    this.setData({
+      ListTouchDirection: null
+    })
+  },
+  toJobs: function(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../Job/Job?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+    })
+  },
+  toPlans: function(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+    })
   }
 })

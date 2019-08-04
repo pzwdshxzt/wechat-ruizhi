@@ -1,4 +1,8 @@
 <!--miniprogram/pages/Job/Job.wxml-->
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">申请审批</view>
+</cu-custom>
 <view class="weui-form-preview  page">
   <form bindsubmit="agreeApply" report-submit>
     <view class="weui-form-preview__hd">

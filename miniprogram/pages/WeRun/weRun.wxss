@@ -1,0 +1,10 @@
+/* miniprogram/pages/WeRun/weRun.wxss */
+
+#column-dom{
+  height: 30%;
+  width: 100%
+}
+#columnSelect{
+  height: 30%;
+  width: 100%
+}

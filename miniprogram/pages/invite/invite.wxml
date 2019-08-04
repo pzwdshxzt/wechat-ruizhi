@@ -1,4 +1,8 @@
 <!--pages/databaseGuide/databaseGuide.wxml-->
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">填写计划</view>
+</cu-custom>
 <view class="container">
   <view class="page__hd">
     <view class="page__title">计划</view>
@@ -13,17 +17,6 @@
   </view>
   <view class="page__bd">
     <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
-    <!-- 结语 -->
-    <view class="guide" wx:if="{{step === 3}}">
-      <text class="headline">生成计划成功！</text>
-      <text class="p">恭喜你，赶紧邀请好友来完成挑战吧！</text>
-
-      <div class="nav">
-        <button class="prev" size="mini" type="default" bindtap="shareMenu">邀请</button>
-        <button class="next" size="mini" type="default" bindtap="goHome">回到首页</button>
-      </div>
-    </view>
-
     <view class="weui-cells__title">计划名称</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">

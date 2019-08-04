@@ -1,0 +1,29 @@
+<!-- 日历年月 -->
+<view class='calendar_title'>
+  <view class='icon' bindtap='lastMonth'>
+    <text class="cuIcon-back text-olive"></text>
+  </view>
+  <view>{{year}}年{{month}}月</view>
+  <view class='icon' bindtap='nextMonth'>
+    <text class="cuIcon-right text-olive"></text>
+  </view>
+</view>
+<!-- 日历主体 -->
+<view class='calendar'>
+  <view class='header'>
+    <view wx:for='{{date}}' wx:key='' class='{{(index == todayIndex) && isTodayWeek ? "weekMark" : ""}}'>{{item}}
+      <view></view>
+    </view>
+  </view>
+
+  <view class='date-box'>
+    <block wx:for='{{dateArr}}' wx:key=''>
+      <view class='{{isToday == item.isToday ? "nowDay" : ""}}'>
+        <view class='date-head' bindtap='lookHuoDong' data-year='{{year}}' data-month='{{month}}' data-datenum='{{item.dateNum}}'>
+          <view>{{item.dateNum}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+</view>

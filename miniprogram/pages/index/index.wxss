@@ -73,38 +73,7 @@ page {
 .weui-cell:before {
   right: 15px;
 }
-
-.kind-list__item {
-  margin: 10px 0;
-  background-color: #fff;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.kind-list__item:first-child {
-  margin-top: 0;
-}
-
-.kind-list__img {
-  width: 30px;
-  height: 30px;
-}
-
-.kind-list__item-hd {
-  padding: 20px;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.kind-list__item-hd_show {
-  opacity: 0.4;
-}
-
-.kind-list__item-bd {
-  height: 0;
-  overflow: hidden;
-}
-
-.kind-list__item-bd_show {
-  height: auto;
+.index {
+   /* background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/index.png?sign=53bec78c8e20fd4c63fb6a49fdb9fd9b&t=1564898453); */
+   height: 400rpx;
 }

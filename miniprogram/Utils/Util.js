@@ -197,7 +197,10 @@ const timeStampToTimeV2 = (timeStamp) => {
  * 2010-10-20 10:00:00
  */
 const timeStampToTimeV3 = (timeStamp) => {
-  return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+  return new Date(parseInt(timeStamp) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+}
+const timeStampToTimeV4 = (timeStamp) => {
+  return new Date(parseInt(timeStamp) * 1000);
 }
 
 module.exports = {
@@ -220,5 +223,6 @@ module.exports = {
   getRandInt: getRandInt,
   timeStampToTimeV1: timeStampToTimeV1,
   timeStampToTimeV2: timeStampToTimeV2,
-  timeStampToTimeV3: timeStampToTimeV3
+  timeStampToTimeV3: timeStampToTimeV3,
+  timeStampToTimeV4: timeStampToTimeV4
 }

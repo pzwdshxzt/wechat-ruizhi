@@ -1,3 +1,7 @@
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">免责申明</view>
+</cu-custom>
 <view class="page">
   <view class="page__hd">
     <view class="page__title">睿智小程序免责声明</view>

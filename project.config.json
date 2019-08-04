@@ -7,11 +7,20 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"checkSiteMap": false
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"nodeModules": true
 	},
 	"appid": "wx237fe6b2c2f69081",
-	"projectname": "miniprogram-test-1",
-	"libVersion": "2.6.6",
+	"projectname": "睿智小程序",
+	"libVersion": "2.8.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

@@ -1,6 +1,9 @@
 <wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
   bind:getuserinfo="onGotUserInfo" />
-
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">任务</view>
+</cu-custom>
 <view class="weui-form-preview">
   <view class="weui-form-preview__hd">
     <view class="weui-form-preview__label">计划名称</view>

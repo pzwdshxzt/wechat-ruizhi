@@ -18,7 +18,7 @@ Page({
     award: '',
     awardCount: 0,
     type: 0,
-    types: ["打卡"],
+    types: ["打卡","运动"],
     isAgree: false,
     showTopTips: false,
     errorMsg: '输入有误',

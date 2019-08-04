@@ -32,7 +32,7 @@ Page({
     return {
       path: '/pages/invited/invited?planId=' + this.data.planId,
       desc: '快来完成我发布的计划吧',
-      imageUrl: '/images/share_' + util.getRandInt(0, 4) + '.png',
+      imageUrl: '/images/invite/share_' + util.getRandInt(0, 4) + '.png',
       success: function(res) {
         console.log('转发成功', res)
       }

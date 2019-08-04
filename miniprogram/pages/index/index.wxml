@@ -1,55 +1,80 @@
 <!--index.wxml-->
-<view class="container">
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg index">
+    <image src="{{avatarUrl}}" class="cu-avatar round  png" mode="widthFix"></image>
+    <view class="text-xl">{{nickName}}
+      <!-- <text class="text-df">{{userInfo.language}}</text> -->
+    </view>
+    <!-- <view class="margin-top-sm">
+      <text>{{userInfo.country}}</text>
+    </view> -->
+    <image src="cloud://cyq-dev-amyvi.6379-cyq-dev-amyvi/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
+  <view class="padding flex text-center text-grey bg-white shadow-warp">
+    <!-- <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange">{{visitTotal}}</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-attentionfill"></text> View</view>
+    </view> -->
+    <!-- <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-blue">{{starCount}}</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-favorfill"></text> Star</view>
+    </view>
+    <view class="flex flex-sub flex-direction">
+      <view class="text-xxl text-green">{{forksCount}}</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-fork"></text> Fork</view>
+    </view> -->
+  </view>
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <navigator class="content" url="../invite/invite" hover-class="none">
+        <text class="cuIcon-roundadd text-cyan"></text>
+        <text class="text-grey">计划邀请</text>
+      </navigator>
+    </view>
 
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="contact">
+        <text class="cuIcon-btn text-olive"></text>
+        <text class="text-grey">联系客服</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="/pages/index/log/log" hover-class="none">
+        <text class="cuIcon-formfill text-green"></text>
+        <text class="text-grey">升级日志</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
+      <view class="content" bindtap="doUpload">
+        <text class="cuIcon-upload text-blue"></text>
+        <text class="text-grey">上传图片</text>
+        <!-- </navigator> -->
+      </view>
+    </view>
 
-  <view class="page__bd page__bd_spacing">
-    <view class="kind-list">
-      <view class="kind-list__item">
-        <view class="weui-flex kind-list__item-hd">
-          <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
-          <view class="weui-flex__item">
-            <button class="userinfo-nickname" bindtap="onGetOpenid">{{nickName}}</button>
-          </view>
-        </view>
-        <view wx:if="{{imgUrl}}">
-          <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
-        </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-time text-red"></text>
+        <text class="text-grey">工作时间</text>
+        <slider style="width:90%" selected-color="#1589eb" color="#fff" bindchange="changeWorkTime" show-value="true" min="1" max="60" value="{{workTime}}" />
       </view>
-      <view class="kind-list__item">
-        <view class="weui-flex kind-list__item-hd" bindtap="kindToggle">
-          <view class="weui-flex__item">工作时间</view>
-          <image class="kind-list__img" src="/images/worktime.png"></image>
-
-        </view>
-        <slider selected-color="#1589eb" color="#fff" bindchange="changeWorkTime" show-value="true" min="1" max="60" value="{{workTime}}" left-icon="cancel" right-icon="success_no_circle" />
-      </view>
-      <view class="kind-list__item">
-        <view class="weui-flex kind-list__item-hd" bindtap="kindToggle">
-          <view class="weui-flex__item">休息时间</view>
-          <image class="kind-list__img" src="/images/resttime.png"></image>
-        </view>
-        <slider selected-color="#1589eb" color="#fff" bindchange="changeRestTime" show-value="true" min="1" max="60" value="{{restTime}}" left-icon="cancel" right-icon="success_no_circle" />
-      </view>
-      <view class="kind-list__item">
-        <navigator url="../invite/invite" open-type="navigate" class="uploader-text">
-          <view class="weui-flex kind-list__item-hd">
-            <view class="weui-flex__item">计划邀请</view>
-            <image class="kind-list__img" src="/images/invite.png"></image>
-          </view>
-        </navigator>
-      </view>
-      <view class="kind-list__item">
-        <view class="weui-flex kind-list__item-hd" bindtap="doUpload">
-          <view class="weui-flex__item">上传图片</view>
-          <image class="kind-list__img" src="/images/upload.png"></image>
-        </view>
-        <view wx:if="{{imgUrl}}">
-          <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
-        </view>
+    </view>
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-time text-green"></text>
+        <text class="text-grey">休息时间</text>
+        <slider style="width:90%" selected-color="#1589eb" color="#fff" bindchange="changeRestTime" show-value="true" min="1" max="60" value="{{restTime}}" />
       </view>
     </view>
   </view>
-
-
-
-</view>
+  <view class="cu-tabbar-height"></view>
+</scroll-view>
