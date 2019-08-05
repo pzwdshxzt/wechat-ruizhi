@@ -41,6 +41,9 @@ page {
   text-align: left;
   font-size: 14px;
 }
+.weui-toptips {
+  top: 10%
+}
 .UCenter-bg {
   background-image: url(https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/home.png?sign=4ac31df4f80d2afd2a639fa6625bdccb&t=1564919045);
   background-size: cover;

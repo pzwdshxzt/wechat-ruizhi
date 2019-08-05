@@ -15,7 +15,7 @@ Page({
     isSharePageIn: false,
     errorMsg: '你已经接受了该计划!',
     statusCode: ['进行中', '计划废弃'],
-    typeCode: ['打卡'],
+    typeCode: ['打卡','运动'],
     showCode: ['否', '是'],
     errorMsg: '系统异常QAQ'
   },
@@ -95,39 +95,44 @@ Page({
     }
 
   },
+  
   /**
    * 选择要执行的计划
    */
   acceptPlan: function(e) {
     util.openLoading('正在玩命的加载数据')
-    db.collection('Jobs').add({
-      data: {
-        planId: this.data.plan._id,
-        planUid: this.data.plan._openid,
-        jober: this.data.openid,
-        inviteName: this.data.plan.inviteName,
-        inviteCount: this.data.plan.inviteCount,
-        doneCount: 0,
-        userInfo: app.globalData.userInfo,
-        status: 0,
-        createTime: util.getTimeStamp(),
-        updateTime: util.getTimeStamp()
-      },
-      success: res => {
-        this.setData({
-          isSharePageIn: false
-        })
-        util.closeLoading()
-        wx.showToast({
-          icon: 'none',
-          title: '接受任务成功！'
-        })
-        util.homePage()
-      },
-      fail: err => {
-        this.showTopTips('接受任务失败!')
-      }
+    util.checkAuthUserInfo().then(res =>{
+      db.collection('Jobs').add({
+        data: {
+          planId: this.data.plan._id,
+          planUid: this.data.plan._openid,
+          jober: this.data.openid,
+          inviteName: this.data.plan.inviteName,
+          inviteCount: this.data.plan.inviteCount,
+          doneCount: 0,
+          userInfo: app.globalData.userInfo,
+          status: 0,
+          createTime: util.getTimeStamp(),
+          updateTime: util.getTimeStamp(),
+          type: this.data.plan.type
+        },
+        success: res => {
+          this.setData({
+            isSharePageIn: false
+          })
+          util.closeLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '接受任务成功！'
+          })
+          util.homePage()
+        },
+        fail: err => {
+          this.showTopTips('接受任务失败!')
+        }
+      })
     })
+    util.closeLoading()
   },
   onShow: function() {
     util.getUserInfo()

@@ -1,6 +1,5 @@
 {
   "pages": [
-      "pages/WeRun/weRun",
     "pages/Home/Home",
     "pages/index/index",
     "pages/Job/Job",
@@ -19,8 +18,9 @@
     "pages/invite/showInfo",
     "pages/invite/success",
     "pages/Job/ShowPlanDetails",
- 
-    "pages/invite/cropper"
+    "pages/invite/cropper",
+    "pages/WeRun/weRun",
+    "pages/WeRun/runJob"
   ],
   "tabBar": {
     "list": [
@@ -61,7 +61,7 @@
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
     "navigationStyle": "custom",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": false
   },
   "sitemapLocation": "sitemap.json",
   "cloud": true,

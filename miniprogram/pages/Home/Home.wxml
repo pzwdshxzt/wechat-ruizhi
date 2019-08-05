@@ -27,7 +27,7 @@
       </view>
     </view>
     <view class="cu-list menu-avatar">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toJobs'>
+      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-type="{{item.type}}" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toJobs'>
         <view class="cu-avatar round lg" style="background-image:url({{item.userInfo.avatarUrl}});"></view>
         <view class="content">
           <view class="text-grey">{{item.inviteName}}</view>

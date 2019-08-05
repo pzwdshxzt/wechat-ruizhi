@@ -8,8 +8,7 @@
   </view>
   <!-- <view style="height:30%">
     <ff-canvas id="column-dom" canvas-id="column" opts="{{ opts }}"></ff-canvas>
-  </view> -->
-  <calendar></calendar>
+  </view> -->  
   <view style="height:30%">
     <view class="cu-bar bg-white solid-bottom margin-top">
       <view class="action">

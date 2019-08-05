@@ -66,11 +66,13 @@ const closeLoading = () => {
   wx.stopPullDownRefresh();
 }
 
-const loginFunction = () => {
+const loginFunction = (userInfoID) => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'login',
-      data: {},
+      data: {
+        userInfo: wx.cloud.CloudID(userInfoID)
+      },
       success: res => {
         resolve(res.result)
       },
@@ -78,6 +80,34 @@ const loginFunction = () => {
         resolve()
       }
     })
+  })
+}
+const checkAuthUserInfo = () =>{
+  return new Promise((resolve, reject) => {
+    if (checkObject(app.globalData.userInfo)) {
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                loginFunction(res.cloudID).then(data =>{
+                  console.log(data)
+                })
+                app.globalData.userInfo = res.userInfo
+                resolve(res.userInfo)
+              }
+            })
+          }
+          else {
+            wx.navigateTo({
+              url: '../Auth/Auth'
+            })
+          }
+        }
+      })
+    }
   })
 }
 const getUserInfo = () => {
@@ -90,13 +120,10 @@ const getUserInfo = () => {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
               success: res => {
+                console.log(res)
                 app.globalData.userInfo = res.userInfo
                 resolve(res.userInfo)
               }
-            })
-          } else {
-            wx.navigateTo({
-              url: '../Auth/Auth'
             })
           }
         }
@@ -217,6 +244,7 @@ module.exports = {
   closeLoading: closeLoading,
   loginFunction: loginFunction,
   getUserInfo: getUserInfo,
+  checkAuthUserInfo: checkAuthUserInfo,
   compareVersion: compareVersion,
   addUserInfo: addUserInfo,
   planForEach: planForEach,

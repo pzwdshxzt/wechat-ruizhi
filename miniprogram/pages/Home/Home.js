@@ -22,6 +22,22 @@ Page({
   },
   onLoad: function() {
     util.openLoading('数据加载中')
+    if (app.globalData.openid && app.globalData.userInfo !== {}) {
+      this.setData({
+        openid: app.globalData.openid
+      })
+      this.onInitData()
+    } else {
+      util.loginFunction().then(res => {
+        console.log(res)
+        this.setData({
+          openid: res.openid
+        })
+        this.onInitData()
+      }).catch(err => {
+        console.log(err)
+      })
+    }
   },
   /**
    * 数据初始化
@@ -111,25 +127,7 @@ Page({
     })
   },
   onShow: function() {
-
-    if (app.globalData.openid && app.globalData.userInfo !== {}) {
-      this.setData({
-        openid: app.globalData.openid
-      })
-      this.onInitData()
-    } else {
-      util.loginFunction().then(res => {
-        util.getUserInfo().then(userInfo => {
-          util.addUserInfo(res.openid, userInfo)
-        })
-        this.setData({
-          openid: res.openid
-        })
-        this.onInitData()
-      }).catch(err => {
-        console.log(err)
-      })
-    }
+    this.onInitData()
   },
   // ListTouch触摸开始
   ListTouchStart(e) {
@@ -161,15 +159,27 @@ Page({
     })
   },
   toJobs: function(e) {
-    console.log(e)
-    wx.navigateTo({
-      url: '../Job/Job?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
-    })
+    let type = e.currentTarget.dataset.type
+    if(type === 0){
+      wx.navigateTo({
+        url: '../Job/Job?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+      })
+    }
+    if (type === 1) {
+      wx.navigateTo({
+        url: '../WeRun/runJob?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+      })
+    }
+
   },
   toPlans: function(e) {
     console.log(e)
     wx.navigateTo({
       url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
     })
+  },
+  onPullDownRefresh:function(e){
+    console.log(e)
+    this.onInitData()
   }
 })

@@ -10,6 +10,7 @@ App({
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
       wx.cloud.init({
+        env: "qaq-uau6p",//这个就是环境id
         traceUser: true,
       })
     }
@@ -39,6 +40,16 @@ App({
   globalData:{
     userInfo: {},
     imgSrc: '',
+    shareImg:[
+      'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_0.png?sign=079c089bd1013e332afb35bb7f5950e6&t=1564998222',
+      'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_1.png?sign=cf5e07d8da6208489d2ec4947ad3c905&t=1564998392',
+      'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_2.png?sign=c9bef885e1112d7ab95921ecda92d5d4&t=1564998426',
+      'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_3.png?sign=8e35b6f7f040102c97e5a5cca2643be6&t=1564998435'
+    ],
+    statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
+    authCode: ['待审核', '已拒绝', '审核通过'],
+    typeCode: ['打卡', '运动'],
+    showCode: ['否', '是'],
     ColorList: [{
       title: '嫣红',
       name: 'red',

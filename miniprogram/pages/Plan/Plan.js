@@ -2,6 +2,7 @@
 const db = wx.cloud.database()
 const util = require('../../Utils/Util.js');
 const dbConsole = require('../../Utils/DbConsole.js');
+const app = getApp();
 Page({
 
   /**
@@ -11,6 +12,7 @@ Page({
     sAngle: 0,
     eAngle: 360,
     spaceBetween: 10,
+    shareImg: app.globalData.shareImg,
     buttons: [{
         openType: 'contact',
         label: 'Contact',
@@ -32,10 +34,10 @@ Page({
     ],
     plan: {},
     Jobs: [],
-    authCode: ['待审核', '已拒绝', '审核通过'],
-    statusCode: ['进行中', '计划废弃'],
-    typeCode: ['打卡'],
-    showCode: ['否', '是']
+    authCode: app.globalData.authCode,
+    statusCode: app.globalData.statusCode,
+    typeCode: app.globalData.typeCode,
+    showCode: app.globalData.showCode
   },
   onLoad: function(options) {
     util.openLoading('数据加载中')
@@ -57,7 +59,7 @@ Page({
     return {
       path: '/pages/invited/invited?planId=' + this.data.plan._id,
       desc: '快来完成我发布的计划吧',
-      imageUrl: '/images/share_' + util.getRandInt(0, 4) + '.png',
+      imageUrl: this.data.shareImg[util.getRandInt(0, 4)],
       success: function(res) {
         console.log('转发成功', res)
       }

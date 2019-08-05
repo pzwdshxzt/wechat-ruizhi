@@ -4,6 +4,7 @@
 	<view slot="content">填写计划</view>
 </cu-custom>
 <view class="container">
+  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
   <view class="page__hd">
     <view class="page__title">计划</view>
     <view class="page__desc">
@@ -16,7 +17,7 @@
     </view>
   </view>
   <view class="page__bd">
-    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+    
     <view class="weui-cells__title">计划名称</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
@@ -30,7 +31,8 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
-          <view class="weui-label">计划期数</view>
+          <view class="weui-label" wx:if="{{!showWeRunNum}}">计划期数</view>
+          <view class="weui-label" wx:if="{{showWeRunNum}}">运动天数</view>
         </view>
         <view class="weui-cell__bd">
           <input type="digit" type="number" value='{{inviteCount}}' bindinput="getInviteCount" class="weui-input" placeholder="请输入计划期数" />
@@ -57,6 +59,16 @@
           <picker bindchange="bindTypeCodeChange" value="{{type}}" range="{{types}}">
             <view class="weui-select weui-select_in-select-after">{{types[type]}}</view>
           </picker>
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{showWeRunNum}}">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">运动步数</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input type="digit" type="number" value='{{weRunNum}}' bindinput="getWeRunNum" class="weui-input" placeholder="请输入运动步数" />
         </view>
       </view>
     </view>

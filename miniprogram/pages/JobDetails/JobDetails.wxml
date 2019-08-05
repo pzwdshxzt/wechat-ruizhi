@@ -1,7 +1,7 @@
 <!--miniprogram/pages/Job/Job.wxml-->
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
-	<view slot="backText">返回</view>
-	<view slot="content">申请审批</view>
+  <view slot="backText">返回</view>
+  <view slot="content">申请审批</view>
 </cu-custom>
 <view class="weui-form-preview  page">
   <form bindsubmit="agreeApply" report-submit>
@@ -13,33 +13,27 @@
       <view class="weui-form-preview__item">
         <view class="weui-form-preview__label">申请日期</view>
         <view class="weui-form-preview__value">{{JobDetails.date}}</view>
-      </view>
-      <view class="weui-form-preview__item">
         <view class="weui-form-preview__label">申请时间</view>
         <view class="weui-form-preview__value">{{JobDetails.time}}</view>
-      </view>
-      <view class="weui-form-preview__item">
         <view class="weui-form-preview__label">备注</view>
         <view class="weui-form-preview__value">{{JobDetails.applyTextarea}}</view>
-      </view>
-      <view class="weui-form-preview__item">
         <view class="weui-form-preview__label">审核状态</view>
         <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
-      </view>
-      <view class="weui-form-preview__item" wx:if="{{JobDetails.authFlag !== 0}}">
-        <view class="weui-form-preview__label">审核意见</view>
-        <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
+        <view wx:if="{{JobDetails.authFlag !== 0}}">
+          <view class="weui-form-preview__label">审核意见</view>
+          <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
+        </view>
       </view>
     </view>
 
 
     <view style="text-align:center">
-        <view wx:if="{{JobDetails.files && JobDetails.files.length !== 0}}">
-          <view class="weui-cells__title">附件图片</view>
-        </view>
-        <block  wx:for="{{JobDetails.files}}" wx:key="index">
-            <image mode="aspectFit" src='{{item}}' />
-        </block>
+      <view wx:if="{{JobDetails.files && JobDetails.files.length !== 0}}">
+        <view class="weui-cells__title">附件图片</view>
+      </view>
+      <block wx:for="{{JobDetails.files}}" wx:key="index">
+        <image mode="aspectFit" src='{{item}}' />
+      </block>
     </view>
 
 

@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
 	<view slot="backText">返回</view>
-	<view slot="content">审核申请</view>
+	<view slot="content">打卡申请</view>
 </cu-custom>
 <view class="page__bd">
   <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>

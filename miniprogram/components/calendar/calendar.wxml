@@ -17,7 +17,7 @@
   </view>
 
   <view class='date-box'>
-    <block wx:for='{{dateArr}}' wx:key=''>
+    <block wx:for='{{dateArr}}' wx:key="index">
       <view class='{{isToday == item.isToday ? "nowDay" : ""}}'>
         <view class='date-head' bindtap='lookHuoDong' data-year='{{year}}' data-month='{{month}}' data-datenum='{{item.dateNum}}'>
           <view>{{item.dateNum}}</view>

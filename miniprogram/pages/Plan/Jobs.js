@@ -2,6 +2,7 @@
 const db = wx.cloud.database()
 const _ = db.command
 const util = require('../../Utils/Util.js');
+const app = getApp()
 Page({
 
   /**
@@ -12,8 +13,8 @@ Page({
     jobId: '',
     JobDetails: [],
     progress: 0,
-    authCode: ['待审核', '已拒绝', '审核通过'],
-    statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
+    authCode: app.globalData.authCode,
+    statusCode: app.globalData.statusCode,
     planUid: '',
     isloadmore: false,
     jobDetailsTotalCount: 0

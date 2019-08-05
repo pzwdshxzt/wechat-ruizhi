@@ -1,6 +1,7 @@
 // miniprogram/pages/Job/ShowPlanDetails.js
 const util = require('../../Utils/Util.js');
 const db = wx.cloud.database()
+const app = getApp()
 Page({
 
   /**
@@ -8,10 +9,10 @@ Page({
    */
   data: {
     plan: {},
-    authCode: ['待审核', '已拒绝', '审核通过'],
-    statusCode: ['进行中', '计划废弃'],
-    typeCode: ['打卡'],
-    showCode: ['否', '是']
+    authCode: app.globalData.authCode,
+    statusCode: app.globalData.statusCode,
+    typeCode: app.globalData.typeCode,
+    showCode: app.globalData.showCode
   },
 
   /**

@@ -17,6 +17,8 @@ Page({
     contentCount: 0,
     award: '',
     awardCount: 0,
+    weRunNum: '',
+    showWeRunNum: false,
     type: 0,
     types: ["打卡","运动"],
     isAgree: false,
@@ -64,38 +66,59 @@ Page({
       inviteName: e.detail.value
     })
   },
-  getInviteCount: function(e) {
-    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
-    var num = e.detail.value;
-    if (!reg.test(num)) {
-      this.showTopTips('请填写数字')
+  getWeRunNum:function(e) {
+    if (this.checkNum(e.detail.value)) {
       this.setData({
-        inviteCount: ''
-      })  
+        weRunNum: e.detail.value
+      })
     } else {
+      console.log(e)
+      this.setData({
+        weRunNum: ''
+      })
+    }
+  },
+  getInviteCount: function(e) {
+    if (this.checkNum(e.detail.value)) {
       this.setData({
         inviteCount: e.detail.value
+      })
+    } else {
+      console.log(e)
+      this.setData({
+        inviteCount: ''
       })
     }
   },
   getInviteLimitCount: function(e) {
-    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
-    var num = e.detail.value;
-    if (!reg.test(num)) {
-      this.showTopTips('请填写数字')
-      this.setData({
-        inviteLimitCount: ''
-      })
-    } else {
+    if (this.checkNum(e.detail.value)) {
       this.setData({
         inviteLimitCount: e.detail.value
       })
+    } else {
+      console.log(e)
+      this.setData({
+        inviteLimitCount: ''
+      })
     }
+  },
+  checkNum: function(num){
+    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
+    if (!reg.test(num)) {
+      this.showTopTips('请填写数字')
+      return false
+    }
+    return true
   },
   bindTypeCodeChange: function(e) {
     this.setData({
       type: e.detail.value
     })
+    if (e.detail.value === '1' && !this.data.showWeRunNum) {
+      this.setData({
+        showWeRunNum: true
+      })
+    }
   },
   bindAgreeChange: function(e) {
     this.setData({
@@ -107,8 +130,14 @@ Page({
       this.showTopTips('请输入计划名称')
       return true
     }
-    if (this.data.inviteCount === 0 || this.data.inviteCount === '') {
-      this.showTopTips('请输入计划期数')
+    if (this.data.type === '1') {
+      if (this.data.weRunNum === 0 || this.data.weRunNum === '0' || this.data.weRunNum === '') {
+        this.showTopTips('请输入微信运动步数')
+        return true
+      }
+    }
+    if (this.data.inviteCount === 0 || this.data.inviteCount === '0' || this.data.weRunNum === '') {
+      this.showTopTips('请输入计划期数/运动天数')
       return true
     }
     if (!this.data.isAgree) {
@@ -131,6 +160,7 @@ Page({
   },
   sumbitPlan: function() {
     if (!this.checkInfo()) {
+      util.openLoading('正在玩命申请中...')
       let path = 'banner-' + util.getTimeStamp() + '.png'
       wx.cloud.uploadFile({
         cloudPath: path,
@@ -153,9 +183,11 @@ Page({
             inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
             createTime: util.getTimeStamp(),
             updateTime: util.getTimeStamp(),
-            banner_url: res.fileID
+            banner_url: res.fileID,
+            weRunNum: Number(this.data.weRunNum)
           }
         }).then(res => {
+          util.closeLoading()
           wx.reLaunch({
             url: 'success?planId=' + res._id
           })

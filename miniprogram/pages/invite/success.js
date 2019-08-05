@@ -1,11 +1,13 @@
 // miniprogram/pages/success/success.js
 const util = require('../../Utils/Util.js');
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    shareImg: app.globalData.shareImg,
     title: '计划发布成功',
     content: '该计划已提交成功！',
     planId: ''
@@ -32,7 +34,7 @@ Page({
     return {
       path: '/pages/invited/invited?planId=' + this.data.planId,
       desc: '快来完成我发布的计划吧',
-      imageUrl: '/images/invite/share_' + util.getRandInt(0, 4) + '.png',
+      imageUrl: this.data.shareImg[util.getRandInt(0, 4)],
       success: function(res) {
         console.log('转发成功', res)
       }

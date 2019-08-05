@@ -13,16 +13,10 @@
     <view class="weui-form-preview__item">
       <view class="weui-form-preview__label">已打卡期数</view>
       <view class="weui-form-preview__value">{{job.doneCount}}</view>
-    </view>
-    <view class="weui-form-preview__item">
       <view class="weui-form-preview__label">任务期数</view>
       <view class="weui-form-preview__value">{{job.inviteCount}}</view>
-    </view>
-    <view class="weui-form-preview__item">
       <view class="weui-form-preview__label">任务状态</view>
       <view class="weui-form-preview__value">{{statusCode[job.status]}}</view>
-    </view>
-    <view class="weui-form-preview__item">
       <view class="weui-form-preview__label">任务进度</view>
     </view>
     <view class="weui-form-preview__item">
