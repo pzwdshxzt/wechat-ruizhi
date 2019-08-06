@@ -24,7 +24,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    util.getUserInfo()
     util.openLoading('数据加载中')
     if (app.globalData.openid) {
       this.setData({
@@ -100,42 +99,47 @@ Page({
    * 选择要执行的计划
    */
   acceptPlan: function(e) {
-    util.openLoading('正在玩命的加载数据')
     util.checkAuthUserInfo().then(res =>{
-      db.collection('Jobs').add({
-        data: {
-          planId: this.data.plan._id,
-          planUid: this.data.plan._openid,
-          jober: this.data.openid,
-          inviteName: this.data.plan.inviteName,
-          inviteCount: this.data.plan.inviteCount,
-          doneCount: 0,
-          userInfo: app.globalData.userInfo,
-          status: 0,
-          createTime: util.getTimeStamp(),
-          updateTime: util.getTimeStamp(),
-          type: this.data.plan.type
-        },
-        success: res => {
-          this.setData({
-            isSharePageIn: false
-          })
-          util.closeLoading()
-          wx.showToast({
-            icon: 'none',
-            title: '接受任务成功！'
-          })
-          util.homePage()
-        },
-        fail: err => {
-          this.showTopTips('接受任务失败!')
-        }
-      })
+      this.addJob()
+    }).catch(err =>{
+      console.log('auth err')
     })
-    util.closeLoading()
+  },
+  addJob: function (){
+    util.openLoading('正在玩命的加载数据')
+    db.collection('Jobs').add({
+      data: {
+        planId: this.data.plan._id,
+        planUid: this.data.plan._openid,
+        jober: this.data.openid,
+        inviteName: this.data.plan.inviteName,
+        inviteCount: this.data.plan.inviteCount,
+        doneCount: 0,
+        userInfo: app.globalData.userInfo,
+        status: 0,
+        createTime: util.getTimeStamp(),
+        updateTime: util.getTimeStamp(),
+        type: this.data.plan.type
+      },
+      success: res => {
+        util.closeLoading()
+        this.setData({
+          isSharePageIn: false
+        })
+        util.closeLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '接受任务成功！'
+        })
+      },
+      fail: err => {
+        this.showTopTips('接受任务失败!')
+        util.closeLoading()
+      }
+    })
   },
   onShow: function() {
-    util.getUserInfo()
+    // util.getUserInfo()
   },
   cancelStep: function() {
     util.homePage()

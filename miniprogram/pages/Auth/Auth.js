@@ -30,15 +30,15 @@ Page({
     }
     wx.getUserInfo({
       success: res => {
-        console.log(res)
         this.setData({
           userInfo: res.userInfo
         })
         app.globalData.userInfo = res.userInfo
         wx.navigateBack()
-      },
-      fail: context.showAuthTip
+      }
     })
+  },
+  backPage:function(){
+    util.backPage(1)
   }
-
 })

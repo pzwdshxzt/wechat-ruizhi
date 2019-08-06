@@ -1,14 +1,15 @@
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
 	<view slot="backText">返回</view>
-	<view slot="content">授权</view>
+	<view slot="content">授权/登录</view>
 </cu-custom>
 <view class="page">
   <view class="page__hd">
     <view class="page__title">授权页面</view>
-    <view class="page__desc">为了您更好的体验，因此需要您授权本小程序</view>
+    <view class="page__desc">为了您更好的体验，因此需要您授权登录本小程序</view>
   </view>
   <view class="page__bd page__bd_spacing">
     <view class="button-sp-area">
+      <button  bindtap="backPage" class="weui-btn" style="background-color:#fff" plain="true">拒绝</button>
       <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="weui-btn" style="background-color:#1589eb;color:white" plain="true">授权</button>
     </view>
   </view>

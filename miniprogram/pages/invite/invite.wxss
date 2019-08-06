@@ -1,9 +1,2 @@
 /* miniprogram/pages/invite/invite.wxss */
-@import "../../style/guide.wxss";
 
-.guide .counter {
-  margin-top: 50rpx;
-  display: flex;
-  flex-direction: row;
-  align-content: space-between;
-}

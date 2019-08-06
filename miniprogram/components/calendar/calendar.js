@@ -10,7 +10,7 @@ Component({
     todayIndex: 0
   },
   lifetimes: {
-    ready: function () {
+    ready: function() {
       let now = new Date();
       let year = new Date().getFullYear();
       let month = new Date().getMonth() + 1;
@@ -25,25 +25,22 @@ Component({
       console.log(e)
     }
   },
-  
+
   methods: {
     dateInit: function(setYear, setMonth) {
       //全部时间的月份都是按0~11基准，显示月份才+1
-      let dateArr = []; //需要遍历的日历数组数据
-      let arrLen = 0; //dateArr的数组长度
       let now = setYear ? new Date(setYear, setMonth) : new Date();
       let year = setYear || now.getFullYear();
-      let nextYear = 0;
-      let month = setMonth || now.getMonth(); //没有+1方便后面计算当月总天数
-      let nextMonth = (month + 1) > 11 ? 1 : (month + 1);
-      let startWeek = new Date(year + '' + (month + 1) + '' + 1).getDay(); //目标月1号对应的星期
-      let dayNums = new Date(year, nextMonth, 0).getDate(); //获取目标月有多少天
+      //没有+1方便后面计算当月总天数
+      let month = setMonth || now.getMonth();
+      //目标月1号对应的星期
+      let startWeek = new Date(year, month, 1).getDay(); 
+      //获取目标月有多少天
+      let dayNums = new Date(year, month + 1, 0).getDate();
       let obj = {};
       let num = 0;
-      if (month + 1 > 11) {
-        nextYear = year + 1;
-        dayNums = new Date(nextYear, nextMonth, 0).getDate();
-      }
+      let dateArr = []; //需要遍历的日历数组数据
+      let arrLen = 0; //dateArr的数组长度
       arrLen = startWeek + dayNums;
       for (let i = 0; i < arrLen; i++) {
         if (i >= startWeek) {
@@ -107,6 +104,9 @@ Component({
     },
     lookHuoDong: function(e) {
       console.log(e)
+    },
+    prefixInteger: function(num, length) {
+      return (Array(length).join('0') + num).slice(-length);
     }
   }
 

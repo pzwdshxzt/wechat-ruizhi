@@ -23,7 +23,7 @@ exports.main = (event, context) => {
   const wxContext = cloud.getWXContext()
 
   return {
-    event,
+    userInfoData: event.userInfoData,
     openid: wxContext.OPENID, 
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,

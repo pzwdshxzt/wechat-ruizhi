@@ -24,8 +24,11 @@ const updateJobs = (_id, doneCount) => {
         updateTime: getTimeStamp()
       },
       success: res => {
-        console.log("updateJobs success")
-        resolve()
+        if (res.result.stats.updated === 0) {
+          reject()
+        } else {
+          resolve(res)
+        }
       },
       fail: res => {
         console.log("updateJobs fail")
@@ -47,8 +50,11 @@ const updateJobDetails = (_id, authFlag, authApplyTextarea) => {
         updateTime: getTimeStamp()
       },
       success: res => {
-        console.log("updateJobDetails success")
-        resolve()
+        if (res.result.stats.updated === 0) {
+          reject()
+        } else {
+          resolve(res)
+        }
       },
       fail: res => {
         console.log("updateJobDetails fail")
@@ -69,11 +75,13 @@ const updateJobStatus = (_id, status) => {
         updateTime: getTimeStamp()
       },
       success: res => {
-        console.log("updateJobDetails success")
-        resolve()
+        if (res.result.stats.updated === 0) {
+          reject()
+        } else {
+          resolve(res)
+        }
       },
       fail: res => {
-        console.log("updateJobDetails fail")
         reject()
       }
     })
@@ -90,12 +98,12 @@ const updateJobsAllStatus = (_id, status) => {
         updateTime: getTimeStamp()
       }
     }).then(res => {
-      console.log("updateJobsAllStatus success")
-
-      resolve(res)
-
+      if (res.result.stats.updated === 0) {
+        reject()
+      } else {
+        resolve(res)
+      }
     }).catch(res => {
-      console.log("updateJobsAllStatus fail")
       reject(res)
     })
   })
@@ -111,14 +119,17 @@ const updatePlanStatus = (_id, status) => {
         updateTime: getTimeStamp()
       }
     }).then(res => {
-      console.log(_id)
-      console.log("updatePlanStatus success")
-      updateJobsAllStatus(_id, 3).then(res => {
-        resolve(res)
-      })
-
+      if (status === 3) {
+        if (res.result.stats.updated === 0) {
+          reject()
+        } else {
+          updateJobsAllStatus(_id, 3).then(res => {
+            resolve(res)
+          })
+        }
+      }
+      resolve(res)
     }).catch(res => {
-      console.log("updatePlanStatus fail")
       reject(res)
     })
   })
@@ -134,10 +145,12 @@ const updatePlanShow = (_id, show) => {
         updateTime: getTimeStamp()
       }
     }).then(res => {
-      console.log("updatePlanShow success")
-      resolve(res)
+      if (res.result.stats.updated === 0) {
+        reject()
+      } else {
+        resolve(res)
+      }
     }).catch(res => {
-      console.log("updatePlanShow fail")
       reject(res)
     })
   })

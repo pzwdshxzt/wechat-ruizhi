@@ -8,13 +8,14 @@ Page({
   /**
    * 页面的初始数据
    */
-
   data: {
     openid: '',
     yourJobs: [],
     yourPlans: [],
     otherPlans: [],
     ColorList: app.globalData.ColorList,
+    CustomBar: app.globalData.CustomBar,
+    showSearchBar: false
   },
 
   onPullDownRefresh: function() {
@@ -29,7 +30,6 @@ Page({
       this.onInitData()
     } else {
       util.loginFunction().then(res => {
-        console.log(res)
         this.setData({
           openid: res.openid
         })
@@ -178,8 +178,10 @@ Page({
       url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
     })
   },
-  onPullDownRefresh:function(e){
-    console.log(e)
-    this.onInitData()
+  onPullDownRefresh: function(e){
+    this.setData({
+      showSearchBar: !this.data.showSearchBar
+    })
+    wx.stopPullDownRefresh()
   }
 })

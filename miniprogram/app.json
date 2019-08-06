@@ -4,7 +4,6 @@
     "pages/index/index",
     "pages/Job/Job",
     "pages/Plan/Plan",
-    "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/invited/invited",
     "pages/invite/invite",

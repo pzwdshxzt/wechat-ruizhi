@@ -1,13 +1,11 @@
-//index.js
 const app = getApp()
-
+const util = require('../../Utils/Util.js');
 Page({
   data: {
     avatarUrl: './user-unlogin.png',
-    userInfo: {},
+    userInfo: app.globalData.userInfo,
     logged: false,
     takeSession: false,
-    requestResult: '',
     nickName: '',
     workTime: '',
     restTime: ''
@@ -18,66 +16,35 @@ Page({
       workTime: wx.getStorageSync('workTime'),
       restTime: wx.getStorageSync('restTime')
     })
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
 
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo,
-                nickName: res.userInfo.nickName
-              })
-            }
-          })
-        }
-      }
-    })
-  },
-  getUserInfoFun: function() {
-    var context = this;
-    const version = wx.getSystemInfoSync().SDKVersion
-
-    if (compareVersion(version, '1.3.0') >= 0) {
-      wx.openBluetoothAdapter()
-    } else {
-      // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
-      wx.showModal({
-        title: '提示',
-        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-      })
-    }
-
-    wx.getUserInfo({
-      success: res => {
-        this.setData({
-          avatarUrl: res.userInfo.avatarUrl,
-          userInfo: res.userInfo
-        })
+    if (util.checkObject(this.data.userInfo)) {
+      util.getUserInfo().then(res => {
         console.log(res)
-      },
-      fail: context.showAuthTip
-    })
-  },
-  onGetUserInfo: function(e) {
-    if (!this.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
+        this.setData({
+          avatarUrl: res.avatarUrl,
+          userInfo: res,
+          nickName: res.nickName
+        })
+      }).catch(err => {
+        console.log('auth err')
       })
     }
   },
 
+  registerUserInfo: function(e) {
+    if (util.checkObject(this.data.userInfo)) {
+      util.checkAuthUserInfo().then(res => {
+        console.log(res)
+        this.setData({
+          avatarUrl: res.avatarUrl,
+          userInfo: res,
+          nickName: res.nickName
+        })
+      }).catch(err => {
+        console.log('auth err')
+      })
+    }
+  },
   onGetOpenid: function() {
     // 调用云函数
     wx.cloud.callFunction({
@@ -153,5 +120,18 @@ Page({
       key: 'restTime',
       data: e.detail.value
     })
+  },
+  onShow:function(){
+    if (util.checkObject(this.data.userInfo)) {
+      util.getUserInfo().then(res => {
+        this.setData({
+          avatarUrl: res.avatarUrl,
+          userInfo: res,
+          nickName: res.nickName
+        })
+      }).catch(err => {
+        console.log('auth err')
+      })
+    }
   }
 })

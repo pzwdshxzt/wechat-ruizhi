@@ -151,6 +151,11 @@ Page({
             if (res.confirm) {
               dbConsole.updateJobStatus(this.data.job._id, 2).then(res => {
                 util.homePage()
+              }).catch(res => {
+                wx.showToast({
+                  title: '放弃计划失败',
+                  icon: 'none'
+                })
               })
             }
           }

@@ -1,76 +1,81 @@
-<!--miniprogram/pages/Jobs/Jobs.wxml-->
-<scroll-view scroll-y class="scrollPage">
-  <!-- <view class="margin radius bg-gradual-blue shadow-blur">
-    <image src="/images/wave.gif" mode="scaleToFill" class="gif-black response" style="height:100rpx"></image>
-  </view> -->
-  <view class="UCenter-bg">
-    <image src="cloud://cyq-dev-amyvi.6379-cyq-dev-amyvi/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+
+<view class="UCenter-bg">
+  <image src="cloud://cyq-dev-amyvi.6379-cyq-dev-amyvi/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+</view>
+<view class="cu-bar bg-white search fixed" style="top:{{CustomBar}}px;" wx:if="{{showSearchBar}}">
+  <view class="search-form round">
+    <text class="cuIcon-search"></text>
+    <input type="text" placeholder="功能开发中..." confirm-type="search"></input>
   </view>
-  <view class="swiper_hd">
-    <swiper autoplay='true' interval='3000' duration='1000' circular='true'>
-      <block wx:for="{{otherPlans}}" wx:key="index">
-        <swiper-item class='banner-show'>
-          <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
-            <image mode="aspectFit" src='{{item.banner_url}}' />
-            <view class="swiper-item demo-text-1">
-              <text>{{item.inviteName}}</text>
-            </view>
-</navigator>
-        </swiper-item>
-      </block>
-    </swiper>
+  <view class="action">
+    <button class="cu-btn bg-gradual-blue shadow-blur round">搜索</button>
   </view>
-  <view wx:if="{{yourJobs && yourJobs.length !== 0}}">
-    <view class="cu-bar bg-white solid-bottom margin-top">
-      <view class="action">
-        <text class="cuIcon-title text-orange "></text> 您的任务
-      </view>
+</view>
+<view class="swiper_hd">
+  <swiper autoplay='true' interval='3000' duration='1000' circular='true'>
+    <block wx:for="{{otherPlans}}" wx:key="index">
+      <swiper-item class='banner-show'>
+        <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
+          <image mode="aspectFit" src='{{item.banner_url}}' />
+          <view class="swiper-item demo-text-1">
+            <text>{{item.inviteName}}</text>
+          </view>
+        </navigator>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view wx:if="{{yourJobs && yourJobs.length !== 0}}">
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 您的任务
     </view>
-    <view class="cu-list menu-avatar">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-type="{{item.type}}" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toJobs'>
-        <view class="cu-avatar round lg" style="background-image:url({{item.userInfo.avatarUrl}});"></view>
-        <view class="content">
-          <view class="text-grey">{{item.inviteName}}</view>
-          <!-- <view class="text-gray text-sm">
+  </view>
+  <view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-type="{{item.type}}" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}"
+      bindtap='toJobs'>
+      <view class="cu-avatar round lg" style="background-image:url({{item.userInfo.avatarUrl}});"></view>
+      <view class="content">
+        <view class="text-grey">{{item.inviteName}}</view>
+        <!-- <view class="text-gray text-sm">
           <text class="cuIcon-infofill text-red"></text> 消息未送达</view>-->
-        </view>
-        <view class="action">
-          <!-- <view class="text-grey text-xs">22:20</view> -->
-          <view class="cu-tag round bg-grey sm">5</view>
-        </view>
-        <view class="move">
-          <!-- <view class="bg-grey">置顶</view> -->
-          <view class="bg-red">删除</view>
-        </view>
       </view>
-    </view>
-  </view>
-  <view wx:if="{{yourPlans && yourPlans.length !== 0}}">
-    <view class="cu-bar bg-white solid-bottom margin-top">
       <view class="action">
-        <text class="cuIcon-title text-orange "></text> 您的计划
+        <!-- <view class="text-grey text-xs">22:20</view> -->
+        <view class="cu-tag round bg-grey sm">5</view>
       </view>
-    </view>
-    <view class="cu-list menu-avatar">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourPlans}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toPlans'>
-        <view class="cu-avatar round lg bg-{{item.colorName}} margin-xs">
-          <text class="avatar-text">{{item.text}}</text>
-        </view>
-        <!-- <view class="cu-avatar round lg" style="background-image:url({{globalData.userInfo.avatarUrl}});"></view> -->
-        <view class="content">
-          <view class="text-grey">{{item.inviteName}}</view>
-          <!-- <view class="text-gray text-sm">
-          <text class="cuIcon-infofill text-red"></text> 消息未送达</view>-->
-        </view>
-        <view class="action">
-          <!-- <view class="text-grey text-xs">22:20</view> -->
-          <view class="cu-tag round bg-grey sm">5</view>
-        </view>
-        <view class="move">
-          <!-- <view class="bg-grey">置顶</view> -->
-          <view class="bg-red">删除</view>
-        </view>
+      <view class="move">
+        <!-- <view class="bg-grey">置顶</view> -->
+        <view class="bg-red">删除</view>
       </view>
     </view>
   </view>
-</scroll-view>
+</view>
+<view wx:if="{{yourPlans && yourPlans.length !== 0}}">
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 您的计划
+    </view>
+  </view>
+  <view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourPlans}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toPlans'>
+      <view class="cu-avatar round lg bg-{{item.colorName}} margin-xs">
+        <text class="avatar-text">{{item.text}}</text>
+      </view>
+      <!-- <view class="cu-avatar round lg" style="background-image:url({{globalData.userInfo.avatarUrl}});"></view> -->
+      <view class="content">
+        <view class="text-grey">{{item.inviteName}}</view>
+        <!-- <view class="text-gray text-sm">
+          <text class="cuIcon-infofill text-red"></text> 消息未送达</view>-->
+      </view>
+      <view class="action">
+        <!-- <view class="text-grey text-xs">22:20</view> -->
+        <view class="cu-tag round bg-grey sm">5</view>
+      </view>
+      <view class="move">
+        <!-- <view class="bg-grey">置顶</view> -->
+        <view class="bg-red">删除</view>
+      </view>
+    </view>
+  </view>
+</view>

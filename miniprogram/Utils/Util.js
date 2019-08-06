@@ -55,6 +55,12 @@ const homePage = () => {
     }
   })
 }
+
+const backPage = (num) => {
+  wx.navigateBack({
+    delta: num
+  });
+}
 const openLoading = (title) => {
   wx.showLoading({
     title: title,
@@ -71,7 +77,7 @@ const loginFunction = (userInfoID) => {
     wx.cloud.callFunction({
       name: 'login',
       data: {
-        userInfo: wx.cloud.CloudID(userInfoID)
+        userInfoData: wx.cloud.CloudID(userInfoID)
       },
       success: res => {
         resolve(res.result)
@@ -82,31 +88,28 @@ const loginFunction = (userInfoID) => {
     })
   })
 }
-const checkAuthUserInfo = () =>{
+const checkAuthUserInfo = () => {
   return new Promise((resolve, reject) => {
     if (checkObject(app.globalData.userInfo)) {
       // 获取用户信息
       wx.getSetting({
         success: res => {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           if (res.authSetting['scope.userInfo']) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
               success: res => {
-                loginFunction(res.cloudID).then(data =>{
-                  console.log(data)
-                })
                 app.globalData.userInfo = res.userInfo
                 resolve(res.userInfo)
               }
             })
-          }
-          else {
-            wx.navigateTo({
-              url: '../Auth/Auth'
-            })
+          } else {
+            reject()
+            gotoAuth()
           }
         }
       })
+    } else {
+      resolve(app.globalData.userInfo)
     }
   })
 }
@@ -117,21 +120,30 @@ const getUserInfo = () => {
       wx.getSetting({
         success: res => {
           if (res.authSetting['scope.userInfo']) {
+            console.log(res.authSetting['scope.userInfo'])
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
               success: res => {
-                console.log(res)
                 app.globalData.userInfo = res.userInfo
                 resolve(res.userInfo)
               }
             })
+          } else {
+            reject()
           }
         }
       })
+    }else{
+      resolve(app.globalData.userInfo)
     }
   })
 }
-const addUserInfo = (openid,userInfo) => {
+const gotoAuth = () => {
+  wx.navigateTo({
+    url: '../Auth/Auth'
+  })
+}
+const addUserInfo = (openid, userInfo) => {
   db.collection('UserInfos').where({
     _openid: openid
   }).get().then(res => {
@@ -178,7 +190,6 @@ const planForEach = (res) => {
   return new Promise((resolve, reject) => {
     if (!checkObject(res)) {
       res.forEach(obj => {
-
         dbConsole.queryUserInfos(obj.jober).then(u => {
           let userInfo = u[0]
           if (!checkObject(userInfo)) {
@@ -240,6 +251,7 @@ module.exports = {
   successPage: successPage,
   failPage: failPage,
   homePage: homePage,
+  backPage: backPage,
   openLoading: openLoading,
   closeLoading: closeLoading,
   loginFunction: loginFunction,

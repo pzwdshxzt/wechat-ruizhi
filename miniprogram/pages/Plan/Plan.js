@@ -72,7 +72,7 @@ Page({
         content: '是否真的废弃这个计划',
         success: res => {
           if (res.confirm) {
-            dbConsole.updatePlanStatus(this.data.plan._id, 1).then(res => {
+            dbConsole.updatePlanStatus(this.data.plan._id, 3).then(res => {
               console.log(res)
               util.homePage()
             })

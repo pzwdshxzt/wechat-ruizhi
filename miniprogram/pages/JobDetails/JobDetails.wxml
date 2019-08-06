@@ -40,7 +40,7 @@
     <view wx:if="{{isAuthFlag}}">
       <view class="weui-cells__title">审批意见</view>
       <view class="weui-cells weui-cells_after-title">
-        <radio-group bindchange="radioChange">
+        <radio-group bindchange="radioChange" style="width:100%">
           <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
             <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
             <view class="weui-cell__bd">{{item.name}}</view>

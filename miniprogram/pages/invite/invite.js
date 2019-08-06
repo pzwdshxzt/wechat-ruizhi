@@ -96,7 +96,6 @@ Page({
         inviteLimitCount: e.detail.value
       })
     } else {
-      console.log(e)
       this.setData({
         inviteLimitCount: ''
       })
