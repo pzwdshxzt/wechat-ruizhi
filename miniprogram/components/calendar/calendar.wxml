@@ -15,7 +15,6 @@
       <view></view>
     </view>
   </view>
-
   <view class='date-box'>
     <block wx:for='{{dateArr}}' wx:key="index">
       <view class='{{isToday == item.isToday ? "nowDay" : ""}}'>
@@ -25,5 +24,4 @@
       </view>
     </block>
   </view>
-
 </view>

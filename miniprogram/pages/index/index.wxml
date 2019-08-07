@@ -2,7 +2,7 @@
 <scroll-view scroll-y class="scrollPage">
   <view class="UCenter-bg index">
     <view class="content" bindtap="registerUserInfo">
-      <image src="{{avatarUrl}}"  class="cu-avatar round  png" mode="widthFix"></image>
+      <image src="{{avatarUrl}}" class="cu-avatar round  png" mode="widthFix"></image>
     </view>
     <view class="text-xl text-white">
       {{nickName}}
@@ -31,44 +31,6 @@
     </view> -->
   </view>
   <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-    <view class="cu-item arrow">
-      <navigator class="content" url="../invite/invite" hover-class="none">
-        <text class="cuIcon-roundadd text-cyan"></text>
-        <text class="text-grey">计划邀请</text>
-      </navigator>
-    </view>
-
-    <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="feedback">
-        <text class="cuIcon-writefill text-cyan"></text>
-        <text class="text-grey">意见反馈</text>
-      </button>
-    </view>
-    <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="contact">
-        <text class="cuIcon-btn text-olive"></text>
-        <text class="text-grey">联系客服</text>
-      </button>
-    </view>
-    <view class="cu-item arrow">
-      <navigator class="content" url="/pages/index/log/log" hover-class="none">
-        <text class="cuIcon-formfill text-green"></text>
-        <text class="text-grey">升级日志</text>
-      </navigator>
-    </view>
-    <view class="cu-item arrow">
-      <view class="content" bindtap="doUpload">
-        <text class="cuIcon-upload text-blue"></text>
-        <text class="text-grey">上传图片</text>
-        <!-- </navigator> -->
-      </view>
-    </view>
-    <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="openSetting">
-        <text class="cuIcon-settings text-pink"></text>
-        <text class="text-grey">权限设置</text>
-      </button>
-    </view>
     <view class="cu-item">
       <view class="content">
         <text class="cuIcon-time text-red"></text>
@@ -82,6 +44,42 @@
         <text class="text-grey">休息时间</text>
         <slider style="width:90%" selected-color="#1589eb" color="#fff" bindchange="changeRestTime" show-value="true" min="1" max="60" value="{{restTime}}" />
       </view>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="../invite/invite" hover-class="none">
+        <text class="cuIcon-roundadd text-cyan"></text>
+        <text class="text-grey">计划邀请</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
+      <view class="content" bindtap="doUpload">
+        <text class="cuIcon-upload text-blue"></text>
+        <text class="text-grey">上传图片</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="contact">
+        <text class="cuIcon-btn text-olive"></text>
+        <text class="text-grey">联系客服</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="openSetting">
+        <text class="cuIcon-settings text-pink"></text>
+        <text class="text-grey">权限设置</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="/pages/index/log/log" hover-class="none">
+        <text class="cuIcon-formfill text-green"></text>
+        <text class="text-grey">升级日志</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
     </view>
   </view>
   <view class="cu-tabbar-height"></view>

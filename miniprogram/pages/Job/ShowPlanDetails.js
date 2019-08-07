@@ -24,7 +24,7 @@ Page({
       this.setData({
         plan: res.data
       })
+      util.closeLoading()
     })
-    util.closeLoading()
   }
 })

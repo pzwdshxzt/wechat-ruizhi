@@ -71,7 +71,14 @@ const closeLoading = () => {
   wx.hideLoading();
   wx.stopPullDownRefresh();
 }
-
+const getPercent = (num, total) => {
+  num = parseFloat(num);
+  total = parseFloat(total);
+  if (isNaN(num) || isNaN(total)) {
+    return "-";
+  }
+  return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
+}
 const loginFunction = (userInfoID) => {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
@@ -120,7 +127,6 @@ const getUserInfo = () => {
       wx.getSetting({
         success: res => {
           if (res.authSetting['scope.userInfo']) {
-            console.log(res.authSetting['scope.userInfo'])
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
               success: res => {
@@ -133,7 +139,7 @@ const getUserInfo = () => {
           }
         }
       })
-    }else{
+    } else {
       resolve(app.globalData.userInfo)
     }
   })
@@ -237,10 +243,62 @@ const timeStampToTimeV2 = (timeStamp) => {
 const timeStampToTimeV3 = (timeStamp) => {
   return new Date(parseInt(timeStamp) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 }
-const timeStampToTimeV4 = (timeStamp) => {
+
+const timeStampToTimeV0 = (timeStamp) => {
   return new Date(parseInt(timeStamp) * 1000);
 }
-
+const timeStampToTimeV4 = (timeStamp, seperator) => {
+  let date = new Date(parseInt(timeStamp) * 1000);
+  return date.getFullYear() + seperator + (date.getMonth() + 1) + seperator + date.getDate();
+}
+const timeStampToTimeV5 = (timeStamp, seperator) => {
+  let date = new Date(parseInt(timeStamp))
+  return date.getFullYear() + seperator + (date.getMonth() + 1) + seperator + date.getDate();
+}
+/**
+ * 计算时间相差几天的日期
+ * 
+ * future: 表示未来还是当前 boolean
+ * timeStamp: 表示时间戳
+ * num: 与timeStamp 相差几天
+ * seperator: 返回的分隔符
+ */
+const timeStampToTimeV6 = (future, timeStamp, num, seperator) => {
+  let date = {}
+  if (checkObject(timeStamp)) {
+    date = new Date()
+  } else {
+    date = new Date(parseInt(timeStamp))
+  }
+  date.setDate(future ? date.getDate() + num : date.getDate() - num)
+  return date.getFullYear() + seperator + (date.getMonth() + 1) + seperator + date.getDate();
+}
+/**
+ * 计算时间相差几天的日期
+ * 
+ * future: 表示未来还是当前 boolean
+ * timeStamp: 表示时间戳
+ * num: 与timeStamp 相差几天
+ * return 时间戳 
+ */
+const timeStampToTimeV7 = (future, timeStamp, num) => {
+  let date = {}
+  if (checkObject(timeStamp)) {
+    date = new Date()
+  } else {
+    date = new Date(parseInt(timeStamp))
+  }
+  date.setDate(future ? date.getDate() + num : date.getDate() - num)
+  return Date.parse(date);
+}
+/**
+ * 数值 替换零
+ */
+const replaceZero = (num, n) => {
+  let num_s = (''+ num).substr(-n)
+  let newNum = Number(num_s)
+  return num - newNum
+}
 module.exports = {
   getTimeStamp: getTimeStamp,
   formatDateTime: formatDateTime,
@@ -261,8 +319,14 @@ module.exports = {
   addUserInfo: addUserInfo,
   planForEach: planForEach,
   getRandInt: getRandInt,
+  getPercent: getPercent,
+  replaceZero: replaceZero,
+  timeStampToTimeV0: timeStampToTimeV0,
   timeStampToTimeV1: timeStampToTimeV1,
   timeStampToTimeV2: timeStampToTimeV2,
   timeStampToTimeV3: timeStampToTimeV3,
-  timeStampToTimeV4: timeStampToTimeV4
+  timeStampToTimeV4: timeStampToTimeV4,
+  timeStampToTimeV5: timeStampToTimeV5,
+  timeStampToTimeV6: timeStampToTimeV6,
+  timeStampToTimeV7: timeStampToTimeV7
 }

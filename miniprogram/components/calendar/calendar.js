@@ -1,5 +1,11 @@
 // components/calendar/calendar.js
 Component({
+  properties:{
+    signArr: {
+      type: Array,
+      default: []
+    }, 
+  },
   data: {
     year: 0,
     month: 0,
@@ -25,7 +31,6 @@ Component({
       console.log(e)
     }
   },
-
   methods: {
     dateInit: function(setYear, setMonth) {
       //全部时间的月份都是按0~11基准，显示月份才+1

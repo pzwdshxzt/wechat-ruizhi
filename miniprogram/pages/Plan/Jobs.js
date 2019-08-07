@@ -15,7 +15,6 @@ Page({
     progress: 0,
     authCode: app.globalData.authCode,
     statusCode: app.globalData.statusCode,
-    planUid: '',
     isloadmore: false,
     jobDetailsTotalCount: 0
   },
@@ -35,9 +34,8 @@ Page({
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
         job: res.data,
-        planUid: res.data.planUid
       })
-      let progress = this.getPercent(res.data.doneCount, res.data.inviteCount)
+      let progress = util.getPercent(res.data.doneCount, res.data.inviteCount)
       this.setData({
         progress: progress
       })
@@ -54,14 +52,6 @@ Page({
           util.closeLoading()
         })
     })
-  },
-  getPercent: function(num, total) {
-    num = parseFloat(num);
-    total = parseFloat(total);
-    if (isNaN(num) || isNaN(total)) {
-      return "-";
-    }
-    return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
   },
   onReachBottom: function() {
     this.setData({

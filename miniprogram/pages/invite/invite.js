@@ -18,13 +18,14 @@ Page({
     award: '',
     awardCount: 0,
     weRunNum: '',
-    showWeRunNum: false,
-    type: 0,
-    types: ["打卡","运动"],
+    type: '0',
+    types: app.globalData.typeCode,
     isAgree: false,
     showTopTips: false,
     errorMsg: '输入有误',
-    inviteLimitCount: ''
+    inviteLimitCount: '',
+    startDay: '',
+    endTime: ''
   },
 
   /**
@@ -44,6 +45,7 @@ Page({
         console.log(err)
       })
     }
+
   },
   goHome: function() {
     util.homePage()
@@ -66,7 +68,7 @@ Page({
       inviteName: e.detail.value
     })
   },
-  getWeRunNum:function(e) {
+  getWeRunNum: function(e) {
     if (this.checkNum(e.detail.value)) {
       this.setData({
         weRunNum: e.detail.value
@@ -80,13 +82,34 @@ Page({
   },
   getInviteCount: function(e) {
     if (this.checkNum(e.detail.value)) {
-      this.setData({
-        inviteCount: e.detail.value
-      })
+      if (this.data.type === '2' || this.data.type === '1'){
+        let startDay = util.timeStampToTimeV6(true, undefined, Number(e.detail.value), '-')
+        let endTime = util.timeStampToTimeV6(true, undefined, Number(e.detail.value) + 5, '-')
+        this.setData({
+          inviteCount: e.detail.value,
+          startDay: startDay,
+          endTime: endTime
+        })
+      }
+      if(this.data.type === '0'){
+        this.setData({
+          inviteCount: e.detail.value,
+        })
+      }
     } else {
-      console.log(e)
       this.setData({
         inviteCount: ''
+      })
+    }
+
+  },
+  bindDateChange: function(e) {
+    console.log(e)
+    if (util.checkObject(this.data.inviteCount) && this.data.type === '2') {
+      this.showTopTips('请先填写运动期数')
+    } else {
+      this.setData({
+        endTime: e.detail.value
       })
     }
   },
@@ -101,7 +124,7 @@ Page({
       })
     }
   },
-  checkNum: function(num){
+  checkNum: function(num) {
     var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
     if (!reg.test(num)) {
       this.showTopTips('请填写数字')
@@ -113,9 +136,12 @@ Page({
     this.setData({
       type: e.detail.value
     })
-    if (e.detail.value === '1' && !this.data.showWeRunNum) {
+    if ((e.detail.value === '1' || e.detail.value === '2') && this.data.inviteCount !== 0 && this.data.inviteCount !== ''){
+      let startDay = util.timeStampToTimeV6(true, undefined, Number(this.data.inviteCount), '-')
+      let endTime = util.timeStampToTimeV6(true, undefined, Number(this.data.inviteCount) + 5, '-')
       this.setData({
-        showWeRunNum: true
+        startDay: startDay,
+        endTime: endTime
       })
     }
   },
@@ -129,13 +155,17 @@ Page({
       this.showTopTips('请输入计划名称')
       return true
     }
-    if (this.data.type === '1') {
+    if (this.data.endTime === '') {
+      this.showTopTips('请输入结束时间')
+      return true
+    }
+    if (this.data.type === '1' || this.data.type === '2') {
       if (this.data.weRunNum === 0 || this.data.weRunNum === '0' || this.data.weRunNum === '') {
         this.showTopTips('请输入微信运动步数')
         return true
       }
     }
-    if (this.data.inviteCount === 0 || this.data.inviteCount === '0' || this.data.weRunNum === '') {
+    if (this.data.inviteCount === 0 || this.data.inviteCount === '0' || this.data.inviteCount === '') {
       this.showTopTips('请输入计划期数/运动天数')
       return true
     }
@@ -153,6 +183,19 @@ Page({
     }
     if (!this.data.files) {
       this.showTopTips('请上传首页轮播图片')
+      return true
+    }
+
+    if (this.data.type === 2) {
+      var endTime = new Date(Date.parse(this.data.endTime));
+      var startDay = new Date(Date.parse(this.data.startDay));
+      if (endTime => startDay) {
+        this.setData({
+          endTime: e.detail.value
+        })
+      } else {
+        this.showTopTips('结束时间应大于运动期数')
+      }
       return true
     }
     return false
@@ -183,7 +226,8 @@ Page({
             createTime: util.getTimeStamp(),
             updateTime: util.getTimeStamp(),
             banner_url: res.fileID,
-            weRunNum: Number(this.data.weRunNum)
+            weRunNum: Number(this.data.weRunNum),
+            endTime: this.data.endTime
           }
         }).then(res => {
           util.closeLoading()

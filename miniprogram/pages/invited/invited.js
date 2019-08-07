@@ -14,9 +14,9 @@ Page({
     plan: {},
     isSharePageIn: false,
     errorMsg: '你已经接受了该计划!',
-    statusCode: ['进行中', '计划废弃'],
-    typeCode: ['打卡','运动'],
-    showCode: ['否', '是'],
+    statusCode: app.globalData.statusCode,
+    typeCode: app.globalData.typeCode,
+    showCode: app.globalData.showCode,
     errorMsg: '系统异常QAQ'
   },
 
@@ -119,7 +119,9 @@ Page({
         status: 0,
         createTime: util.getTimeStamp(),
         updateTime: util.getTimeStamp(),
-        type: this.data.plan.type
+        type: this.data.plan.type,
+        endTime: this.data.plan.endTime,
+        weRunNum: this.data.plan.weRunNum
       },
       success: res => {
         util.closeLoading()

@@ -3,28 +3,24 @@ const _ = db.command
 const util = require('../../Utils/Util.js');
 const dbConsole = require('../../Utils/DbConsole.js');
 const app = getApp()
+const buttons = [{
+    openType: 'contact',
+    label: 'Contact',
+    icon: '/images/icon/contact.png',
+  },
+  {
+    label: 'Delete Job',
+    icon: '/images/icon/delete.png'
+  }
+]
 Page({
   data: {
-    sAngle: 0,
-    eAngle: 360,
-    spaceBetween: 10,
-    buttons: [{
-        openType: 'contact',
-        label: 'Contact',
-        icon: '/images/icon/contact.png',
-      },
-      {
-        label: 'Delete Job',
-        icon: '/images/icon/delete.png'
-      }
-    ],
-    job: {},
-    jobId: '',
-    JobDetails: [],
-    progress: 0,
+    buttons: buttons,
     statusCode: app.globalData.statusCode,
     authCode: app.globalData.authCode,
-    planUid: '',
+    job: {},
+    JobDetails: [],
+    progress: 0,
     jobDetailsTotalCount: 0,
     isloadmore: false
   },
@@ -40,9 +36,8 @@ Page({
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       this.setData({
         job: res.data,
-        planUid: res.data.planUid
       })
-      let progress = this.getPercent(res.data.doneCount, res.data.inviteCount)
+      let progress = util.getPercent(res.data.doneCount, res.data.inviteCount)
       this.setData({
         progress: progress
       })
@@ -61,16 +56,8 @@ Page({
   },
   openApplyPage() {
     wx.navigateTo({
-      url: 'Apply?JobId=' + this.data.job._id + '&pid=' + this.data.job.planId + '&planUid=' + this.data.planUid
+      url: 'Apply?JobId=' + this.data.job._id + '&pid=' + this.data.job.planId
     })
-  },
-  getPercent: function(num, total) {
-    num = parseFloat(num);
-    total = parseFloat(total);
-    if (isNaN(num) || isNaN(total)) {
-      return "-";
-    }
-    return total <= 0 ? 0 : (Math.round(num / total * 10000) / 100.00);
   },
   onClick(e) {
     if (e.detail.index === 1) {
@@ -103,21 +90,7 @@ Page({
     console.log('onContact', e)
   },
   onChange(e) {},
-  onAngle(e) {
-    console.log(e)
-    const {
-      value
-    } = e.detail
-    const sAngle = value ? -90 : 0
-    const eAngle = value ? -210 : 360
-    const spaceBetween = value ? 30 : 10
-
-    this.setData({
-      sAngle,
-      eAngle,
-      spaceBetween,
-    })
-  },
+  
   gotoPlanDetails: function() {
     wx.navigateTo({
       url: 'ShowPlanDetails?PlanId=' + this.data.job.planId,

@@ -3,38 +3,46 @@
   <view slot="content">运动任务</view>
 </cu-custom>
 <scroll-view scroll-y class="scrollPage">
-  <wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
-    bind:getuserinfo="onGotUserInfo" />
+  <wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="10" sAngle="0" eAngle="360" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact" bind:getuserinfo="onGotUserInfo"
+  />
   <calendar></calendar>
   <view class="weui-form-preview">
     <view class="weui-form-preview__hd">
-      <view class="weui-form-preview__label">任务名称</view>
-      <view class="weui-form-preview__value_in-hd">{{job.inviteName}}</view>
+      <view class="weui-form-preview__label">目标步数</view>
+      <view class="weui-form-preview__value_in-hd">{{job.weRunNum}}</view>
       <view class="weui-form-preview__label">今日步数</view>
-      <view class="weui-form-preview__value_in-hd">{{weRunNum}}</view>
+      <view class="weui-form-preview__value_in-hd">{{toDayRunNum}}</view>
     </view>
     <view class="weui-form-preview__bd">
       <view class="weui-form-preview__item">
-        <view class="weui-form-preview__label">已打卡期数</view>
+        <view class="weui-form-preview__label">任务名称</view>
+        <view class="weui-form-preview__value">{{job.inviteName}}</view>
+        <view class="weui-form-preview__label" wx:if="{{job.type === 0 || job.type === 2}}">已打卡期数</view>
+        <view class="weui-form-preview__label" wx:if="{{job.type === 1}}">已连续打卡期数</view>
         <view class="weui-form-preview__value">{{job.doneCount}}</view>
         <view class="weui-form-preview__label">任务期数</view>
         <view class="weui-form-preview__value">{{job.inviteCount}}</view>
+        <view class="weui-form-preview__label">任务开始时间</view>
+        <view class="weui-form-preview__value">{{startDate}}</view>
+        <view class="weui-form-preview__label" wx:if="{{job.type === 1 || job.type === 2}}">任务结束时间</view>
+        <view class="weui-form-preview__value" wx:if="{{job.type === 1 || job.type === 2}}">{{job.endTime}}</view>
         <view class="weui-form-preview__label">任务状态</view>
         <view class="weui-form-preview__value">{{statusCode[job.status]}}</view>
         <view class="weui-form-preview__label">任务进度</view>
       </view>
       <view class="weui-form-preview__item">
-          <view class="weui-progress">
-            <view class="weui-progress__bar">
-              <progress color="white" activeColor="#1589eb" percent="{{progress}}" stroke-width="3" />
-            </view>
+        <view class="weui-progress">
+          <view class="weui-progress__bar">
+            <progress color="white" activeColor="#1589eb" percent="{{progress}}" stroke-width="3" />
           </view>
         </view>
+      </view>
       <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="openApplyPage" wx:if="{{job.status === 0 && job.weRunNum <= weRunNum }}">今日打卡</button>
       <button class="weui-btn" bindtap="gotoPlanDetails">查看计划详情</button>
-
     </view>
-    <!-- <view class="weui-cells__title">打卡记录</view>
+    <view class="weui-cells__tips">此任务需要用户授权微信运动
+    </view>
+    <!-- <view class="weui-cells__title">打卡记录</view
   <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
     <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__bd">{{item.date}}</view>
@@ -53,6 +61,4 @@
     </view>
    </view> -->
   </view>
-
-
 </scroll-view>

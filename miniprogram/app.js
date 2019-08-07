@@ -48,7 +48,7 @@ App({
     ],
     statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
     authCode: ['待审核', '已拒绝', '审核通过'],
-    typeCode: ['打卡', '运动'],
+    typeCode: ['打卡', '运动(连续型)', '运动(累计型)'],
     showCode: ['否', '是'],
     ColorList: [{
       title: '嫣红',

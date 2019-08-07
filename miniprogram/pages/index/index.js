@@ -19,7 +19,6 @@ Page({
 
     if (util.checkObject(this.data.userInfo)) {
       util.getUserInfo().then(res => {
-        console.log(res)
         this.setData({
           avatarUrl: res.avatarUrl,
           userInfo: res,

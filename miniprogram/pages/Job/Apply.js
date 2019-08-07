@@ -14,7 +14,6 @@ Page({
     applyTextarea: '',
     JobId: '',
     pid: '',
-    planUid: '',
     inputNum: 0,
     isAgree: false,
     errorMsg: '输入有误',
@@ -27,8 +26,7 @@ Page({
   onLoad: function(options) {
     this.setData({
       JobId: options.JobId,
-      pid: options.pid,
-      planUid: options.planUid
+      pid: options.pid
     })
   },
   bindDateChange: function(e) {
@@ -89,14 +87,6 @@ Page({
         success: res => {
           util.closeLoading()
           util.successPage('申请成功', '你得申请已提交，将有任务发布者进行审核，请等待!!')
-          // db.collection('Jobs').doc(this.data.JobId).get({
-          //   success: res => {
-          //     this.callPlanFuncation(e.detail.formId, this.data.planUid, res.data.inviteName ,res.data.planId)
-          //   },
-          //   fail: res => {
-          //     util.failPage('通知失败', '申请成功，但是通知任务发布者失败!!')
-          //   }
-          // })
         },
         fail: err => {
           util.closeLoading()

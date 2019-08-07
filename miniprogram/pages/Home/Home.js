@@ -165,7 +165,7 @@ Page({
         url: '../Job/Job?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
       })
     }
-    if (type === 1) {
+    if (type === 1 || type === 2) {
       wx.navigateTo({
         url: '../WeRun/runJob?JobId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
       })
