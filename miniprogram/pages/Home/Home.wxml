@@ -32,7 +32,7 @@
     </view>
   </view>
   <view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-type="{{item.type}}" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}"
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourJobs}}" wx:key bindtouchstart="JobListTouchStart" bindtouchmove="JobListTouchMove" data-type="{{item.type}}" data-jobid="{{item._id}}" bindtouchend="JobListTouchEnd" data-target="move-box-{{index}}"
       bindtap='toJobs'>
       <view class="cu-avatar round lg" style="background-image:url({{item.userInfo.avatarUrl}});"></view>
       <view class="content">
@@ -40,10 +40,10 @@
         <!-- <view class="text-gray text-sm">
           <text class="cuIcon-infofill text-red"></text> 消息未送达</view>-->
       </view>
-      <view class="action">
-        <!-- <view class="text-grey text-xs">22:20</view> -->
+      <!-- <view class="action">
+        <view class="text-grey text-xs">22:20</view>
         <view class="cu-tag round bg-grey sm">5</view>
-      </view>
+      </view> -->
       <view class="move">
         <!-- <view class="bg-grey">置顶</view> -->
         <view class="bg-red">删除</view>
@@ -58,7 +58,7 @@
     </view>
   </view>
   <view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourPlans}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" data-jobid="{{item._id}}" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" bindtap='toPlans'>
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{yourPlans}}" wx:key bindtouchstart="PlanListTouchStart" bindtouchmove="PlanListTouchMove" data-jobid="{{item._id}}" bindtouchend="PlanListTouchEnd" data-target="move-box-{{index}}" bindtap='toPlans'>
       <view class="cu-avatar round lg bg-{{item.colorName}} margin-xs">
         <text class="avatar-text">{{item.text}}</text>
       </view>

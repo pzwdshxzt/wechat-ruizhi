@@ -22,6 +22,7 @@ Page({
     this.onInitData()
   },
   onLoad: function() {
+
     util.openLoading('数据加载中')
     if (app.globalData.openid && app.globalData.userInfo !== {}) {
       this.setData({
@@ -130,21 +131,53 @@ Page({
     this.onInitData()
   },
   // ListTouch触摸开始
-  ListTouchStart(e) {
+  JobListTouchStart(e) {
     this.setData({
       ListTouchStart: e.touches[0].pageX
     })
   },
 
   // ListTouch计算方向
-  ListTouchMove(e) {
+  JobListTouchMove(e) {
+    console.log('JobListTouchMove')
     this.setData({
       ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
     })
   },
 
   // ListTouch计算滚动
-  ListTouchEnd(e) {
+  JobListTouchEnd(e) {
+    if (this.data.ListTouchDirection == 'left') {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    } else {
+      this.setData({
+        modalName: null
+      })
+    }
+    this.setData({
+      ListTouchDirection: null
+    })
+  },
+
+  // ListTouch触摸开始
+  PlanListTouchStart(e) {
+    this.setData({
+      ListTouchStart: e.touches[0].pageX
+    })
+  },
+
+  // ListTouch计算方向
+  PlanListTouchMove(e) {
+    console.log('PlanListTouchMove')
+    this.setData({
+      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+    })
+  },
+
+  // ListTouch计算滚动
+  PlanListTouchEnd(e) {
     if (this.data.ListTouchDirection == 'left') {
       this.setData({
         modalName: e.currentTarget.dataset.target

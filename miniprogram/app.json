@@ -19,7 +19,8 @@
     "pages/Job/ShowPlanDetails",
     "pages/invite/cropper",
     "pages/WeRun/weRun",
-    "pages/WeRun/runJob"
+    "pages/WeRun/runJob",
+    "pages/cardPacket/cardPacket"
   ],
   "tabBar": {
     "list": [

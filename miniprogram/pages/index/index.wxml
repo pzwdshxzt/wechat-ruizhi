@@ -52,6 +52,12 @@
       </navigator>
     </view>
     <view class="cu-item arrow">
+      <navigator class="content" url="../cardPacket/cardPacket" hover-class="none">
+        <text class="cuIcon-roundadd text-cyan"></text>
+        <text class="text-grey">卡包信息</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
       <view class="content" bindtap="doUpload">
         <text class="cuIcon-upload text-blue"></text>
         <text class="text-grey">上传图片</text>

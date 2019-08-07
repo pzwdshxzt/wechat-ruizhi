@@ -38,6 +38,7 @@ App({
     })
   },
   globalData:{
+    rawSign: 'RZ95120512',
     userInfo: {},
     imgSrc: '',
     shareImg:[
@@ -50,6 +51,11 @@ App({
     authCode: ['待审核', '已拒绝', '审核通过'],
     typeCode: ['打卡', '运动(连续型)', '运动(累计型)'],
     showCode: ['否', '是'],
+    supportMode: {
+      fingerPrint: '指纹',
+      facial: '人脸',
+      speech: '声纹'
+    },
     ColorList: [{
       title: '嫣红',
       name: 'red',
