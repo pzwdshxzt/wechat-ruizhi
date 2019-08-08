@@ -28,9 +28,9 @@
     <block wx:if="{{plan.type === 1 || plan.type === 2}}">
       <view class="weui-form-preview__label">目标步数</view>
       <view class="weui-form-preview__value">{{plan.weRunNum}}</view>
+      <view class="weui-form-preview__label">结束时间</view>
+      <view class="weui-form-preview__value">{{plan.endTime}}</view>
     </block>
-    <view class="weui-form-preview__label">结束时间</view>
-    <view class="weui-form-preview__value">{{plan.endTime}}</view>
     <view class="weui-form-preview__label">是否展示</view>
     <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
 

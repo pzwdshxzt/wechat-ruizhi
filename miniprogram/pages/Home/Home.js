@@ -50,6 +50,21 @@ Page({
     let yourPlans = await that.onQueryPlans();
     /** 同步执行 */
     let results = await Promise.all([otherPlans, yourJobs, yourPlans])
+    /**
+     * 更新对象中某属性值
+     */
+    let data = results[2].map((data, index) => {
+      db.collection('JobDetails').where({
+        planId: data._id,
+        authFlag: 0
+      }).count().then(res => {
+        var param = {};
+        var str = "yourPlans[" + index + "].authNum";
+        param[str] = res.total;
+        that.setData(param);
+      })
+    })
+   
     util.closeLoading()
   },
 
@@ -66,16 +81,7 @@ Page({
           let dataList = this.data.ColorList;
           let length = this.data.ColorList.length
           res.data.map(data => {
-            /** 
-             * TODO 
-             * 遗留问题，authNum 页面未显示
-             */
-            db.collection('JobDetails').where({
-              planId: data._id,
-              authFlag: 0
-            }).count().then(res => {
-              data.authNum = res.total
-            })
+            data.authNum = 0
             data.colorName = dataList[util.getRandInt(0, length)].name
             data.text = data.inviteName.substring(0, 1)
           })
@@ -83,7 +89,7 @@ Page({
         this.setData({
           yourPlans: res.data
         })
-        resolve('success')
+        resolve(res.data)
       }).catch(err => {
         console.error('[数据库] [查询记录] 失败：', err)
         reject('error')
