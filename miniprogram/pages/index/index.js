@@ -132,5 +132,11 @@ Page({
         console.log('auth err')
       })
     }
+  },
+  onBuild(){
+    wx.showToast({
+      icon: 'none',
+      title: '正在建设中...'
+    })
   }
 })

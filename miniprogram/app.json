@@ -67,5 +67,11 @@
   "cloud": true,
   "usingComponents": {
     "cu-custom": "/style/colorui/components/cu-custom"
+  },
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.0",
+      "provider": "wx069ba97219f66d99"
+    }
   }
 }

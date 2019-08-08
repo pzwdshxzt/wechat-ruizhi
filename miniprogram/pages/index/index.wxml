@@ -52,10 +52,12 @@
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="../cardPacket/cardPacket" hover-class="none">
+      <view class="content" bindtap="onBuild">
+        <!-- <navigator class="content" url="../cardPacket/cardPacket" hover-class="none"> -->
         <text class="cuIcon-roundadd text-cyan"></text>
         <text class="text-grey">卡包信息</text>
-      </navigator>
+        <!-- </navigator> -->
+      </view>
     </view>
     <view class="cu-item arrow">
       <view class="content" bindtap="doUpload">

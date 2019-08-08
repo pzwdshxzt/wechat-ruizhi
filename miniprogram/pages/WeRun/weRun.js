@@ -4,7 +4,6 @@ let selectChart = null;
 
 function selectInitChart(canvas, width, height, F2) {
   const data = [];
-
   selectChart = new F2.Chart({
     el: canvas,
     width,
@@ -86,9 +85,10 @@ Page({
           name: 'openapi',
           data: {
             action: 'getWeRunAllData',
-            weRunData: wx.cloud.CloudID(cloudID), // 这个 CloudID 值到云函数端会被替换
+            weRunData: wx.cloud.CloudID(cloudID),
           }
         }).then(res => {
+          console.log(res)
           res.result.map(data => {
             let date = util.timeStampToTimeV0(data.timestamp);
             data.date = (date.getMonth()+1) + '.' + date.getDate()

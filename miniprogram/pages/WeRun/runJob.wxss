@@ -1,1 +1,21 @@
 /* miniprogram/pages/WeRun/runJob.wxss */
+.demo5 {
+    padding: 15px;
+    background-color: white;
+}
+
+.demo5-calendar {
+    background-color:azure;
+    padding-top: 10px;
+    border-radius: 15px;
+}
+
+.demo5-header {
+    font-size: large;
+    color: #59518d;    
+}
+
+.demo5-board {
+    color: #c7cbe2;
+    font-weight: bold;
+}

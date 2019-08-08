@@ -36,9 +36,17 @@ App({
         this.globalData.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
       }
     })
+
+    wx.checkIsSupportSoterAuthentication({
+      success: res => {
+        this.globalData.supportMode = res.supportMode
+      }
+    })
   },
   globalData:{
     rawSign: 'RZ95120512',
+    /** 时间大于多少充裕呢 */
+    ampleTime: 14,
     userInfo: {},
     imgSrc: '',
     shareImg:[
@@ -51,11 +59,12 @@ App({
     authCode: ['待审核', '已拒绝', '审核通过'],
     typeCode: ['打卡', '运动(连续型)', '运动(累计型)'],
     showCode: ['否', '是'],
-    supportMode: {
+    supportModeMsg: {
       fingerPrint: '指纹',
       facial: '人脸',
       speech: '声纹'
     },
+    supportMode:[],
     ColorList: [{
       title: '嫣红',
       name: 'red',

@@ -5,8 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    supportMode: [],
-    supportModeCode: app.globalData.supportMode
+    supportMode: app.globalData.supportMode,
+    supportModeCode: app.globalData.supportModeMsg
   },
 
   /**
@@ -14,23 +14,12 @@ Page({
    */
   onLoad: function(options) {
     let that = this
-    wx.checkIsSupportSoterAuthentication({
-      success: res => {
-        console.log(res)
-        that.setData({
-          supportMode: res.supportMode
-        })
-      },
-      fail: res => {
-        console.log(res)
-      }
-    })
-    if (that.data.supportMode.length > 0) {
+    if (app.globalData.supportMode.length > 0) {
       console.log('in')
       wx.startSoterAuthentication({
         requestAuthModes: that.data.supportMode[0],
         challenge: app.globalData.rawSign,
-        authContent: '请用' + supportModeCode[that.data.supportMode.length[0]]+'解锁',
+        authContent: '请用' + that.data.supportModeCode[that.data.supportMode.length[0]]+'解锁',
         success: res => {
           console.log(res)
         },
