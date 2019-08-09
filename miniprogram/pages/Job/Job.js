@@ -19,7 +19,7 @@ Page({
     statusCode: app.globalData.statusCode,
     authCode: app.globalData.authCode,
     job: {},
-    JobDetails: [],
+    jobDetails: [],
     progress: 0,
     jobDetailsTotalCount: 0,
     isloadmore: false
@@ -27,7 +27,7 @@ Page({
   onLoad: function(options) {
     util.openLoading('数据加载中')
     db.collection('JobDetails').where({
-      JobId: options.JobId
+      jobId: options.JobId
     }).count().then(res => {
       this.setData({
         jobDetailsTotalCount: res.total
@@ -42,13 +42,13 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-          JobId: res.data._id
+          jobId: res.data._id
         }).orderBy('date', 'desc')
         .orderBy('time', 'desc')
         .limit(10)
         .get().then(res => {
           this.setData({
-            JobDetails: res.data
+            jobDetails: res.data
           })
           util.closeLoading()
         })
@@ -90,7 +90,7 @@ Page({
     console.log('onContact', e)
   },
   onChange(e) {},
-  
+
   gotoPlanDetails: function() {
     wx.navigateTo({
       url: 'ShowPlanDetails?PlanId=' + this.data.job.planId,
@@ -101,22 +101,21 @@ Page({
       isloadmore: true
     })
     var that = this;
-    if (this.data.JobDetails.length < this.data.jobDetailsTotalCount) {
+    if (this.data.jobDetails.length < this.data.jobDetailsTotalCount) {
       db.collection('JobDetails')
         .where({
-          JobId: this.data.job._id
+          jobId: this.data.job._id
         })
         .orderBy('date', 'desc')
         .orderBy('time', 'desc')
-        .skip(this.data.JobDetails.length)
+        .skip(this.data.jobDetails.length)
         .limit(10)
         .get().then(res => {
-          console.log(res)
           if (res.data.length > 0) {
             var jobDetails = {};
-            jobDetails = that.data.JobDetails.concat(res.data);
+            jobDetails = that.data.jobDetails.concat(res.data);
             that.setData({
-              JobDetails: jobDetails,
+              jobDetails: jobDetails,
             })
           }
           this.setData({

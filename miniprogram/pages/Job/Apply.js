@@ -12,7 +12,7 @@ Page({
     applyCount: 0,
     applyCountList: [0, 1, 2, 3, 4, 5],
     applyTextarea: '',
-    JobId: '',
+    jobId: '',
     pid: '',
     inputNum: 0,
     isAgree: false,
@@ -25,7 +25,7 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      JobId: options.JobId,
+      jobId: options.JobId,
       pid: options.pid
     })
   },
@@ -72,7 +72,7 @@ Page({
     if (!this.checkInfo()) {
       db.collection('JobDetails').add({
         data: {
-          JobId: this.data.JobId,
+          jobId: this.data.jobId,
           planId: this.data.pid,
           date: this.data.date,
           time: this.data.time,

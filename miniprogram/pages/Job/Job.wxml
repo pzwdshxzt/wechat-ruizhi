@@ -29,9 +29,9 @@
     <button class="weui-btn" bindtap="gotoPlanDetails">查看计划详情</button>
 
   </view>
-  <block wx:if="{{JobDetails && JobDetails.length !== 0}}">
+  <block wx:if="{{jobDetails && jobDetails.length !== 0}}">
     <view class="weui-cells__title">打卡记录</view>
-    <view class="weui-cells weui-cells_after-title" wx:for="{{JobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
+    <view class="weui-cells weui-cells_after-title" wx:for="{{jobDetails}}" wx:key="idx" wx:for-index="idx" wx:for-item="item">
       <navigator url="../JobDetails/JobDetails?JobDetailsId={{item._id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__bd">{{item.date}}</view>
         <view class="weui-cell__ft weui-cell__ft_in-access">{{authCode[item.authFlag]}}</view>

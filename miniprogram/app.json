@@ -20,7 +20,8 @@
     "pages/invite/cropper",
     "pages/WeRun/weRun",
     "pages/WeRun/runJob",
-    "pages/cardPacket/cardPacket"
+    "pages/cardPacket/cardPacket",
+    "pages/WeRun/runPlan"
   ],
   "tabBar": {
     "list": [

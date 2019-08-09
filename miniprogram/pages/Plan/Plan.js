@@ -1,58 +1,71 @@
 // miniprogram/pages/Plan/Plan.js
+import regeneratorRuntime from '../../Utils/runtime.js'
 const db = wx.cloud.database()
 const util = require('../../Utils/Util.js');
 const dbConsole = require('../../Utils/DbConsole.js');
+
 const app = getApp();
+let buttons = [{
+    openType: 'contact',
+    label: 'Contact',
+    icon: '/images/icon/contact.png',
+  },
+  {
+    label: 'Delete Plan',
+    icon: '/images/icon/delete.png'
+  },
+  {
+    openType: 'share',
+    label: 'Share Plan',
+    icon: '/images/icon/share.png'
+  },
+  {
+    label: 'Change Show',
+    icon: '/images/icon/change.png'
+  }
+]
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    sAngle: 0,
-    eAngle: 360,
-    spaceBetween: 10,
-    shareImg: app.globalData.shareImg,
-    buttons: [{
-        openType: 'contact',
-        label: 'Contact',
-        icon: '/images/icon/contact.png',
-      },
-      {
-        label: 'Delete Plan',
-        icon: '/images/icon/delete.png'
-      },
-      {
-        openType: 'share',
-        label: 'Share Plan',
-        icon: '/images/icon/share.png'
-      },
-      {
-        label: 'Change Show',
-        icon: '/images/icon/change.png'
-      }
-    ],
-    plan: {},
-    Jobs: [],
     authCode: app.globalData.authCode,
     statusCode: app.globalData.statusCode,
     typeCode: app.globalData.typeCode,
-    showCode: app.globalData.showCode
+    showCode: app.globalData.showCode,
+    shareImg: app.globalData.shareImg,
+    buttons,
+    plan: {},
+    jobs: []
   },
   onLoad: function(options) {
+    this.initData(options)
+  },
+  async initData(options){
+    let that = this
     util.openLoading('数据加载中')
-    db.collection('Plans').doc(options.PlanId).get().then(res => {
-      this.setData({
-        plan: res.data
-      })
-    })
-    db.collection('Jobs').where({
+    let plan = await db.collection('Plans').doc(options.PlanId).get()
+    let jobs = await db.collection('Jobs').where({
       planId: options.PlanId
-    }).get().then(res => {
-      this.setData({
-        Jobs: res.data
+    }).get()
+    /** 同步执行 */
+    let results = await Promise.all([plan, jobs])
+    util.closeLoading()
+    this.setData({
+      plan: results[0].data,
+      jobs: results[1].data
+    })
+    this.data.jobs.map((data, index) => {
+      db.collection('JobDetails').where({
+        jobId: data._id,
+        authFlag: 0
+      }).count().then(res => {
+        var param = {};
+        var str = "jobs[" + index + "].authNum";
+        param[str] = res.total;
+        that.setData(param);
       })
-      util.closeLoading()
     })
   },
   onShareAppMessage: function() {
@@ -100,20 +113,5 @@ Page({
     }
   },
   onContact(e) {},
-  onChange(e) {},
-  onAngle(e) {
-    console.log(e)
-    const {
-      value
-    } = e.detail
-    const sAngle = value ? -90 : 0
-    const eAngle = value ? -210 : 360
-    const spaceBetween = value ? 30 : 10
-
-    this.setData({
-      sAngle,
-      eAngle,
-      spaceBetween,
-    })
-  }
+  onChange(e) {}
 })

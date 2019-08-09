@@ -50,6 +50,7 @@ Page({
     let yourPlans = await that.onQueryPlans();
     /** 同步执行 */
     let results = await Promise.all([otherPlans, yourJobs, yourPlans])
+
     /**
      * 更新对象中某属性值
      */
@@ -64,7 +65,7 @@ Page({
         that.setData(param);
       })
     })
-   
+
     util.closeLoading()
   },
 
@@ -159,10 +160,17 @@ Page({
 
   },
   toPlans: function(e) {
-    console.log(e)
-    wx.navigateTo({
-      url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
-    })
+    let type = e.currentTarget.dataset.type
+    // if (type === 0) {
+      wx.navigateTo({
+        url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+      })
+    // }
+    if (type === 1 || type === 2) {
+      wx.navigateTo({
+        url: '../WeRun/runPlan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+      })
+    }
   },
   onPullDownRefresh: function(e) {
     this.setData({

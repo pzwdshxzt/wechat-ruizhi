@@ -19,10 +19,10 @@
         <view class="weui-form-preview__value">{{JobDetails.applyTextarea}}</view>
         <view class="weui-form-preview__label">审核状态</view>
         <view class="weui-form-preview__value">{{authCode[JobDetails.authFlag]}}</view>
-        <view wx:if="{{JobDetails.authFlag !== 0}}">
+        <block wx:if="{{JobDetails.authFlag !== 0}}">
           <view class="weui-form-preview__label">审核意见</view>
-          <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea}}</view>
-        </view>
+          <view class="weui-form-preview__value">{{JobDetails.authApplyTextarea === ''?authCode[JobDetails.authFlag]:JobDetails.authApplyTextarea}}</view>
+        </block>
       </view>
     </view>
 

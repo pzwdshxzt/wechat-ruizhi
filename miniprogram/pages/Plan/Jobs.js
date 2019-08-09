@@ -11,7 +11,7 @@ Page({
   data: {
     job: {},
     jobId: '',
-    JobDetails: [],
+    jobDetails: [],
     progress: 0,
     authCode: app.globalData.authCode,
     statusCode: app.globalData.statusCode,
@@ -25,7 +25,7 @@ Page({
   onLoad: function(options) {
     util.openLoading('数据加载中')
     db.collection('JobDetails').where({
-      JobId: options.JobId
+      jobId: options.JobId
     }).count().then(res => {
       this.setData({
         jobDetailsTotalCount: res.total
@@ -40,14 +40,14 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-          JobId: res.data._id
+          jobId: res.data._id
         })
         .limit(10)
         .orderBy('date', 'desc')
         .orderBy('time', 'desc')
         .get().then(res => {
           this.setData({
-            JobDetails: res.data
+            jobDetails: res.data
           })
           util.closeLoading()
         })
@@ -58,21 +58,21 @@ Page({
       isloadmore: true
     })
     var that = this;
-    if (this.data.JobDetails.length < this.data.jobDetailsTotalCount) {
+    if (this.data.jobDetails.length < this.data.jobDetailsTotalCount) {
       db.collection('JobDetails')
         .where({
-          JobId: this.data.job._id
+          jobId: this.data.job._id
         })
         .orderBy('date', 'desc')
         .orderBy('time', 'desc')
-        .skip(this.data.JobDetails.length)
+        .skip(this.data.jobDetails.length)
         .limit(10)
         .get().then(res => {
           if (res.data.length > 0) {
             var jobDetails = {};
-            jobDetails = that.data.JobDetails.concat(res.data);
+            jobDetails = that.data.jobDetails.concat(res.data);
             that.setData({
-              JobDetails: jobDetails,
+              jobDetails: jobDetails,
             })
           } 
           this.setData({

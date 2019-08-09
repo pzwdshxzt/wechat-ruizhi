@@ -32,71 +32,97 @@ Page({
     stepInfoList: [],
     toDayRunNum: 0,
     startDate: '',
-    demo5_days_style: [],
+    daysAddonStyle: [],
     daysAddon: []
   },
-
   /**
-   * 生命周期函数--监听页面加载
+   * 查询签到数据
    */
-  onLoad: function(options) {
-    const days_count = new Date(2019, 7, 0).getDate();
-    let demo5_days_style = new Array;
+  queryData(){
+    let daysAddonStyle = new Array;
     let daysAddon = new Array
-    for (let i = 1; i <= days_count; i++) {
-      const date = new Date(2019, 7, i);
-      if (date.getDay() == 0 || date.getDay() == 6) {
-        demo5_days_style.push({
-          month: 'current',
-          day: i,
-          color: '#f488cd'
-        });
-        daysAddon.push({
-          8: '已打卡'
-        })
-      } else {
-        demo5_days_style.push({
-          month: 'current',
-          day: i,
-          color: '#a18ada'
-        });
-        daysAddon.push({
-          8: '补卡'
-        })
-      }
-    }
-
-    demo5_days_style.push({
+    daysAddonStyle.push({
       month: 'current',
       day: 12,
       color: 'white',
       background: '#b49eeb'
     });
-    demo5_days_style.push({
+    daysAddonStyle.push({
       month: 'current',
       day: 17,
       color: 'white',
       background: '#f5a8f0'
     });
-    demo5_days_style.push({
+    daysAddonStyle.push({
       month: 'current',
       day: 20,
       color: 'white',
       background: '#aad4f5'
     });
-    demo5_days_style.push({
+    daysAddonStyle.push({
       month: 'current',
       day: 25,
       color: 'white',
       background: '#84e7d0'
     });
 
+
+    daysAddon.push({
+      day: 2,
+      year: 2019,
+      month: 8,
+      content: '漏卡'
+    })
+    daysAddon.push({
+      day: 5,
+      year: 2019,
+      month: 8,
+      content: '漏卡'
+    })
+    daysAddon.push({
+      day: 12,
+      year: 2019,
+      month: 8,
+      content: '补卡'
+    })
+    daysAddon.push({
+      day: 10,
+      year: 2019,
+      month: 8,
+      content: '补卡'
+    })
+    daysAddon.push({
+      day: 25,
+      year: 2019,
+      month: 8,
+      content: '补卡'
+    })
+    daysAddon.push({
+      day: 11,
+      year: 2019,
+      month: 8,
+      content: '补卡'
+    })
+
+    daysAddon.push({
+      day: 9,
+      year: 2019,
+      month: 7,
+      content: '补卡'
+    })
     this.setData({
-      demo5_days_style,
+      daysAddonStyle,
       daysAddon
     });
-
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    
     let that = this
+    that.queryData()
+
     util.openLoading('数据加载中')
     wx.getWeRunData({
       success(res) {

@@ -1,4 +1,4 @@
-<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
+<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="10" sAngle="0" eAngle="360" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
   bind:getuserinfo="onGotUserInfo" />
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
 	<view slot="backText">返回</view>
@@ -29,13 +29,14 @@
     <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
   </view>
   <view class="weui-cells__title">任务执行人</view>
-  <view class="weui-cells weui-cells_after-title" wx:for="{{Jobs}}" wx:key="_id" wx:for-index="">
+  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index="">
     <navigator url="Jobs?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__hd">
         <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
       </view>
       <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access">查询申请记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.authNum === 0}}">查询申请记录</view>
+      <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum !== 0}}">{{item.authNum}}</view>
     </navigator>
   </view>
 
