@@ -64,6 +64,16 @@ exports.main = async (event, context) => {
             }
         })
       }
+      case 'updateJobsByWeRun': {
+        return await db.collection('Jobs').doc(event._id).update({
+          data: {
+            clockDatas: _.push(event.clockData),
+            updateTime: event.updateTime,
+            doneCount: _.inc(1)
+          }
+        })
+      }
+        
     }
   } catch (e) {
     console.error(e)

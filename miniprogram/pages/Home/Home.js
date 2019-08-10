@@ -55,15 +55,17 @@ Page({
      * 更新对象中某属性值
      */
     let data = results[2].map((data, index) => {
-      db.collection('JobDetails').where({
-        planId: data._id,
-        authFlag: 0
-      }).count().then(res => {
-        var param = {};
-        var str = "yourPlans[" + index + "].authNum";
-        param[str] = res.total;
-        that.setData(param);
-      })
+      if (data.type === 0) {
+        db.collection('JobDetails').where({
+          planId: data._id,
+          authFlag: 0
+        }).count().then(res => {
+          var param = {};
+          var str = "yourPlans[" + index + "].authNum";
+          param[str] = res.total;
+          that.setData(param);
+        })
+      }
     })
 
     util.closeLoading()
@@ -162,9 +164,9 @@ Page({
   toPlans: function(e) {
     let type = e.currentTarget.dataset.type
     // if (type === 0) {
-      wx.navigateTo({
-        url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
-      })
+    wx.navigateTo({
+      url: '../Plan/Plan?PlanId=' + e.currentTarget.dataset.jobid + '&uid=' + this.data.openid,
+    })
     // }
     if (type === 1 || type === 2) {
       wx.navigateTo({

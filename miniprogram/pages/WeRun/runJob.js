@@ -19,110 +19,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    addonShow: true,
-    cs: 45,
-    addon: 'custom',
     buttons: buttons,
     statusCode: app.globalData.statusCode,
     authCode: app.globalData.authCode,
-    job: {},
+    weRunSignCode: app.globalData.weRunSignCode,
+    weRunSignColorCode: app.globalData.weRunSignColorCode,
+    isClock: true,
+    addonShow: true,
+    addon: 'custom',
     progress: 0,
-    isloadmore: false,
-    authWeRun: false,
-    stepInfoList: [],
     toDayRunNum: 0,
+    job: {},
+    stepInfoList: [],
     startDate: '',
     daysAddonStyle: [],
-    daysAddon: []
+    daysAddon: [],
+    clockDatas: [],
+    isClock: true
   },
-  /**
-   * 查询签到数据
-   */
-  queryData(){
-    let daysAddonStyle = new Array;
-    let daysAddon = new Array
-    daysAddonStyle.push({
-      month: 'current',
-      day: 12,
-      color: 'white',
-      background: '#b49eeb'
-    });
-    daysAddonStyle.push({
-      month: 'current',
-      day: 17,
-      color: 'white',
-      background: '#f5a8f0'
-    });
-    daysAddonStyle.push({
-      month: 'current',
-      day: 20,
-      color: 'white',
-      background: '#aad4f5'
-    });
-    daysAddonStyle.push({
-      month: 'current',
-      day: 25,
-      color: 'white',
-      background: '#84e7d0'
-    });
 
-
-    daysAddon.push({
-      day: 2,
-      year: 2019,
-      month: 8,
-      content: '漏卡'
-    })
-    daysAddon.push({
-      day: 5,
-      year: 2019,
-      month: 8,
-      content: '漏卡'
-    })
-    daysAddon.push({
-      day: 12,
-      year: 2019,
-      month: 8,
-      content: '补卡'
-    })
-    daysAddon.push({
-      day: 10,
-      year: 2019,
-      month: 8,
-      content: '补卡'
-    })
-    daysAddon.push({
-      day: 25,
-      year: 2019,
-      month: 8,
-      content: '补卡'
-    })
-    daysAddon.push({
-      day: 11,
-      year: 2019,
-      month: 8,
-      content: '补卡'
-    })
-
-    daysAddon.push({
-      day: 9,
-      year: 2019,
-      month: 7,
-      content: '补卡'
-    })
-    this.setData({
-      daysAddonStyle,
-      daysAddon
-    });
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
     let that = this
-    that.queryData()
-
     util.openLoading('数据加载中')
     wx.getWeRunData({
       success(res) {
@@ -138,7 +58,10 @@ Page({
             toDayRunNum: res.result[res.result.length - 1].step,
             stepInfoList: res.result
           })
-          that.checkStepData(res.result)
+          /** 去掉今天 */
+          let temp = [...res.result]
+          temp.pop()
+          that.checkStepData(temp)
         })
       },
       fail(res) {
@@ -157,15 +80,21 @@ Page({
         })
       }
     })
-
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       that.setData({
         job: res.data,
-        startDate: util.timeStampToTimeV5(res.data.createTime, '-'),
+        clockDatas: res.data.clockDatas,
+        startDate: util.formatDate(new Date(res.data.createTime)),
         progress: util.getPercent(res.data.doneCount, res.data.inviteCount)
+      }, function() {
+        that.queryData()
+        that.setData({
+          isClock: !that.checkClock(util.formatDate(new Date()))
+        })
       })
       util.closeLoading()
     })
+
   },
   gotoPlanDetails: function() {
     wx.navigateTo({
@@ -184,39 +113,37 @@ Page({
     let day = Math.floor((Date.parse(this.data.job.endTime) - Date.parse(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())) / (24 * 3600 * 1000));
     /** 项目开始 时间的时间戳 */
     let startTimestamp = util.timeStampToTimeV7(false, this.data.job.createTime, 1)
-    let endTimestamp = util.timeStampToTimeV7(true, this.data.job.endTime, 1)
+    let endTimestamp = util.timeStampToTimeV7(true, Date.parse(this.data.job.endTime), 1)
+    console.log(startTimestamp)
+    console.log(endTimestamp)
+    let isfail = false;
     /**
      * 过滤重接受任务开始的那天算起
      */
-    let newArray = stepData.filter(info => {
-      /**
-       * 完成
-       */
+    let needStepData = stepData.filter(info => {
+      /**  完成  */
       if (this.data.job.weRunNum <= info.step) {
         info.type = 1
         info.sign = true
       }
-      /**
-       * 未完成
-       */
+      /** 未完成 */
       if (this.data.job.weRunNum > info.step) {
         info.type = 2
         info.sign = false
+        isfail = true
       }
+      info.clockDateId = util.formatDate(new Date(info.timestamp * 1000))
       return startTimestamp <= info.timestamp * 1000 && endTimestamp >= info.timestamp * 1000
     })
-
-
+    console.log(needStepData)
+    this.setData({
+      needStepData
+    })
     /** 连续性任务如果有未完成的直接失败 */
     if (this.data.job.type === 1) {
-      let isfail = false;
-      newArray.map(res => {
-        if (res.type === 2) {
-          isfail = true
-        }
-      })
       /**
-       * 如果存在没有成功的天数
+       * 如果存在没有成功的天数  
+       * 微信最多只能取30数据 所以只能判断30天内的数据
        */
       if (isfail) {
         console.log('执行失败更新')
@@ -224,7 +151,6 @@ Page({
     }
     /** 累积性判断项目有没有到期  */
     if (this.data.job.type === 2) {
-
       /**
        * 执行修改job失败 并且提示项目已更新为失败 且不能打卡了
        */
@@ -255,8 +181,8 @@ Page({
      * 如果都没有问题就自动打卡更新时间 
      * signDate 是运动签到数据
      **/
-    if (util.checkObject(this.data.job.signData)) {
-      // newArray直接更新上去
+    if (util.checkObject(this.data.job.clockDatas)) {
+
     } else {
       /**
        *  TODO 如果已经存在打卡数据  
@@ -264,10 +190,8 @@ Page({
        *  之前没有打卡得也可以直接自动补签 
        *  数据合在一起
        **/
-      console.log(this.data.job.signData)
+      console.log(this.data.job.clockDatas)
     }
-
-
   },
   onClick(e) {
     if (e.detail.index === 1) {
@@ -305,17 +229,15 @@ Page({
   onChange(e) {
     console.log('onChange', e)
   },
-  dayClick(val) {
-    /** 判断是否需要打卡 */
-    console.log(val)
-  },
+
   prevMonth(val) {
     /** 刷新签到数据 */
-    console.log(val)
+    this.queryData()
   },
   nextMonth(val) {
     /** 刷新签到数据 */
     console.log(val)
+    this.queryData()
   },
   /** 
    * 获取今日步数
@@ -339,9 +261,7 @@ Page({
       }
     })
   },
-  openApplyPage: function() {
-    console.log('手动打卡')
-  },
+
   switchAddon: function() {
     if (this.data.addonShow) {
       this.setData({
@@ -356,4 +276,149 @@ Page({
       });
     }
   },
+
+  /**
+   * 查询签到数据
+   */
+  queryData: function() {
+    let clockDatas = this.data.clockDatas
+    let daysAddonStyle = new Array;
+    let daysAddon = new Array
+    let weRunSignCode = this.data.weRunSignCode
+    let weRunSignColorCode = this.data.weRunSignColorCode
+    if (!util.checkObject(clockDatas)) {
+      clockDatas.map(clockData => {
+        daysAddonStyle.push({
+          month: clockData.month,
+          day: clockData.day,
+          color: 'white',
+          background: weRunSignColorCode[clockData.content]
+        });
+        daysAddon.push({
+          day: clockData.day,
+          year: clockData.year,
+          month: clockData.month,
+          content: weRunSignCode[clockData.content]
+        })
+      })
+      this.setData({
+        daysAddonStyle,
+        daysAddon
+      });
+    }
+
+  },
+  /**
+   * 今日打卡
+   */
+  openApplyPage: function() {
+    let now = new Date()
+    let clockDateId = util.formatDate(now)
+    if (this.checkClock(clockDateId)) {
+      if (this.data.toDayRunNum >= this.data.job.weRunNum) {
+        let clockData = {
+          clockDateId,
+          day: now.getDate(),
+          year: now.getFullYear(),
+          month: now.getMonth() + 1,
+          content: 1,
+          step: this.data.toDayRunNum
+        }
+        this.clock(clockData, clockDateId)
+      }
+    }
+  },
+  /**
+   * 日历上打卡等
+   */
+  dayClick(val) {
+    let clockDateId = util.formatDate(new Date(val.detail.year, val.detail.month - 1, val.detail.day))
+    console.log(clockDateId)
+
+    if (this.checkClock(clockDateId)) {
+      wx.showModal({
+        title: '是否打卡',
+        content: clockDateId + '请求打卡？',
+        success: function(e) {
+          if (e.confirm) {
+            let clockDateRunNum = 0
+            this.data.needStepData.map(data => {
+              if (data.clockDateId === clockDateId) {
+                clockDateRunNum = data.step
+              }
+            })
+            console.log(clockDateRunNum)
+            if (clockDateRunNum >= this.data.job.weRunNum) {
+              let clockData = {
+                clockDateId,
+                day: val.detail.day,
+                year: val.detail.year,
+                month: val.detail.month,
+                content: 1,
+                step: this.data.toDayRunNum
+              }
+              this.clock(clockData, clockDateId)
+              console.log(clockData)
+            } else {
+              wx.showToast({
+                title: '补签步数未达到目标步数',
+                icon: 'none'
+              })
+            }
+          }
+        }
+      })
+    }
+  },
+  /**
+   * 打卡入口
+   */
+  clock(clockData, clockDateId) {
+    util.openLoading('打卡申请中...')
+    let clockDatas = this.data.clockDatas
+    let that = this
+    if (util.checkObject(clockDatas)) {
+      clockDatas = new Array
+    }
+    dbConsole.updateJobsByWeRun(that.data.job._id, clockData).then(res => {
+      clockDatas.push(clockData)
+      this.setData({
+        clockDatas: clockDatas
+      }, function() {
+        this.queryData()
+        wx.showToast({
+          title: '打卡成功',
+          icon: 'none'
+        })
+      });
+
+    }).catch(res => {
+      console.log(res)
+    })
+    util.closeLoading()
+
+  },
+
+  /**
+   * 判断是否打卡
+   * clockDateId 日期
+   * return boolean
+   */
+  checkClock(clockDateId) {
+    let click = true
+    if (!util.checkObject(this.data.clockDatas)) {
+      this.data.clockDatas.map(info => {
+        if (info.clockDateId === clockDateId) {
+          click = false
+        }
+      })
+    }
+    if (!click) {
+      wx.showToast({
+        title: clockDateId + '已打卡',
+        icon: 'none',
+      })
+    }
+    return click
+  }
 })

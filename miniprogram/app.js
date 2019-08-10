@@ -55,6 +55,8 @@ App({
       'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_2.png?sign=c9bef885e1112d7ab95921ecda92d5d4&t=1564998426',
       'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_3.png?sign=8e35b6f7f040102c97e5a5cca2643be6&t=1564998435'
     ],
+    weRunSignCode: ['开始','已打卡','补卡','漏卡','结束日'],
+    weRunSignColorCode: ['#aad4f5', '#84e7d0', '#b49eeb', '#f5a8f0', '#aad4f5'],
     statusCode: ['进行中', '已完成', '放弃', '计划废弃'],
     authCode: ['待审核', '已拒绝', '审核通过'],
     typeCode: ['打卡', '运动(连续型)', '运动(累计型)'],

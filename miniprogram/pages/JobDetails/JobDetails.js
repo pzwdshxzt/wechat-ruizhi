@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    JobDetails: {},
+    jobDetails: {},
     authCode: ['待审核', '已拒绝', '审核通过'],
     isAuthFlag: false,
     applyTextarea: '',
@@ -29,7 +29,7 @@ Page({
     util.openLoading('数据加载中')
     db.collection('JobDetails').doc(options.JobDetailsId).get().then(res => {
       this.setData({
-        JobDetails: res.data
+        jobDetails: res.data
       })
       if (!util.checkObject(options.isAuthFlag) && res.data.authFlag === 0) {
         this.setData({
@@ -48,12 +48,12 @@ Page({
         authFlag = radioItems[i].value
       }
     }
-    dbConsole.updateJobDetails(this.data.JobDetails._id, authFlag, this.data.applyTextarea).then(res => {
+    dbConsole.updateJobDetails(this.data.jobDetails._id, authFlag, this.data.applyTextarea).then(res => {
       if (authFlag === 2) {
-        db.collection('Jobs').doc((this.data.JobDetails.JobId)).get().then(jobs => {
-          let newCount = jobs.data.doneCount + this.data.JobDetails.applyCount
+        db.collection('Jobs').doc((this.data.jobDetails.JobId)).get().then(jobs => {
+          let newCount = jobs.data.doneCount + this.data.jobDetails.applyCount
           dbConsole.updateJobs(jobs.data._id, newCount).then(res => {
-            this.callPlanFuncation(this.data.JobDetails.formId, this.data.JobDetails._openid, '审核通过', jobs.data.inviteName, jobs.data._id)
+            this.callPlanFuncation(this.data.jobDetails.formId, this.data.jobDetails._openid, '审核通过', jobs.data.inviteName, jobs.data._id)
             util.successPage('审核成功', '您已经审核成功了')
             util.closeLoading()
             if (newCount >= jobs.data.inviteCount) {
@@ -67,7 +67,7 @@ Page({
       }
       if (authFlag === 1) {
         util.successPage('审核成功', '您已经审核成功了')
-        this.callPlanFuncation(e.detail.formId, this.data.JobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
+        this.callPlanFuncation(e.detail.formId, this.data.jobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
         util.closeLoading()
       }
     }).catch(res => {

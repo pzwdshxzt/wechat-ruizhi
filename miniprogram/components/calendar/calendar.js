@@ -196,6 +196,7 @@ Component({
     days_array: [], // 日期数组
     days_color: [], // 日期字体、背景颜色数组
     days_addon: [], // 日期附件
+    days_addon_temp: [], // 日期附件
     weekTitle: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     max_year: 2099, // 最大年份
     max_month: 12, // 最大月份
@@ -526,7 +527,7 @@ Component({
         const item = this.data.days_color[i];
         const background = item.background ? item.background : 'transparent';
         for (let j = 0; j < days.length; j++) {
-          if (days[j].info == item.month && days[j].day == item.day) {
+          if (days[j].month == item.month && days[j].day == item.day) {
             if (item.color) {
               days[j].color = item.color + '!important';
             }
@@ -567,32 +568,7 @@ Component({
       if (week.length > 0) {
         days_array.push(week);
       }
-     
-
-      /**
-       * 本月的日期
-       */
-      const new_addon_array = new Array
-      console.log(new_addon_array)
-      if (this.data.days_addon.length > 0 && this.data.days_addon.length !== days_count) {
-        for (let j = 0; j < days_count; j++) {
-          let isDay = false
-          for (let i = 0; i < this.data.days_addon.length; i++) {
-            const item = this.data.days_addon[i];
-            if (j === item.day && item.month === month && item.year === year) {
-              new_addon_array.push(item)
-              isDay = true
-            }
-          }
-          if (!isDay) {
-            new_addon_array.push(j)
-          }
-        }
-        console.log(new_addon_array)
-        this.setData({
-          days_addon: new_addon_array
-        })
-      }
+      
       return days_array;
     },
     /**
@@ -633,16 +609,38 @@ Component({
      */
     _setDaysAddon: function(addonArray, oldAddon) {
       let that = this
-      console.log(addonArray)
-      console.log(this.data.addon);
+      let year = this.data.year
+      let month = this.data.month
+      let addons = addonArray
       if (typeof(addonArray) == 'object' && addonArray instanceof Array) {
-        this.setData({
-          days_array: addonArray
-        }, function(){
+        const last_day = new Date(year, month, 0);
+        const days_count = last_day.getDate(); // 本月最后一天是几号
+        const new_addon_array = new Array
+        if (addons.length > 0) {
+          for (let j = 0; j < days_count; j++) {
+            let isDay = false
+            for (let i = 0; i < addons.length; i++) {
+              const item = addons[i];
+              if (j === item.day && item.month === month && item.year === year) {
+                new_addon_array.push(item)
+                isDay = true
+              }
+            }
+            if (!isDay) {
+              new_addon_array.push(j)
+            }
+          }
+          console.log(new_addon_array)
           this.setData({
-            days_array: that._setCalendarData(this.data.year, this.data.month)
+            days_addon: new_addon_array
           })
-        });
+        }
+
+        // this.setData({
+        //   days_addon_temp: addonArray
+        // }, function(){
+        //   that._setAddonArray(this.data.year, this.data.month)
+        // });
       }
     },
 
