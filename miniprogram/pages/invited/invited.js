@@ -57,6 +57,14 @@ Page({
   },
 
   checkInfo: function(options) {
+
+    if (this.data.plan.endTime < Date.parse(new Date())) {
+      this.setData({
+        isSharePageIn: false
+      })
+      this.showTopTips('该项目已经停止接受！!')
+    }
+
     db.collection('Jobs').where({
       planId: options.planId,
       jober: this.data.openid,
@@ -107,6 +115,13 @@ Page({
   },
   addJob: function() {
     util.openLoading('正在玩命的加载数据')
+    let endTime = 0
+    if (this.data.plan.type === 1) {
+      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.inviteCount)
+    }
+    if (this.data.plan.type === 2) {
+      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.planCycle)
+    }
     db.collection('Jobs').add({
       data: {
         planId: this.data.plan._id,
@@ -120,7 +135,7 @@ Page({
         createTime: util.getTimeStamp(),
         updateTime: util.getTimeStamp(),
         type: this.data.plan.type,
-        endTime: this.data.plan.type === 1 ? util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.inviteCount) : this.data.plan.endTime,
+        endTime: endTime,
         weRunNum: this.data.plan.weRunNum
       },
       success: res => {

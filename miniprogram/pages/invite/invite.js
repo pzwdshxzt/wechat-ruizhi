@@ -8,6 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    types: app.globalData.typeCode,
+    startDay: util.formatDate(new Date()),
     files: '',
     inviteCount: '',
     inviteName: '',
@@ -19,13 +21,12 @@ Page({
     awardCount: 0,
     weRunNum: '',
     type: '0',
-    types: app.globalData.typeCode,
     isAgree: false,
     showTopTips: false,
     errorMsg: '输入有误',
     inviteLimitCount: '',
-    startDay: '',
-    endTime: ''
+    endTime: '',
+    planCycle: ''
   },
 
   /**
@@ -45,7 +46,6 @@ Page({
         console.log(err)
       })
     }
-
   },
   goHome: function() {
     util.homePage()
@@ -82,20 +82,9 @@ Page({
   },
   getInviteCount: function(e) {
     if (this.checkNum(e.detail.value)) {
-      if (this.data.type === '2' || this.data.type === '1'){
-        let startDay = util.timeStampToTimeV6(true, undefined, Number(e.detail.value), '-')
-        let endTime = util.timeStampToTimeV6(true, undefined, Number(e.detail.value) + 5, '-')
-        this.setData({
-          inviteCount: e.detail.value,
-          startDay: startDay,
-          endTime: endTime
-        })
-      }
-      if(this.data.type === '0'){
-        this.setData({
-          inviteCount: e.detail.value,
-        })
-      }
+      this.setData({
+        inviteCount: e.detail.value,
+      })
     } else {
       this.setData({
         inviteCount: ''
@@ -103,15 +92,10 @@ Page({
     }
 
   },
-  bindDateChange: function(e) {
-    console.log(e)
-    if (util.checkObject(this.data.inviteCount) && this.data.type === '2') {
-      this.showTopTips('请先填写运动期数')
-    } else {
-      this.setData({
-        endTime: e.detail.value
-      })
-    }
+  bindEndDateChange: function(e) {
+    this.setData({
+      endTime: e.detail.value
+    })
   },
   getInviteLimitCount: function(e) {
     if (this.checkNum(e.detail.value)) {
@@ -125,7 +109,7 @@ Page({
     }
   },
   checkNum: function(num) {
-    var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
+    var reg = /^[0-9]+$/;
     if (!reg.test(num)) {
       this.showTopTips('请填写数字')
       return false
@@ -136,20 +120,41 @@ Page({
     this.setData({
       type: e.detail.value
     })
-    if ((e.detail.value === '1' || e.detail.value === '2') && this.data.inviteCount !== 0 && this.data.inviteCount !== ''){
-      let startDay = util.timeStampToTimeV6(true, undefined, Number(this.data.inviteCount), '-')
-      let endTime = util.timeStampToTimeV6(true, undefined, Number(this.data.inviteCount) + 5, '-')
-      this.setData({
-        startDay: startDay,
-        endTime: endTime
-      })
-    }
   },
   bindAgreeChange: function(e) {
     this.setData({
       isAgree: !!e.detail.value.length
     });
   },
+  getPlanCycle: function(e) {
+    if (this.checkNum(e.detail.value)) {
+      let planCycle = e.detail.value
+      let inviteCount = this.data.inviteCount
+      console.log(inviteCount)
+      if (inviteCount === '' || inviteCount === 0) {
+        this.showTopTips('请先填写运动天数')
+        this.setData({
+          planCycle: ''
+        })
+      } else {
+        if (Number(inviteCount) < Number(planCycle)) {
+          this.setData({
+            planCycle: e.detail.value
+          });
+        } else {
+          this.showTopTips('计划周期应大于运动天数')
+          this.setData({
+            planCycle: ''
+          });
+        }
+      }
+    } else {
+      this.setData({
+        planCycle: ''
+      })
+    }
+  },
+  
   checkInfo: function() {
     if (this.data.inviteName === '') {
       this.showTopTips('请输入计划名称')
@@ -162,6 +167,12 @@ Page({
     if (this.data.type === '1' || this.data.type === '2') {
       if (this.data.weRunNum === 0 || this.data.weRunNum === '0' || this.data.weRunNum === '') {
         this.showTopTips('请输入微信运动步数')
+        return true
+      }
+    }
+    if (this.data.type === '2') {
+      if (this.data.planCycle === 0 || this.data.planCycle === '0' || this.data.planCycle === '') {
+        this.showTopTips('请输入计划周期')
         return true
       }
     }
@@ -188,63 +199,60 @@ Page({
 
     if (this.data.type === 2) {
       var endTime = new Date(Date.parse(this.data.endTime));
-      var startDay = new Date(Date.parse(this.data.startDay));
-      if (endTime => startDay) {
-        this.setData({
-          endTime: e.detail.value
-        })
-      } else {
-        this.showTopTips('结束时间应大于运动期数')
-      }
+      this.setData({
+        endTime: e.detail.value
+      })
       return true
     }
     return false
   },
   sumbitPlan: function() {
-    if (!this.checkInfo()) {
-      util.openLoading('正在玩命申请中...')
-      let path = 'banner-' + util.getTimeStamp() + '.png'
-      wx.cloud.uploadFile({
-        cloudPath: path,
-        filePath: this.data.files,
-      }).then(res => {
-        this.setData({
-          files: res.fileID
-        })
-        console.log(res.fileID)
-        db.collection('Plans').add({
-          data: {
-            inviteName: this.data.inviteName,
-            inviteCount: Number(this.data.inviteCount),
-            ibs: this.data.openid,
-            status: 0,
-            show: this.data.show,
-            content: this.data.content,
-            award: this.data.award,
-            type: Number(this.data.type),
-            inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
-            createTime: util.getTimeStamp(),
-            updateTime: util.getTimeStamp(),
-            banner_url: res.fileID,
-            weRunNum: Number(this.data.weRunNum),
-            endTime: Date.parse(this.data.endTime)
-          }
-        }).then(res => {
-          util.closeLoading()
-          wx.reLaunch({
-            url: 'success?planId=' + res._id
-          })
-        }).catch(res => {
-          wx.showToast({
-            icon: 'none',
-            title: '添加计划失败'
-          })
-          console.error('[数据库] [新增记录] 失败：', err)
-        })
-      }).catch(res => {
-        console.log(res)
-      })
-    }
+    console.log(this.checkInfo())
+    // if (!this.checkInfo()) {
+    //   util.openLoading('正在玩命申请中...')
+    //   let path = 'banner-' + util.getTimeStamp() + '.png'
+    //   wx.cloud.uploadFile({
+    //     cloudPath: path,
+    //     filePath: this.data.files,
+    //   }).then(res => {
+    //     this.setData({
+    //       files: res.fileID
+    //     })
+    //     console.log(res.fileID)
+    //     db.collection('Plans').add({
+    //       data: {
+    //         inviteName: this.data.inviteName,
+    //         inviteCount: Number(this.data.inviteCount),
+    //         ibs: this.data.openid,
+    //         status: 0,
+    //         show: this.data.show,
+    //         content: this.data.content,
+    //         award: this.data.award,
+    //         type: Number(this.data.type),
+    //         inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
+    //         createTime: util.getTimeStamp(),
+    //         updateTime: util.getTimeStamp(),
+    //         banner_url: res.fileID,
+    //         weRunNum: Number(this.data.weRunNum),
+    //         endTime: Date.parse(this.data.endTime),
+    //         planCycle: this.data.planCycle
+    //       }
+    //     }).then(res => {
+    //       util.closeLoading()
+    //       wx.reLaunch({
+    //         url: 'success?planId=' + res._id
+    //       })
+    //     }).catch(res => {
+    //       wx.showToast({
+    //         icon: 'none',
+    //         title: '添加计划失败'
+    //       })
+    //       console.error('[数据库] [新增记录] 失败：', err)
+    //     })
+    //   }).catch(res => {
+    //     console.log(res)
+    //   })
+    // }
   },
   /**
    * 1.展示

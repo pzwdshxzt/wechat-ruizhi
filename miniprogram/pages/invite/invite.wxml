@@ -9,11 +9,11 @@
     <view class="page__title">计划</view>
     <view class="page__desc">
       <text>
-            1、计划工作为实现组织目标服务。
-            2、计划工作是管理活动的桥梁，是组织、领导和控制等管理活动的基础。
-            3、计划工作具有普遍性和秩序性。
-            4、计划工作要追求效率。
-            5、计划运动让自己自律。
+          1、计划工作为实现组织目标服务。
+          2、计划工作是管理活动的桥梁，是组织、领导和控制等管理活动的基础。
+          3、计划工作具有普遍性和秩序性。
+          4、计划工作要追求效率。
+          5、计划运动让自己自律。
       </text>
     </view>
   </view>
@@ -40,7 +40,18 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells__title">此计划最多多少人参加(0或者不写将没有限制)</view>
+    <view class="weui-cells__title"  wx:if="{{type === '2'}}">计划周期应大于运动天数</view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{type === '2'}}">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划周期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input type="digit" type="number" value='{{planCycle}}' bindblur="getPlanCycle" class="weui-input" placeholder="请输入计划周期" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">此计划限制参加人数(0或者不写将没有限制)</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
@@ -73,13 +84,15 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells weui-cells_after-title" wx:if="{{type === '2' || type === '0'}}">
+    
+    <view class="weui-cells__title">该计划停止接受计划时间</view>
+    <view class="weui-cells weui-cells_after-title" >
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">结束时间</view>
         </view>
         <view class="weui-cell__bd">
-          <picker mode="date" value="{{endTime}}" start="{{startDay}}" end="2099-09-01" bindchange="bindDateChange">
+          <picker mode="date" value="{{endTime}}" start="{{startDay}}" end="2099-09-01" bindchange="bindEndDateChange">
             <view class="weui-input">{{endTime}}</view>
           </picker>
         </view>
