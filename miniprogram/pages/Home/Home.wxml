@@ -10,7 +10,7 @@
     <button class="cu-btn bg-gradual-blue shadow-blur round">搜索</button>
   </view>
 </view>
-<!-- <view class="swiper_hd">
+<view class="swiper_hd">
   <swiper autoplay='true' interval='3000' duration='1000' circular='true'>
     <block wx:for="{{otherPlans}}" wx:key="index">
       <swiper-item class='banner-show'>
@@ -23,7 +23,7 @@
       </swiper-item>
     </block>
   </swiper>
-</view> -->
+</view>
 <view wx:if="{{yourJobs && yourJobs.length !== 0}}">
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
@@ -64,7 +64,7 @@
       <view class="content">
         <view class="text-grey">{{item.inviteName}}</view>
         <view class="text-gray text-sm">
-          <text class="cuIcon-new text-green"></text>{{item.content}}</view>
+          <text class="cuIcon-new text-green"></text>{{item.contentShort}}</view>
       </view>
       <view class="action">
         <view class="text-grey text-xs">in</view>

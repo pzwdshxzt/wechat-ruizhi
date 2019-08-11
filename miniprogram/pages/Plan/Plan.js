@@ -42,7 +42,7 @@ Page({
   onLoad: function(options) {
     this.initData(options)
   },
-  async initData(options){
+  async initData(options) {
     let that = this
     util.openLoading('数据加载中')
     let plan = await db.collection('Plans').doc(options.PlanId).get()
@@ -57,15 +57,17 @@ Page({
       jobs: results[1].data
     })
     this.data.jobs.map((data, index) => {
-      db.collection('JobDetails').where({
-        jobId: data._id,
-        authFlag: 0
-      }).count().then(res => {
-        var param = {};
-        var str = "jobs[" + index + "].authNum";
-        param[str] = res.total;
-        that.setData(param);
-      })
+      if (data.type == 0) {
+        db.collection('JobDetails').where({
+          jobId: data._id,
+          authFlag: 0
+        }).count().then(res => {
+          var param = {};
+          var str = "jobs[" + index + "].authNum";
+          param[str] = res.total;
+          that.setData(param);
+        })
+      }
     })
   },
   onShareAppMessage: function() {

@@ -31,7 +31,7 @@
       <view class="weui-form-preview__label">任务开始时间</view>
       <view class="weui-form-preview__value">{{startDate}}</view>
       <view class="weui-form-preview__label" wx:if="{{job.type === 1 || job.type === 2}}">任务结束时间</view>
-      <view class="weui-form-preview__value" wx:if="{{job.type === 1 || job.type === 2}}">{{job.endTime}}</view>
+      <view class="weui-form-preview__value" wx:if="{{job.type === 1 || job.type === 2}}">{{endDate}}</view>
       <view class="weui-form-preview__label">任务状态</view>
       <view class="weui-form-preview__value">{{statusCode[job.status]}}</view>
       <view class="weui-form-preview__label">任务进度</view>
@@ -43,9 +43,9 @@
         </view>
       </view>
     </view>
-    <button class="weui-btn" disabled="true" wx:if="{{job.status === 0 && job.weRunNum > toDayRunNum }}">今日步数未到，不能打卡</button>
-    <button class="weui-btn" disabled="true" wx:if="{{isClock}}">今日已打卡</button>
-    <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="openApplyPage" wx:if="{{job.status === 0 && job.weRunNum <= toDayRunNum }}">今日打卡</button>
+    <button class="weui-btn" disabled="true" wx:if="{{job.status === 0 && job.weRunNum > toDayRunNum && !isClock}}">今日步数未到，不能打卡</button>
+    <button class="weui-btn" disabled="true" wx:if="{{job.status === 0 && isClock}}">今日已打卡</button>
+    <button class="weui-btn" style="background-color:#1589eb;color:white" bindtap="openApplyPage" wx:if="{{job.status === 0 && job.weRunNum <= toDayRunNum && !isClock}}">今日打卡</button>
     <button class="weui-btn" bindtap="gotoPlanDetails">查看计划详情</button>
   </view>
 

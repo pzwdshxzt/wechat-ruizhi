@@ -94,18 +94,18 @@ Page({
     }
 
   },
-  
+
   /**
    * 选择要执行的计划
    */
   acceptPlan: function(e) {
-    util.checkAuthUserInfo().then(res =>{
+    util.checkAuthUserInfo().then(res => {
       this.addJob()
-    }).catch(err =>{
+    }).catch(err => {
       console.log('auth err')
     })
   },
-  addJob: function (){
+  addJob: function() {
     util.openLoading('正在玩命的加载数据')
     db.collection('Jobs').add({
       data: {
@@ -120,7 +120,7 @@ Page({
         createTime: util.getTimeStamp(),
         updateTime: util.getTimeStamp(),
         type: this.data.plan.type,
-        endTime: this.data.plan.endTime,
+        endTime: this.data.plan.type === 1 ? util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.inviteCount) : this.data.plan.endTime,
         weRunNum: this.data.plan.weRunNum
       },
       success: res => {

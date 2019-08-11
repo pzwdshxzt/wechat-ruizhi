@@ -3,6 +3,27 @@ const db = wx.cloud.database()
 const _ = db.command
 const dbConsole = require('DbConsole.js');
 
+
+Date.prototype.addDays = function (days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function getDates(startDate, stopDate) {
+  var dateArray = new Array();
+  var currentDate = startDate;
+  while (currentDate <= stopDate) {
+    let obj = {
+      date: formatDate(new Date(currentDate)),
+      dateTime: Date.parse(currentDate)
+    }
+    dateArray.push(obj);
+    currentDate = currentDate.addDays(1);
+  }
+  return dateArray;
+}
+
 const formatDateTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -328,5 +349,6 @@ module.exports = {
   timeStampToTimeV4: timeStampToTimeV4,
   timeStampToTimeV5: timeStampToTimeV5,
   timeStampToTimeV6: timeStampToTimeV6,
-  timeStampToTimeV7: timeStampToTimeV7
+  timeStampToTimeV7: timeStampToTimeV7,
+  getDates: getDates
 }

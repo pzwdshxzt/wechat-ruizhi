@@ -617,7 +617,7 @@ Component({
         const days_count = last_day.getDate(); // 本月最后一天是几号
         const new_addon_array = new Array
         if (addons.length > 0) {
-          for (let j = 0; j < days_count; j++) {
+          for (let j = 0; j <= days_count; j++) {
             let isDay = false
             for (let i = 0; i < addons.length; i++) {
               const item = addons[i];
@@ -630,7 +630,6 @@ Component({
               new_addon_array.push(j)
             }
           }
-          console.log(new_addon_array)
           this.setData({
             days_addon: new_addon_array
           })

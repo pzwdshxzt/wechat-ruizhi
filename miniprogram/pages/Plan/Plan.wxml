@@ -29,7 +29,7 @@
     <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
   </view>
   <view class="weui-cells__title">任务执行人</view>
-  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index="">
+  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index=""  wx:if="{{plan.type === 0}}">
     <navigator url="Jobs?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__hd">
         <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
@@ -37,6 +37,18 @@
       <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
       <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.authNum === 0}}">查询申请记录</view>
       <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum !== 0}}">{{item.authNum}}</view>
+    </navigator>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index="" wx:if="{{plan.type === 1 || plan.type ===2}}">
+    <navigator url="../WeRun/runPlan?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__hd">
+        <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+      </view>
+      <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.type === 0 && item.authNum === 0}}">查看申请记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.type === 1 || item.type === 2}}">查看运动打卡记录</view>
+      <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum !== 0 && item.type === 0}}">{{item.authNum}}</view>
     </navigator>
   </view>
 

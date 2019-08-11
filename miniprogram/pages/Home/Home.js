@@ -86,6 +86,7 @@ Page({
           res.data.map(data => {
             data.authNum = 0
             data.colorName = dataList[util.getRandInt(0, length)].name
+            data.contentShort = data.content.length > 15 ? data.content.substring(0, 15) + '...' : data.content
             data.text = data.inviteName.substring(0, 1)
           })
         }

@@ -227,7 +227,7 @@ Page({
             updateTime: util.getTimeStamp(),
             banner_url: res.fileID,
             weRunNum: Number(this.data.weRunNum),
-            endTime: this.data.endTime
+            endTime: Date.parse(this.data.endTime)
           }
         }).then(res => {
           util.closeLoading()
