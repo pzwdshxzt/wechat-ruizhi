@@ -9,8 +9,10 @@ App({
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
+      /**  */
+      /** qaq-uau6p */
       wx.cloud.init({
-        env: "qaq-uau6p",
+        env: "cyq-dev-amyvi",
         traceUser: true,
       })
     }
