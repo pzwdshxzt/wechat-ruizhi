@@ -207,52 +207,50 @@ Page({
     return false
   },
   sumbitPlan: function() {
-    console.log(this.checkInfo())
-    // if (!this.checkInfo()) {
-    //   util.openLoading('正在玩命申请中...')
-    //   let path = 'banner-' + util.getTimeStamp() + '.png'
-    //   wx.cloud.uploadFile({
-    //     cloudPath: path,
-    //     filePath: this.data.files,
-    //   }).then(res => {
-    //     this.setData({
-    //       files: res.fileID
-    //     })
-    //     console.log(res.fileID)
-    //     db.collection('Plans').add({
-    //       data: {
-    //         inviteName: this.data.inviteName,
-    //         inviteCount: Number(this.data.inviteCount),
-    //         ibs: this.data.openid,
-    //         status: 0,
-    //         show: this.data.show,
-    //         content: this.data.content,
-    //         award: this.data.award,
-    //         type: Number(this.data.type),
-    //         inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
-    //         createTime: util.getTimeStamp(),
-    //         updateTime: util.getTimeStamp(),
-    //         banner_url: res.fileID,
-    //         weRunNum: Number(this.data.weRunNum),
-    //         endTime: Date.parse(this.data.endTime),
-    //         planCycle: this.data.planCycle
-    //       }
-    //     }).then(res => {
-    //       util.closeLoading()
-    //       wx.reLaunch({
-    //         url: 'success?planId=' + res._id
-    //       })
-    //     }).catch(res => {
-    //       wx.showToast({
-    //         icon: 'none',
-    //         title: '添加计划失败'
-    //       })
-    //       console.error('[数据库] [新增记录] 失败：', err)
-    //     })
-    //   }).catch(res => {
-    //     console.log(res)
-    //   })
-    // }
+    if (!this.checkInfo()) {
+      util.openLoading('正在玩命申请中...')
+      let path = 'banner-' + util.getTimeStamp() + '.png'
+      wx.cloud.uploadFile({
+        cloudPath: path,
+        filePath: this.data.files,
+      }).then(res => {
+        this.setData({
+          files: res.fileID
+        })
+        db.collection('Plans').add({
+          data: {
+            inviteName: this.data.inviteName,
+            inviteCount: Number(this.data.inviteCount),
+            ibs: this.data.openid,
+            status: 0,
+            show: this.data.show,
+            content: this.data.content,
+            award: this.data.award,
+            type: Number(this.data.type),
+            inviteLimitCount: util.checkObject(this.data.inviteLimitCount) ? 0 : Number(this.data.inviteLimitCount),
+            createTime: util.getTimeStamp(),
+            updateTime: util.getTimeStamp(),
+            banner_url: res.fileID,
+            weRunNum: Number(this.data.weRunNum),
+            endTime: Date.parse(this.data.endTime),
+            planCycle: Number(this.data.planCycle)
+          }
+        }).then(res => {
+          util.closeLoading()
+          wx.reLaunch({
+            url: 'success?planId=' + res._id
+          })
+        }).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '添加计划失败'
+          })
+          console.error('[数据库] [新增记录] 失败：', err)
+        })
+      }).catch(res => {
+        console.log(res)
+      })
+    }
   },
   /**
    * 1.展示

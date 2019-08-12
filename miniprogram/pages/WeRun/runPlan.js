@@ -23,7 +23,6 @@ Page({
     statusCode: app.globalData.statusCode,
     authCode: app.globalData.authCode,
     weRunSignCode: app.globalData.weRunSignCode,
-    weRunSignColorCode: app.globalData.weRunSignColorCode,
     addonShow: true,
     addon: 'custom',
     progress: 0,
@@ -42,7 +41,6 @@ Page({
    */
   onLoad: function(options) {
     /** 当前时间 */
-    let date = new Date()
     let that = this
     util.openLoading('数据加载中')
     db.collection('Jobs').doc(options.JobId).get().then(res => {
@@ -53,8 +51,12 @@ Page({
         endDate: util.formatDate(new Date(res.data.endTime)),
         progress: util.getPercent(res.data.doneCount, res.data.inviteCount)
       }, function() {
+        let startDay = new Date(that.data.job.createTime)
+        startDay.setHours(8, 0, 0)
+        let nowDay = new Date()
+        nowDay.setHours(8, 0, 0)
         that.setData({
-          activityDates: util.getDates(new Date(this.data.job.createTime), date.setDate(date.getDate()))
+          activityDates: util.getDates(startDay, nowDay)
         }, function() {
           that.queryData()
         })
@@ -68,16 +70,6 @@ Page({
       url: '../Job/ShowPlanDetails?PlanId=' + this.data.job.planId,
     })
   },
-  prevMonth(val) {
-    /** 刷新签到数据 */
-    this.queryData()
-  },
-  nextMonth(val) {
-    /** 刷新签到数据 */
-    console.log(val)
-    this.queryData()
-  },
-
   switchAddon: function() {
     if (this.data.addonShow) {
       this.setData({
@@ -97,61 +89,82 @@ Page({
    * 查询签到数据
    */
   queryData: function() {
-
     let clockDatas = this.data.clockDatas
     let daysAddonStyle = new Array;
     let daysAddon = new Array
     let weRunSignCode = this.data.weRunSignCode
-    let weRunSignColorCode = this.data.weRunSignColorCode
     let activityDates = this.data.activityDates
     let targetWeRunNum = this.data.job.weRunNum
     console.log(activityDates)
     if (!util.checkObject(activityDates)) {
-      activityDates.map(info => {
+      activityDates.forEach((info, index) => {
         let data = info
+        let isFirstDay = false
+        if (index === 0) {
+          let currentDate = new Date(data.dateTime)
+          /** 开始日 */
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 0))
+          daysAddon.push(this.daysAddonObj(currentDate, 0))
+          isFirstDay = true
+        }
         let clockData = clockDatas.find(c => {
           if (data.date === c.clockDateId) {
             return true
           }
         })
+       
+        console.log(clockData)
         let currentDate = new Date(data.dateTime)
         /** 等于空 就说明还没有打卡 */
         if (util.checkObject(clockData)) {
           /** 未打卡 */
           if (this.data.job.status === 0) {
-            daysAddonStyle.push({
-              month: currentDate.getMonth() + 1,
-              day: currentDate.getDate(),
-              background: weRunSignColorCode[5],
-              color: 'white'
-            })
-            daysAddon.push({
-              day: currentDate.getDate(),
-              year: currentDate.getFullYear(),
-              month: currentDate.getMonth() + 1,
-              content: weRunSignCode[5]
-            })
+            if (!isFirstDay) {
+              daysAddon.push(this.daysAddonObj(currentDate, 5))
+            }
+            daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 5))
           }
         } else {
           /** 已打卡系列 */
           daysAddonStyle.push({
             month: clockData.month,
             day: clockData.day,
-            background: weRunSignColorCode[clockData.content],
+            year: clockData.year,
+            background: weRunSignCode[clockData.content].colorCode,
             color: 'white'
           })
-          daysAddon.push({
-            day: clockData.day,
-            year: clockData.year,
-            month: clockData.month,
-            content: weRunSignCode[clockData.content]
-          })
+          if (!isFirstDay) {
+            daysAddon.push({
+              day: clockData.day,
+              year: clockData.year,
+              month: clockData.month,
+              content: weRunSignCode[clockData.content].text
+            })
+          }
         }
       })
     }
+    
     this.setData({
       daysAddonStyle,
       daysAddon
     });
-  }
+  },
+  daysAddonObj(date, num) {
+    return {
+      day: date.getDate(),
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      content: this.data.weRunSignCode[num].text
+    }
+  },
+  daysAddonStyleObj(date, num) {
+    return {
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      year: date.getFullYear(),
+      background: this.data.weRunSignCode[num].colorCode,
+      color: 'white'
+    }
+  },
 })

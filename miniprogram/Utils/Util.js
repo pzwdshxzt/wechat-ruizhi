@@ -320,6 +320,7 @@ const replaceZero = (num, n) => {
   let newNum = Number(num_s)
   return num - newNum
 }
+
 module.exports = {
   getTimeStamp: getTimeStamp,
   formatDateTime: formatDateTime,

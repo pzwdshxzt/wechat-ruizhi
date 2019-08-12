@@ -36,7 +36,6 @@ Page({
     statusCode: app.globalData.statusCode,
     authCode: app.globalData.authCode,
     weRunSignCode: app.globalData.weRunSignCode,
-    weRunSignColorCode: app.globalData.weRunSignColorCode,
     isClock: false,
     addonShow: true,
     addon: 'custom',
@@ -103,7 +102,6 @@ Page({
 
   queryJob(jobId) {
     let that = this
-    let date = new Date()
     db.collection('Jobs').doc(jobId).get().then(res => {
       that.setData({
         job: res.data,
@@ -112,9 +110,13 @@ Page({
         endDate: util.formatDate(new Date(res.data.endTime)),
         progress: util.getPercent(res.data.doneCount, res.data.inviteCount)
       }, function() {
+        let startDay = new Date(that.data.job.createTime)
+        startDay.setHours(8, 0, 0)
+        let date = new Date(that.data.job.endTime)
+        date.setHours(8, 0, 0)
         that.setData({
-          isClock: !that.checkClock(util.formatDate(date)),
-          activityDates: util.getDates(new Date(this.data.job.createTime), date.setDate(date.getDate()))
+          isClock: !that.checkClock(util.formatDate(date), true),
+          activityDates: util.getDates(startDay, date)
         })
       })
     })
@@ -138,7 +140,6 @@ Page({
     /** 项目开始 时间的时间戳 */
     let startTimestamp = util.timeStampToTimeV7(false, that.data.job.createTime, 1)
     let endTimestamp = util.timeStampToTimeV7(true, that.data.job.endTime, 1)
-    
     /**
      * 过滤重接受任务开始的那天算起
      */
@@ -151,7 +152,6 @@ Page({
       if (that.data.job.weRunNum > info.step) {
         info.done = false
       }
-
       info.clockDateId = util.formatDate(new Date(info.timestamp * 1000))
       return startTimestamp <= info.timestamp * 1000 && endTimestamp >= info.timestamp * 1000
     })
@@ -168,7 +168,7 @@ Page({
        * 微信最多只能取30数据 所以只能判断30天内的数据
        */
       let isfail = false;
-      needStepData.forEach((data,index) => {
+      needStepData.forEach((data, index) => {
         if (that.data.job.weRunNum > data.step && index !== needStepData.length - 1) {
           console.log(index)
           isfail = true
@@ -177,63 +177,62 @@ Page({
       if (isfail) {
         /** 执行失败更新 */
         if (that.data.job.status === 0) {
-          dbConsole.updateJobStatus(that.data.job._id, 4).then(res => {
-            wx.showToast({
-              title: '该任务已失败，自动删除！',
-              icon: 'none',
-              duration: 5000,
-              success() {
-                that.queryJob(that.data.job._id)
-              }
-            })
-          })
-
+          that.updateJobStatus('该任务已失败，自动删除！', that.data.job._id, 4)
         }
       }
     }
-    /** 累积性判断项目有没有到期  */
-    if (that.data.job.type === 2) {
-      /**
-       * 执行修改job失败 并且提示项目已更新为失败 且不能打卡了
-       */
-      if (day < 0) {
-        console.log('已过期')
+
+    /**
+     * 判断是否完成
+     * 失败: 执行修改job失败 
+     * 成功: 执行修改job失败
+     */
+    if (day < 0) {
+      let job = this.data.job
+      if (job.doneCount >= job.inviteCount && job.status === 0) {
+        /** 任务完成 */
+        console.log('任务完成')
+        if (that.data.job.status === 0) {
+          that.updateJobStatus('任务已完成！', job._id, 1)
+        }
       }
-      /**
-       * 所剩任务时间不足以完成任务咯 但任然可以打卡
-       */
-      if (day < that.data.job.inviteCount - that.data.job.doneCount) {
-        /**
-         * 提示所剩时间不多
-         */
+      if (job.doneCount < job.inviteCount && job.status === 0) {
+        /** 执行失败更新 */
+        that.updateJobStatus('该任务已失败，自动删除！', job._id, 4)
       }
-      /**
-       * 所剩时间正好等于任务剩下得时间，所以你得保证接下来每天都完成哦
-       */
-      if (day === that.data.job.inviteCount - that.data.job.doneCount) {
-        /**
-         * 提示每天都要完成
-         */
-      }
-      /** 时间充裕 */
-      if (day > that.data.job.inviteCount - that.data.job.doneCount - app.globalData.ampleTime) {}
     }
 
-    /** 
-     * 如果都没有问题就自动打卡更新时间 
-     * clockDatas 是运动签到数据
-     **/
-    if (util.checkObject(this.data.job.clockDatas)) {
-
-    } else {
-      /**
-       *  TODO 如果已经存在打卡数据  
-       *  数据拼接 
-       *  之前没有打卡得也可以直接自动补签 
-       *  数据合在一起
-       **/
-      // console.log(this.data.job.clockDatas)
+    if (day === 0) {
+      let job = this.data.job
+      if (job.doneCount >= job.inviteCount && job.status === 0) {
+        /** 任务完成 */
+        console.log('任务完成')
+        if (that.data.job.status === 0) {
+          that.updateJobStatus('任务已完成！', job._id, 1)
+        }
+      } else {
+        if (job.status === 0) {
+          wx.showToast({
+            title: '今日是最后一天，请尽快将打满，否则明日任务将以失败结束',
+            icon: 'none',
+            duration: 5000,
+          })
+        }
+      }
     }
+  },
+  updateJobStatus(title, id, status) {
+    let that = this
+    dbConsole.updateJobStatus(id, status).then(res => {
+      wx.showToast({
+        title: title,
+        icon: 'none',
+        duration: 5000,
+        success() {
+          that.queryJob(id)
+        }
+      })
+    })
   },
   onClick(e) {
     if (e.detail.index === 1) {
@@ -265,22 +264,6 @@ Page({
   onShow() {
     this.getWeRunData()
   },
-  onContact(e) {
-    console.log('onContact', e)
-  },
-  onChange(e) {
-    console.log('onChange', e)
-  },
-
-  prevMonth(val) {
-    /** 刷新签到数据 */
-    this.queryData()
-  },
-  nextMonth(val) {
-    /** 刷新签到数据 */
-    console.log(val)
-    this.queryData()
-  },
   /** 
    * 获取今日步数
    */
@@ -303,7 +286,6 @@ Page({
       }
     })
   },
-
   switchAddon: function() {
     if (this.data.addonShow) {
       this.setData({
@@ -318,22 +300,39 @@ Page({
       });
     }
   },
-
   /**
-   * 查询签到数据
+   * 展示数据在日历上
    */
   queryData: function() {
+    let nowDay = new Date()
+    let nowTimestamp = Date.parse(nowDay)
+    let todayClockDataId = util.formatDate(nowDay)
     let clockDatas = this.data.clockDatas
     let daysAddonStyle = new Array;
     let daysAddon = new Array
     let weRunSignCode = this.data.weRunSignCode
-    let weRunSignColorCode = this.data.weRunSignColorCode
     let activityDates = this.data.activityDates
     let needStepData = this.data.needStepData
     let targetWeRunNum = this.data.job.weRunNum
     if (!util.checkObject(activityDates)) {
-      activityDates.map(info => {
+      activityDates.forEach((info, index) => {
         let data = info
+        let isFirstDay = false
+        let isEndDay = false
+        if (index === 0) {
+          let currentDate = new Date(data.dateTime)
+          /** 开始日 */
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 0))
+          daysAddon.push(this.daysAddonObj(currentDate, 0))
+          isFirstDay = true
+        }
+        if (index === activityDates.length - 1) {
+          let currentDate = new Date(data.dateTime)
+          /** 结束日 */
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 8))
+          daysAddon.push(this.daysAddonObj(currentDate, 8))
+          isEndDay = true
+        }
         let clockData = clockDatas.find(c => {
           if (data.date === c.clockDateId) {
             return true
@@ -349,48 +348,42 @@ Page({
           let currentDate = new Date(data.dateTime)
           if (util.checkObject(weRunNumToDay)) {
             /** 漏卡 */
-            daysAddonStyle.push({
-              month: currentDate.getMonth() + 1,
-              day: currentDate.getDate(),
-              background: weRunSignColorCode[3],
-              color: 'white'
-            })
-            daysAddon.push({
-              day: currentDate.getDate(),
-              year: currentDate.getFullYear(),
-              month: currentDate.getMonth() + 1,
-              content: weRunSignCode[3]
-            })
+            if (data.dateTime > nowTimestamp) {
+              /** 未开始 */
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 7))
+              if (!isFirstDay && !isEndDay) {
+                daysAddon.push(this.daysAddonObj(currentDate, 7))
+              }
+            } else {
+              /** 漏卡 */
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 4))
+              if (!isFirstDay && !isEndDay) {
+                daysAddon.push(this.daysAddonObj(currentDate, 4))
+              }
+            }
           } else {
             /** 判断是否到达步数 */
             if (weRunNumToDay.step >= targetWeRunNum) {
               /** 可以补卡 */
-              daysAddonStyle.push({
-                month: currentDate.getMonth() + 1,
-                day: currentDate.getDate(),
-                background: weRunSignColorCode[2],
-                color: 'white'
-              })
-              daysAddon.push({
-                day: currentDate.getDate(),
-                year: currentDate.getFullYear(),
-                month: currentDate.getMonth() + 1,
-                content: weRunSignCode[2]
-              })
+              if (todayClockDataId === weRunNumToDay.clockDateId) {
+                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 1))
+                if (!isFirstDay && !isEndDay) {
+                  daysAddon.push(this.daysAddonObj(currentDate, 1))
+                }
+              } else {
+                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 3))
+                if (!isFirstDay && !isEndDay) {
+                  daysAddon.push(this.daysAddonObj(currentDate, 3))
+                }
+              }
             } else {
               /** 未完成 */
-              daysAddonStyle.push({
-                month: currentDate.getMonth() + 1,
-                day: currentDate.getDate(),
-                background: weRunSignColorCode[4],
-                color: 'white'
-              })
-              daysAddon.push({
-                day: currentDate.getDate(),
-                year: currentDate.getFullYear(),
-                month: currentDate.getMonth() + 1,
-                content: weRunSignCode[4]
-              })
+              console.log(todayClockDataId)
+              console.log(weRunNumToDay)
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 6))
+              if (!isFirstDay && !isEndDay) {
+                daysAddon.push(this.daysAddonObj(currentDate, 6))
+              }
             }
           }
         } else {
@@ -398,15 +391,18 @@ Page({
           daysAddonStyle.push({
             month: clockData.month,
             day: clockData.day,
-            background: weRunSignColorCode[clockData.content],
+            year: clockData.year,
+            background: weRunSignCode[clockData.content].colorCode,
             color: 'white'
           })
-          daysAddon.push({
-            day: clockData.day,
-            year: clockData.year,
-            month: clockData.month,
-            content: weRunSignCode[clockData.content]
-          })
+          if (!isFirstDay && !isEndDay) {
+            daysAddon.push({
+              day: clockData.day,
+              year: clockData.year,
+              month: clockData.month,
+              content: weRunSignCode[clockData.content].text
+            })
+          }
         }
       })
     }
@@ -415,6 +411,23 @@ Page({
       daysAddon
     });
   },
+  daysAddonObj(date, num) {
+    return {
+      day: date.getDate(),
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      content: this.data.weRunSignCode[num].text
+    }
+  },
+  daysAddonStyleObj(date, num) {
+    return {
+      month: date.getMonth() + 1,
+      day: date.getDate(),
+      year: date.getFullYear(),
+      background: this.data.weRunSignCode[num].colorCode,
+      color: 'white'
+    }
+  },
   /**
    * 今日打卡
    */
@@ -422,14 +435,14 @@ Page({
     /** 当前时间 */
     let date = new Date()
     let clockDateId = util.formatDate(date)
-    if (this.checkClock(clockDateId)) {
+    if (this.checkClock(clockDateId, false)) {
       if (this.data.toDayRunNum >= this.data.job.weRunNum) {
         let clockData = {
           clockDateId,
           day: date.getDate(),
           year: date.getFullYear(),
           month: date.getMonth() + 1,
-          content: 1,
+          content: 2,
           step: this.data.toDayRunNum
         }
         this.clock(clockData, clockDateId)
@@ -441,6 +454,7 @@ Page({
    */
   dayClick(val) {
     let that = this
+    let nowDateTime = Date.parse(new Date())
     let clockDateId = util.formatDate(new Date(val.detail.year, val.detail.month - 1, val.detail.day))
     let clockData = this.data.needStepData.find(info => {
       if (info.clockDateId === clockDateId) {
@@ -448,26 +462,34 @@ Page({
       }
     })
     if (util.checkObject(clockData)) {
-      let checkInActivity = this.data.activityDates.some(data => {
+      let checkInActivity = this.data.activityDates.find(data => {
         if (data.date === clockDateId) {
           return true
         }
       })
       if (checkInActivity) {
-        wx.showToast({
-          title: '由于未获得' + clockDateId + '运动,打卡失败',
-          icon: 'none'
-        })
+        if (checkInActivity.dateTime > nowDateTime) {
+          wx.showToast({
+            title: '未到打卡时间，请耐心等待',
+            icon: 'none'
+          })
+        } else {
+          wx.showToast({
+            title: '由于未获得' + clockDateId + '运动,打卡失败',
+            icon: 'none'
+          })
+        }
+
       } else {
         wx.showToast({
-          title: clockDateId + '不在活动开始到今日范围内,打卡失败',
+          title: clockDateId + '不在任务开始到今日范围内,打卡失败',
           icon: 'none'
         })
       }
 
     } else {
       if (clockData.done) {
-        if (that.checkClock(clockDateId)) {
+        if (that.checkClock(clockDateId, false)) {
           wx.showModal({
             title: '是否打卡',
             content: clockDateId + '请求打卡？',
@@ -486,7 +508,7 @@ Page({
                     day: val.detail.day,
                     year: val.detail.year,
                     month: val.detail.month,
-                    content: 1,
+                    content: 2,
                     step: that.data.toDayRunNum
                   }
                   that.clock(clockData, clockDateId)
@@ -503,7 +525,7 @@ Page({
         }
       } else {
         wx.showToast({
-          title: '由于您未完成，不能打卡',
+          title: '由于步数未达到要求，不能打卡',
           icon: 'none'
         })
       }
@@ -515,8 +537,9 @@ Page({
    */
   clock(clockData, clockDateId) {
     util.openLoading('打卡申请中...')
-    let clockDatas = this.data.clockDatas
     let that = this
+    let clockDatas = this.data.clockDatas
+    let today = util.formatDate(new Date())
     if (util.checkObject(clockDatas)) {
       clockDatas = new Array
     }
@@ -531,12 +554,11 @@ Page({
           icon: 'none'
         })
       });
-      if (clockDateId === util.formatDate(new Date())) {
+      if (clockDateId === today) {
         this.setData({
           isClock: true
         })
       }
-
     }).catch(res => {
       console.log(res)
     })
@@ -548,7 +570,7 @@ Page({
    * clockDateId 日期
    * return boolean
    */
-  checkClock(clockDateId) {
+  checkClock(clockDateId, first) {
     let click = true
     if (!util.checkObject(this.data.clockDatas)) {
       this.data.clockDatas.map(info => {
@@ -557,7 +579,7 @@ Page({
         }
       })
     }
-    if (!click) {
+    if (!click && !first) {
       wx.showToast({
         title: clockDateId + '已打卡',
         icon: 'none',

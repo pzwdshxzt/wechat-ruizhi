@@ -527,7 +527,7 @@ Component({
         const item = this.data.days_color[i];
         const background = item.background ? item.background : 'transparent';
         for (let j = 0; j < days.length; j++) {
-          if (days[j].month == item.month && days[j].day == item.day) {
+          if (year == item.year && days[j].month == item.month && days[j].day == item.day) {
             if (item.color) {
               days[j].color = item.color + '!important';
             }
@@ -568,14 +568,26 @@ Component({
       if (week.length > 0) {
         days_array.push(week);
       }
-      
+
+      /**
+       * 设置日期颜色、背景
+       */
+      for (let i = 0; i < this.data.days_addon.length; i++) {
+        const item = this.data.days_addon[i];
+        for (let j = 0; j < days.length; j++) {
+          if (year == item.year && days[j].month == item.month && days[j].day == item.day) {
+            days[j].addon = item.content;
+          }
+        }
+      }
+
       return days_array;
     },
     /**
      * 设置Addon
      */
     _setAddonArray: function(year, month) {
-      
+
     },
     _setAddon: function(newAddon, oldAddon) {
       if (newAddon == 'none') {
@@ -609,37 +621,14 @@ Component({
      */
     _setDaysAddon: function(addonArray, oldAddon) {
       let that = this
-      let year = this.data.year
-      let month = this.data.month
-      let addons = addonArray
       if (typeof(addonArray) == 'object' && addonArray instanceof Array) {
-        const last_day = new Date(year, month, 0);
-        const days_count = last_day.getDate(); // 本月最后一天是几号
-        const new_addon_array = new Array
-        if (addons.length > 0) {
-          for (let j = 0; j <= days_count; j++) {
-            let isDay = false
-            for (let i = 0; i < addons.length; i++) {
-              const item = addons[i];
-              if (j === item.day && item.month === month && item.year === year) {
-                new_addon_array.push(item)
-                isDay = true
-              }
-            }
-            if (!isDay) {
-              new_addon_array.push(j)
-            }
-          }
+        this.setData({
+          days_addon: addonArray
+        }, function() {
           this.setData({
-            days_addon: new_addon_array
-          })
-        }
-
-        // this.setData({
-        //   days_addon_temp: addonArray
-        // }, function(){
-        //   that._setAddonArray(this.data.year, this.data.month)
-        // });
+            days_array: that._setCalendarData(this.data.year, this.data.month)
+          });
+        });
       }
     },
 

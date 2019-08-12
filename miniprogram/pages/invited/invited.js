@@ -58,9 +58,11 @@ Page({
 
   checkInfo: function(options) {
 
-    if (this.data.plan.endTime < Date.parse(new Date())) {
+    let endTime = new Date(this.data.plan.endTime)
+    endTime.setHours(23, 59, 59)
+    if (Date.parse(endTime) < Date.parse(new Date())) {
       this.setData({
-        isSharePageIn: false
+        isSharePageIn: true
       })
       this.showTopTips('该项目已经停止接受！!')
     }
@@ -117,10 +119,10 @@ Page({
     util.openLoading('正在玩命的加载数据')
     let endTime = 0
     if (this.data.plan.type === 1) {
-      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.inviteCount)
+      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.inviteCount - 1)
     }
     if (this.data.plan.type === 2) {
-      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.planCycle)
+      endTime = util.timeStampToTimeV7(true, util.getTimeStamp, this.data.plan.planCycle - 1)
     }
     db.collection('Jobs').add({
       data: {

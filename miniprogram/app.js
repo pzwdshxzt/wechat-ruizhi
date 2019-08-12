@@ -55,8 +55,52 @@ App({
       'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_2.png?sign=c9bef885e1112d7ab95921ecda92d5d4&t=1564998426',
       'https://6379-cyq-dev-amyvi-1251696577.tcb.qcloud.la/share_3.png?sign=8e35b6f7f040102c97e5a5cca2643be6&t=1564998435'
     ],
-    weRunSignCode: ['开始', '已打卡', '补卡', '漏卡', '未完成', '未打卡', '结束日'],
-    weRunSignColorCode: ['#aad4f5', '#00CD00', '#b49eeb', '#f5a8f0', '#FF7F24', '#FF7F24', '#aad4f5'],
+    weRunSignCode: [{
+        text: '开始日',
+        colorCode: '#f37b1d',
+        colorCodeName: 'orange'
+      },
+      {
+        text: '打卡',
+        colorCode: '#0081ff',
+        colorCodeName: 'blue'
+      },
+      {
+        text: '已打卡',
+        colorCode: '#39b54a',
+        colorCodeName: 'green'
+      },
+      {
+        text: '补卡',
+        colorCode: '#8dc63f',
+        colorCodeName: 'olive'
+      },
+      {
+        text: '漏卡',
+        colorCode: '#e54d42',
+        colorCodeName: 'red'
+      },
+      {
+        text: '未完成',
+        colorCode: '#aaaaaa',
+        colorCodeName: 'gray'
+      },
+      {
+        text: '未打卡',
+        colorCode: '#8799a3',
+        colorCodeName: 'grey'
+      },
+      {
+        text: '等待',
+        colorCode: '#a5673f',
+        colorCodeName: 'brown'
+      },
+      {
+        text: '结束日',
+        colorCode: '#f37b1d',
+        colorCodeName: 'orange'
+      }
+    ],
     statusCode: ['进行中', '已完成', '放弃', '计划废弃', '失败'],
     authCode: ['待审核', '已拒绝', '审核通过'],
     typeCode: ['打卡', '运动(连续型)', '运动(累计型)'],

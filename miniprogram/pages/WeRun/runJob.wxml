@@ -8,6 +8,11 @@
   <calendar cell-size="45" next="{{true}}" prev="{{true}}" lunar="{{true}}" addon="{{addon}}" show-more-days="{{false}}" calendar-style="demo5-calendar" header-style="demo5-header" weeksType="cn" board-style="demo5-board" bind:dayClick="dayClick" bind:prevMonth="prevMonth" bind:nextMonth="nextMonth" daysAddon="{{daysAddon}}" days-color="{{daysAddonStyle}}"
   />
 </view>
+<view class="padding-sm flex flex-wrap bg-white">
+  <view class="padding-xs" wx:for="{{weRunSignCode}}" wx:key>
+    <view class="cu-tag radius bg-{{item.colorCodeName}}">{{item.text}}</view>
+  </view>
+</view>
 <view class="weui-form-preview">
   <view class="weui-form-preview__hd">
     <view class="weui-form-preview__label">显示打卡情况</view>
