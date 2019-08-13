@@ -2,8 +2,6 @@
   <view slot="backText">返回</view>
   <view slot="content">运动任务</view>
 </cu-custom>
-<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="10" sAngle="0" eAngle="360" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact" bind:getuserinfo="onGotUserInfo"
-/>
 <view class="demo5">
   <calendar cell-size="45" next="{{true}}" prev="{{true}}" lunar="{{true}}" addon="{{addon}}" show-more-days="{{false}}" calendar-style="demo5-calendar" header-style="demo5-header" weeksType="cn" board-style="demo5-board" bind:dayClick="dayClick" bind:prevMonth="prevMonth" bind:nextMonth="nextMonth" daysAddon="{{daysAddon}}" days-color="{{daysAddonStyle}}"
   />
