@@ -53,7 +53,7 @@ Page({
       }, function() {
         let startDay = new Date(that.data.job.createTime)
         startDay.setHours(8, 0, 0)
-        let nowDay = new Date()
+        let nowDay = new Date(that.data.job.endTime)
         nowDay.setHours(8, 0, 0)
         that.setData({
           activityDates: util.getDates(startDay, nowDay)
