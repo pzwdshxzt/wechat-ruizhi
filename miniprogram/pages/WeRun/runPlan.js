@@ -100,6 +100,7 @@ Page({
       activityDates.forEach((info, index) => {
         let data = info
         let isFirstDay = false
+        let isEndDay = false
         if (index === 0) {
           let currentDate = new Date(data.dateTime)
           /** 开始日 */
@@ -107,6 +108,15 @@ Page({
           daysAddon.push(this.daysAddonObj(currentDate, 0))
           isFirstDay = true
         }
+
+        if (index === activityDates.length - 1) {
+          let currentDate = new Date(data.dateTime)
+          /** 结束日 */
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 8))
+          daysAddon.push(this.daysAddonObj(currentDate, 8))
+          isEndDay = true
+        }
+
         let clockData = clockDatas.find(c => {
           if (data.date === c.clockDateId) {
             return true
@@ -119,7 +129,7 @@ Page({
         if (util.checkObject(clockData)) {
           /** 未打卡 */
           if (this.data.job.status === 0) {
-            if (!isFirstDay) {
+            if (!isFirstDay && !isEndDay) {
               daysAddon.push(this.daysAddonObj(currentDate, 5))
             }
             daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 5))
@@ -133,7 +143,7 @@ Page({
             background: weRunSignCode[clockData.content].colorCode,
             color: 'white'
           })
-          if (!isFirstDay) {
+          if (!isFirstDay && !isEndDay) {
             daysAddon.push({
               day: clockData.day,
               year: clockData.year,
