@@ -1,15 +1,11 @@
 # 任务发布及其审核机制 - 小程序
 
 ## 功能展示
-<figure class="third">
-    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/home.jpg?raw=true" width="150">
-    <img src="https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/applyresult.jpg" width="150">
-    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/clockdata.jpg?raw=true" width="150">
+<figure class="half">
+    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/home.jpg?raw=true" width="150"><img src="https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/applyresult.jpg" width="150"><img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/clockdata.jpg?raw=true" width="150">
 </figure>
-<figure class="third">
-    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/werun.jpg?raw=true" width="150">
-    <img src="https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/qryplan.jpg" width="150">
-    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/time.jpg?raw=true" width="150">
+<figure class="half">
+    <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/werun.jpg?raw=true" width="150"><img src="https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/qryplan.jpg" width="150"><img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/time.jpg?raw=true" width="150">
 </figure>
 
 ## 概述
