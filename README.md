@@ -11,7 +11,7 @@
     <img src="https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/qryplan.jpg" width="150">
     <img src="https://github.com/pzwdshxzt/wechat-ruizhi/blob/master/images/time.jpg?raw=true" width="150">
 </figure>
-![睿智小程序]()
+
 ## 概述
 ### 本小程序意愿是在实现任务发布及其审核机制主题下，完成了这个小程序的开发，还有许多未开发得功能，正在逐步完善，意愿成为一款‘睿智’小程序。本代码仅供学习。
 ## 开发须知
