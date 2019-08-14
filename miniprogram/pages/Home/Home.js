@@ -16,14 +16,14 @@ Page({
     otherPlans: [],
     ColorList: app.globalData.ColorList,
     CustomBar: app.globalData.CustomBar,
-    showSearchBar: false
+    showSearchBar: false,
+    loading: true
   },
 
   onPullDownRefresh: function() {
     this.onInitData()
   },
   onLoad: function() {
-    util.openLoading('数据加载中')
     if (app.globalData.openid && app.globalData.userInfo !== {}) {
       this.setData({
         openid: app.globalData.openid
@@ -67,8 +67,9 @@ Page({
         })
       }
     })
-
-    util.closeLoading()
+    this.setData({
+      loading: false
+    })
   },
 
   /**

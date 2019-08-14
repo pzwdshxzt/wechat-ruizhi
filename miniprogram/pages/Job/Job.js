@@ -22,10 +22,10 @@ Page({
     jobDetails: [],
     progress: 0,
     jobDetailsTotalCount: 0,
-    isloadmore: false
+    isloadmore: false,
+    loading: true
   },
   onLoad: function(options) {
-    util.openLoading('数据加载中')
     db.collection('JobDetails').where({
       jobId: options.JobId
     }).count().then(res => {
@@ -48,9 +48,9 @@ Page({
         .limit(10)
         .get().then(res => {
           this.setData({
-            jobDetails: res.data
+            jobDetails: res.data,
+            loading: false
           })
-          util.closeLoading()
         })
     })
   },

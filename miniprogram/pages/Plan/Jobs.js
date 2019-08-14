@@ -16,6 +16,7 @@ Page({
     authCode: app.globalData.authCode,
     statusCode: app.globalData.statusCode,
     isloadmore: false,
+    loading: true,
     jobDetailsTotalCount: 0
   },
 
@@ -23,7 +24,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    util.openLoading('数据加载中')
     db.collection('JobDetails').where({
       jobId: options.JobId
     }).count().then(res => {
@@ -47,9 +47,9 @@ Page({
         .orderBy('time', 'desc')
         .get().then(res => {
           this.setData({
-            jobDetails: res.data
+            jobDetails: res.data,
+            loading: false
           })
-          util.closeLoading()
         })
     })
   },
@@ -74,7 +74,7 @@ Page({
             that.setData({
               jobDetails: jobDetails,
             })
-          } 
+          }
           this.setData({
             isloadmore: false
           })

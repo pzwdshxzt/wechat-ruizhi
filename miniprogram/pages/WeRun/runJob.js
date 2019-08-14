@@ -38,6 +38,7 @@ Page({
     weRunSignCode: app.globalData.weRunSignCode,
     isClock: false,
     addonShow: true,
+    loading: true,
     addon: 'custom',
     progress: 0,
     toDayRunNum: 0,
@@ -59,7 +60,6 @@ Page({
     /** 当前时间 */
     let date = new Date()
     let that = this
-    util.openLoading('数据加载中')
     wx.getWeRunData({
       success(res) {
         const cloudID = res.cloudID
@@ -97,7 +97,6 @@ Page({
       }
     })
     this.queryJob(options.JobId)
-    util.closeLoading()
   },
 
   queryJob(jobId) {
@@ -116,7 +115,8 @@ Page({
         date.setHours(8, 0, 0)
         that.setData({
           isClock: !that.checkClock(util.formatDate(date), true),
-          activityDates: util.getDates(startDay, date)
+          activityDates: util.getDates(startDay, date),
+          loading: false
         })
       })
     })

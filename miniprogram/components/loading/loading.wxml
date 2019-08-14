@@ -1,0 +1,5 @@
+<view>
+  <view class="bg-white radius shadow-lg">
+    <image style="width:100%"  src="{{show[num]}}" mode="aspectFit" class="gif-white response"></image>
+  </view>
+</view>

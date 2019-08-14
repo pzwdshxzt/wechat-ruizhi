@@ -36,6 +36,7 @@ Page({
     showCode: app.globalData.showCode,
     shareImg: app.globalData.shareImg,
     buttons,
+    loading: true,
     plan: {},
     jobs: []
   },
@@ -44,17 +45,16 @@ Page({
   },
   async initData(options) {
     let that = this
-    util.openLoading('数据加载中')
     let plan = await db.collection('Plans').doc(options.PlanId).get()
     let jobs = await db.collection('Jobs').where({
       planId: options.PlanId
     }).get()
     /** 同步执行 */
     let results = await Promise.all([plan, jobs])
-    util.closeLoading()
     this.setData({
       plan: results[0].data,
-      jobs: results[1].data
+      jobs: results[1].data,
+      loading: false
     })
     this.data.jobs.map((data, index) => {
       if (data.type == 0) {

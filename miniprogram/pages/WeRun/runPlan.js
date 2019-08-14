@@ -24,6 +24,7 @@ Page({
     authCode: app.globalData.authCode,
     weRunSignCode: app.globalData.weRunSignCode,
     addonShow: true,
+    loading: true,
     addon: 'custom',
     progress: 0,
     job: {},
@@ -42,14 +43,14 @@ Page({
   onLoad: function(options) {
     /** 当前时间 */
     let that = this
-    util.openLoading('数据加载中')
     db.collection('Jobs').doc(options.JobId).get().then(res => {
       that.setData({
         job: res.data,
         clockDatas: util.checkObject(res.data.clockDatas) ? [] : res.data.clockDatas,
         startDate: util.formatDate(new Date(res.data.createTime)),
         endDate: util.formatDate(new Date(res.data.endTime)),
-        progress: util.getPercent(res.data.doneCount, res.data.inviteCount)
+        progress: util.getPercent(res.data.doneCount, res.data.inviteCount),
+        loading: false
       }, function() {
         let startDay = new Date(that.data.job.createTime)
         startDay.setHours(8, 0, 0)
@@ -61,7 +62,6 @@ Page({
           that.queryData()
         })
       })
-      util.closeLoading()
     })
 
   },

@@ -12,19 +12,19 @@ Page({
     authCode: app.globalData.authCode,
     statusCode: app.globalData.statusCode,
     typeCode: app.globalData.typeCode,
-    showCode: app.globalData.showCode
+    showCode: app.globalData.showCode,
+    loading: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    util.openLoading('数据加载中')
     db.collection('Plans').doc(options.PlanId).get().then(res => {
       this.setData({
-        plan: res.data
+        plan: res.data,
+        loading: false
       })
-      util.closeLoading()
     })
   }
 })

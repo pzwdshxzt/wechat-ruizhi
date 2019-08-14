@@ -1,10 +1,10 @@
-<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="10" sAngle="0" eAngle="360" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
-  bind:getuserinfo="onGotUserInfo" />
+<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="10" sAngle="0" eAngle="360" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact" bind:getuserinfo="onGotUserInfo"
+/>
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
-	<view slot="backText">返回</view>
-	<view slot="content">计划</view>
+  <view slot="backText">返回</view>
+  <view slot="content">计划</view>
 </cu-custom>
-<view class="weui-form-preview">
+<view class="weui-form-preview" wx:if="{{!loading}}">
   <view class="weui-form-preview__hd">
     <view class="weui-form-preview__label">计划名称</view>
     <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
@@ -29,7 +29,7 @@
     <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
   </view>
   <view class="weui-cells__title">任务执行人</view>
-  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index=""  wx:if="{{plan.type === 0}}">
+  <view class="weui-cells weui-cells_after-title" wx:for="{{jobs}}" wx:key="_id" wx:for-index="" wx:if="{{plan.type === 0}}">
     <navigator url="Jobs?JobId={{item._id}}&planId={{item.planId}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__hd">
         <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
@@ -52,4 +52,7 @@
     </navigator>
   </view>
 
+</view>
+<view wx:if="{{loading}}">
+  <loading></loading>
 </view>

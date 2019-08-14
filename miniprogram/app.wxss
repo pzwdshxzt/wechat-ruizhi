@@ -4,7 +4,7 @@
 @import 'style/colorui/icon.wxss';
 @import 'style/colorui/animation.wxss';
 page {
-  background-color: #f8f8f8;
+  background-color: #fff;
   font-size: 16px;
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }

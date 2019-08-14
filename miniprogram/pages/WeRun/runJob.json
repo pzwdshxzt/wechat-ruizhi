@@ -2,6 +2,7 @@
   "usingComponents": {
     "ff-canvas": "@antv/f2-canvas",
     "calendar": "../../components/calendar/calendar",
-    "wux-fab-button": "/components/fab-button/index"
+    "wux-fab-button": "/components/fab-button/index",
+    "loading": "/components/loading/loading"
   }
 }

@@ -1,10 +1,9 @@
-<wux-fab-button position="bottomRight" theme="calm" direction="vertical" reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}" buttons="{{ buttons }}" bind:change="onChange" bind:click="onClick" bind:contact="onContact"
-  bind:getuserinfo="onGotUserInfo" />
 <cu-custom bgColor="bg-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
   <view slot="content">计划详情</view>
 </cu-custom>
-<view class="weui-form-preview">
+
+<view class="weui-form-preview" wx:if="{{!loading}}">
   <view class="weui-form-preview__hd">
     <view class="weui-form-preview__label">计划名称</view>
     <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
@@ -39,4 +38,8 @@
   </view>
   <view class="weui-cells__tips" wx:if="{{plan.type === 1 || plan.type === 2}}">由于获取微信步数需要您主动获取，所以本任务需要您每日打开此页面，若步数大于目标步数即可手动打卡成功，如果忘记打卡，隔日打开此页面也可打卡。(不得超过30天, 微信步数最多只能取30天的数据，如果任务期数大于30天可能导致运动连续性会直接失败/累积性缺少次数。) 若步数未达到目标步数，任务类型为连续性的将自动失败，运动累计型不受影响,但若时间到达结束日当天还没有打满卡，隔日累积性任务也会失败。
   </view>
+</view>
+
+<view  wx:if="{{loading}}">
+  <loading></loading>
 </view>
