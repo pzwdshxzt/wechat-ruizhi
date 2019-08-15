@@ -5,77 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    supportMode: app.globalData.supportMode,
-    supportModeCode: app.globalData.supportModeMsg
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    let that = this
-    if (app.globalData.supportMode.length > 0) {
-      console.log('in')
-      wx.startSoterAuthentication({
-        requestAuthModes: that.data.supportMode[0],
-        challenge: app.globalData.rawSign,
-        authContent: '请用' + that.data.supportModeCode[that.data.supportMode.length[0]]+'解锁',
-        success: res => {
-          console.log(res)
-        },
-        fail: res => {
-          console.log(res)
-        }
-      })
+    list: [{
+      cardNo: '6214123412341234',
+      img: 'https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg'
+    },
+    {
+      cardNo: '6214123412341234',
+      img: 'https://image.weilanwl.com/color2.0/plugin/wdh2236.jpg'
+    },
+    {
+      cardNo: '6214123412341234',
+      img: 'https://image.weilanwl.com/color2.0/plugin/qpct2148.jpg'
+    },
+    {
+      cardNo: '6214123412341234',
+      img: 'https://image.weilanwl.com/color2.0/plugin/qpczdh2307.jpg'
     }
+    ]
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+  addCard:function(e){
+    console.log(e)
   }
 })

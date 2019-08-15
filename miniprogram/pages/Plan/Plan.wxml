@@ -36,7 +36,7 @@
       </view>
       <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
       <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.authNum === 0}}">查询申请记录</view>
-      <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum !== 0}}">{{item.authNum}}</view>
+      <view class="cu-tag round bg-grey sm animated infinite heartBeat slow" wx:if="{{item.authNum !== 0}}">{{item.authNum}}</view>
     </navigator>
   </view>
 
@@ -46,9 +46,7 @@
         <image src="{{item.userInfo.avatarUrl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
       </view>
       <view class="weui-cell__bd">{{item.userInfo.nickName}}</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.type === 0 && item.authNum === 0}}">查看申请记录</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{item.type === 1 || item.type === 2}}">查看运动打卡记录</view>
-      <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum !== 0 && item.type === 0}}">{{item.authNum}}</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">查看运动打卡记录</view>
     </navigator>
   </view>
 

@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/Home/Home",
+    "pages/cardPacket/cardPacket",
+    "pages/cardPacket/index",
     "pages/index/index",
+    "pages/Home/Home",
     "pages/Job/Job",
     "pages/Plan/Plan",
     "pages/openapi/openapi",
@@ -20,7 +22,7 @@
     "pages/invite/cropper",
     "pages/WeRun/weRun",
     "pages/WeRun/runJob",
-    "pages/cardPacket/cardPacket",
+    
     "pages/WeRun/runPlan"
   ],
   "tabBar": {
