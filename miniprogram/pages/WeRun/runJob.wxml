@@ -4,8 +4,7 @@
 </cu-custom>
 <view wx:if="{{!loading}}">
   <view class="demo5">
-    <calendar cell-size="45" next="{{true}}" prev="{{true}}" lunar="{{true}}" addon="{{addon}}" show-more-days="{{false}}" calendar-style="demo5-calendar" header-style="demo5-header" weeksType="cn" board-style="demo5-board" bind:dayClick="dayClick" bind:prevMonth="prevMonth"
-      bind:nextMonth="nextMonth" daysAddon="{{daysAddon}}"  days-color="{{daysAddonStyle}}" />
+    <calendar cell-size="45" next="{{true}}" prev="{{true}}" lunar="{{true}}" addon="{{addon}}" show-more-days="{{false}}" calendar-style="demo5-calendar" header-style="demo5-header" weeksType="cn" board-style="demo5-board" bind:dayClick="dayClick"  daysAddon="{{daysAddon}}"  days-color="{{daysAddonStyle}}" />
   </view>
   <view class="padding-sm flex flex-wrap bg-white">
     <view class="padding-xs" wx:for="{{weRunSignCode}}" wx:key>
