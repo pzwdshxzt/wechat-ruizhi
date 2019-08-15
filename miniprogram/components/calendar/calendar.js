@@ -534,6 +534,9 @@ Component({
             if (item.background) {
               days[j].background = item.background + '!important';
             }
+            if (item.animation) {
+              days[j].animation = item.animation;
+            }
           }
         }
       }
@@ -713,6 +716,15 @@ Component({
      * 点击具体日期
      */
     dayClick: function(event) {
+      var that = this;
+      that.setData({
+        animation: event.currentTarget.dataset.class
+      })
+      setTimeout(function () {
+        that.setData({
+          animation: ''
+        })
+      }, 500)
       const click_day = event.currentTarget.dataset.day;
       const eventDetail = {
         year: click_day.year,

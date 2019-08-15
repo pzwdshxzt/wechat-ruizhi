@@ -1,28 +1,71 @@
-<cu-custom bgColor="bg-gradual-green" isBack="{{true}}"><view slot="backText">返回</view><view slot="content">日志</view></cu-custom>
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">日志</view>
+</cu-custom>
 <view class="cu-timeline">
- 
 
-  <view class="cu-item text-green">
-    <view class="bg-green content shadow">
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
       <view class="cu-capsule radius">
-        <view class="cu-tag bg-white text-green">v2.0.1</view>
-        <view class="cu-tag line-white">2019/08/12</view>
+        <view class="cu-tag bg-white text-blue">v1.1.1</view>
+        <view class="cu-tag line-white">2019/08/15</view>
       </view>
       <view class="margin-top-sm text-content">
-        <view>1.新增运动打卡</view>
-        <view>2.运动记录</view>
+        <view>1.新增部分animation动画</view>
+        <view>2.修改部分bug</view>
+        <view>3.修改加载动画</view>
       </view>
     </view>
   </view>
-  <view class="cu-item text-green">
-    <view class="bg-green content shadow">
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
       <view class="cu-capsule radius">
-        <view class="cu-tag bg-white text-green">v1.0.1</view>
+        <view class="cu-tag bg-white text-blue">v1.1.0</view>
+        <view class="cu-tag line-white">2019/08/12</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>重大更新(运动打卡计划上线)</view>
+        <view>1.新增运动打卡</view>
+        <view>2.运动记录</view>
+        <view>3.修改大量样式(引入ColorUI)</view>
+        <view>4.运动打卡日历引入极点日历,修改其样式，功能等</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-blue">v1.0.3</view>
+        <view class="cu-tag line-white">2019/08/01</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.新增提交审核可加图片</view>
+        <view>2.审核可看到图片</view>
+        <view>3.增加查询只有20条限制and倒叙查询任务完成情况</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-blue">v1.0.2</view>
+        <view class="cu-tag line-white">2019/08/01</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>增加轮播展示别人的计划(选择了计划展示的计划才可以被人看到)</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-blue">v1.0.1</view>
         <view class="cu-tag line-white">2019/07/08</view>
       </view>
       <view class="margin-top-sm text-content">
         <view>1.0版本上线</view>
-        <view>新增任务审核机制等</view>
+        <view>新增任务审核机制</view>
+        <view>本小程序初衷是为了解决效率问题,由于是写后台出身(后台服务也写的不咋地),所以本项目有些简陋,各种方法、样式、组件等等可能处理的不是很妥当,仅供参考。</view>
       </view>
     </view>
   </view>

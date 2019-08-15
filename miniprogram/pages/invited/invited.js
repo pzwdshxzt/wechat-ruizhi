@@ -13,6 +13,7 @@ Page({
     openid: '',
     plan: {},
     isSharePageIn: false,
+    loading:true,
     errorMsg: '你已经接受了该计划!',
     statusCode: app.globalData.statusCode,
     typeCode: app.globalData.typeCode,
@@ -50,6 +51,7 @@ Page({
         .get().then(res => {
           this.setData({
             plan: res.data,
+            loading: false
           })
           this.checkInfo(options)
         })

@@ -2,7 +2,7 @@
 	<view slot="backText">返回</view>
 	<view slot="content">计划详情</view>
 </cu-custom>
-<view class="container">
+<view class="container" wx:if="{{!loading}}">
   <view class="page__bd">
     <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
     <form class="list" bindsubmit="acceptPlan" report-submit>
@@ -36,4 +36,7 @@
       </view>
     </form>
   </view>
+</view>
+<view wx:if="{{loading}}">
+  <loading></loading>
 </view>

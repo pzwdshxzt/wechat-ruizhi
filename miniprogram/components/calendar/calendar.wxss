@@ -1,5 +1,5 @@
 /* plugin/components/calendar/calendar.wxss */
-
+@import '/style/colorui/animate.wxss';
 /*
  * 字体
  */
@@ -109,4 +109,10 @@
 
 .calendar-lunar-day {    
     font-size: 20rpx;
+}
+
+.day-shake {
+  animation-duration: 3s;
+  animation-delay: 2s;
+  animation-iteration-count: shake;
 }

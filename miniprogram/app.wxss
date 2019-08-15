@@ -2,7 +2,7 @@
 @import 'style/weui.wxss';
 @import 'style/colorui/main.wxss';
 @import 'style/colorui/icon.wxss';
-@import 'style/colorui/animation.wxss';
+@import 'style/colorui/animate.wxss';
 page {
   background-color: #fff;
   font-size: 16px;

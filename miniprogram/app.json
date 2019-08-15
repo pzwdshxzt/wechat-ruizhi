@@ -56,7 +56,8 @@
     "backgroundColor": "#fff"
   },
   "window": {
-    "backgroundColor": "white",
+    "backgroundColor": "#ffffff",
+    "backgroundColorTop": "#ffffff",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#3197ed",
     "navigationBarTitleText": "",

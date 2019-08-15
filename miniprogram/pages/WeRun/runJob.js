@@ -139,7 +139,7 @@ Page({
     let day = Math.floor((that.data.job.endTime - Date.parse(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())) / (24 * 3600 * 1000));
     /** 项目开始 时间的时间戳 */
     let startTimestamp = util.timeStampToTimeV7(false, that.data.job.createTime, 1)
-    let endTimestamp = util.timeStampToTimeV7(true, that.data.job.endTime, 1)
+    let endTimestamp = util.timeStampToTimeV7(true, that.data.job.endTime, 0)
     /**
      * 过滤重接受任务开始的那天算起
      */
@@ -322,14 +322,14 @@ Page({
         if (index === 0) {
           let currentDate = new Date(data.dateTime)
           /** 开始日 */
-          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 0))
-          daysAddon.push(this.daysAddonObj(currentDate, 0))
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 0, 'heartBeat'))
+          daysAddon.push(this.daysAddonObj(currentDate, 0 ))
           isFirstDay = true
         }
         if (index === activityDates.length - 1) {
           let currentDate = new Date(data.dateTime)
           /** 结束日 */
-          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 8))
+          daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 8, 'heartBeat'))
           daysAddon.push(this.daysAddonObj(currentDate, 8))
           isEndDay = true
         }
@@ -350,13 +350,13 @@ Page({
             /** 漏卡 */
             if (data.dateTime > nowTimestamp) {
               /** 未开始 */
-              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 7))
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 7, 'shake'))
               if (!isFirstDay && !isEndDay) {
                 daysAddon.push(this.daysAddonObj(currentDate, 7))
               }
             } else {
               /** 漏卡 */
-              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 4))
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 4, 'shake'))
               if (!isFirstDay && !isEndDay) {
                 daysAddon.push(this.daysAddonObj(currentDate, 4))
               }
@@ -366,12 +366,12 @@ Page({
             if (weRunNumToDay.step >= targetWeRunNum) {
               /** 可以补卡 */
               if (todayClockDataId === weRunNumToDay.clockDateId) {
-                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 1))
+                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 1, 'tada'))
                 if (!isFirstDay && !isEndDay) {
                   daysAddon.push(this.daysAddonObj(currentDate, 1))
                 }
               } else {
-                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 3))
+                daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 3, 'tada'))
                 if (!isFirstDay && !isEndDay) {
                   daysAddon.push(this.daysAddonObj(currentDate, 3))
                 }
@@ -380,7 +380,7 @@ Page({
               /** 未完成 */
               console.log(todayClockDataId)
               console.log(weRunNumToDay)
-              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 6))
+              daysAddonStyle.push(this.daysAddonStyleObj(currentDate, 6, 'shake'))
               if (!isFirstDay && !isEndDay) {
                 daysAddon.push(this.daysAddonObj(currentDate, 6))
               }
@@ -393,7 +393,8 @@ Page({
             day: clockData.day,
             year: clockData.year,
             background: weRunSignCode[clockData.content].colorCode,
-            color: 'white'
+            color: 'white',
+            animation: 'heartBeat'
           })
           if (!isFirstDay && !isEndDay) {
             daysAddon.push({
@@ -419,13 +420,14 @@ Page({
       content: this.data.weRunSignCode[num].text
     }
   },
-  daysAddonStyleObj(date, num) {
+  daysAddonStyleObj(date, num, animation) {
     return {
       month: date.getMonth() + 1,
       day: date.getDate(),
       year: date.getFullYear(),
       background: this.data.weRunSignCode[num].colorCode,
-      color: 'white'
+      color: 'white',
+      animation: animation
     }
   },
   /**

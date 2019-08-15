@@ -11,7 +11,7 @@
       <button class="cu-btn bg-gradual-blue shadow-blur round">搜索</button>
     </view>
   </view>
-  <view class="swiper_hd">
+  <view class="swiper_hd animated tada slower">
     <swiper autoplay='true' interval='3000' duration='1000' circular='true'>
       <block wx:for="{{otherPlans}}" wx:key="index">
         <swiper-item class='banner-show'>
@@ -69,7 +69,7 @@
         </view>
         <view class="action">
           <view class="text-grey text-xs">in</view>
-          <view class="cu-tag round bg-grey sm" wx:if="{{item.authNum && item.authNum !== 0}}">{{item.authNum}}</view>
+          <view class="cu-tag round bg-grey sm animated infinite heartBeat slow" wx:if="{{item.authNum && item.authNum !== 0}}">{{item.authNum}}</view>
         </view>
         <!-- <view class="move">
         <view class="bg-grey">置顶</view>
@@ -79,6 +79,7 @@
     </view>
   </view>
 </view>
+
 <view wx:if="{{loading}}">
   <loading></loading>
 </view>

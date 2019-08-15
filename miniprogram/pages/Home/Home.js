@@ -17,7 +17,8 @@ Page({
     ColorList: app.globalData.ColorList,
     CustomBar: app.globalData.CustomBar,
     showSearchBar: false,
-    loading: true
+    loading: true,
+    shake: 'shake'
   },
 
   onPullDownRefresh: function() {
