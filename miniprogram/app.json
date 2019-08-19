@@ -22,8 +22,8 @@
     "pages/invite/cropper",
     "pages/WeRun/weRun",
     "pages/WeRun/runJob",
-    
-    "pages/WeRun/runPlan"
+    "pages/WeRun/runPlan",
+    "pages/cardPacket/addCard"
   ],
   "tabBar": {
     "list": [
@@ -76,6 +76,10 @@
     "WechatSI": {
       "version": "0.3.0",
       "provider": "wx069ba97219f66d99"
+    },
+    "ocr-plugin": {
+      "version": "2.0.2",
+      "provider": "wx4418e3e031e551be"
     }
   }
 }

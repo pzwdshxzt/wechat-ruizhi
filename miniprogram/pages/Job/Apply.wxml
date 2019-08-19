@@ -3,7 +3,7 @@
 	<view slot="content">打卡申请</view>
 </cu-custom>
 <view class="page__bd">
-  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+  <view class="weui-toptips weui-toptips_warn" style="top:{{CustomBar}}px;" wx:if="{{showTopTips}}">{{errorMsg}}</view>
   <view class="weui-cells__title">打卡申请</view>
   <view class="weui-cells weui-cells_after-title">
     <form class="list" bindsubmit="applyStep" report-submit>

@@ -4,7 +4,7 @@
   <view slot="content">填写计划</view>
 </cu-custom>
 <view class="container">
-  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+  <view class="weui-toptips weui-toptips_warn" style="top:{{CustomBar}}px;" wx:if="{{showTopTips}}">{{errorMsg}}</view>
   <view class="page__hd">
     <view class="page__title">计划</view>
     <view class="page__desc">
@@ -40,7 +40,7 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells__title"  wx:if="{{type === '2'}}">计划周期应大于运动天数</view>
+    <view class="weui-cells__title" wx:if="{{type === '2'}}">计划周期应大于运动天数</view>
     <view class="weui-cells weui-cells_after-title" wx:if="{{type === '2'}}">
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
@@ -84,9 +84,9 @@
         </view>
       </view>
     </view>
-    
+
     <view class="weui-cells__title">该计划停止接受计划时间</view>
-    <view class="weui-cells weui-cells_after-title" >
+    <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
           <view class="weui-label">结束时间</view>

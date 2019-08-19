@@ -9,6 +9,7 @@ Page({
    */
   data: {
     types: app.globalData.typeCode,
+    CustomBar: app.globalData.CustomBar,
     startDay: util.formatDate(new Date()),
     files: '',
     inviteCount: '',

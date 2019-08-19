@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="container" wx:if="{{!loading}}">
   <view class="page__bd">
-    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+    <view class="weui-toptips weui-toptips_warn" style="top:{{CustomBar}}px;" wx:if="{{showTopTips}}">{{errorMsg}}</view>
     <form class="list" bindsubmit="acceptPlan" report-submit>
       <view class="weui-form-preview__hd">
         <view class="weui-form-preview__label">计划名称</view>

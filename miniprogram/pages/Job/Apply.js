@@ -2,11 +2,13 @@
 const db = wx.cloud.database()
 const _ = db.command
 const util = require('../../Utils/Util.js');
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    CustomBar: app.globalData.CustomBar,
     date: util.formatDate(new Date()),
     time: util.formatTime(new Date()),
     applyCount: 0,

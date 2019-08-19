@@ -1,0 +1,104 @@
+<cu-custom bgColor="bg-blue" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">添加卡信息</view>
+</cu-custom>
+
+<view class="weui-toptips weui-toptips_warn" style="top:{{CustomBar}}px;" wx:if="{{showTopTips}}">{{errorMsg}}</view>
+<view class="cu-form-group margin-top">
+  <view class="title">卡类型</view>
+  <picker bindchange="pickerCardTypeChange" value="{{cardTypeCode}}" range="{{cardType}}">
+    <view class="picker">
+      {{cardType[cardTypeCode]}}
+    </view>
+  </picker>
+</view>
+<view class="padding">
+  <view wx:if="{{cardTypeCode === 0}}">
+    <ocr-navigator bind:onSuccess="idSuccess" certificateType="idCard" selectedOptions="{{['id','name','sex','birthday','homePlace']}}">
+      <button class="cu-btn block bg-blue margin-tb-sm lg">身份证识别</button>
+    </ocr-navigator>
+    <form>
+      <view class="cu-form-group margin-top">
+        <view class="title">姓名</view>
+        <input bindblur="addName" value="{{name}}" placeholder="请扫描或者手输姓名..."></input>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">身份证号</view>
+        <input value="{{idNo}}" bindblur="addIdNo" placeholder="请扫描或者手输身份证号..."></input>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">性别</view>
+        <picker bindchange="pickerSexChange" value="{{sexCode}}" range="{{sexCodeMsg}}">
+          <view class="picker">
+            {{sexCodeMsg[sexCode]}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">出生日期</view>
+        <picker mode="date" value="{{birthday}}" start="1900-09-01" end="2099-09-01" bindchange="birthdayChange">
+          <view class="picker">
+            {{birthday}}
+          </view>
+        </picker>
+      </view>
+      <view class="cu-form-group">
+        <view class="title">家庭住址</view>
+        <input value="{{address}}" bindblur="addAddress" placeholder="请扫描或者手输家庭住址..."></input>
+      </view>
+    </form>
+  </view>
+  <view wx:if="{{cardTypeCode === 1}}">
+    <ocr-navigator bind:onSuccess="bankSuccess" certificateType="bankCard" selectedOptions="{{['bankName','number','validDate']}}">
+      <button class="cu-btn block bg-blue margin-tb-sm lg">银行卡识别</button>
+    </ocr-navigator>
+    <view class="cu-form-group">
+      <view class="title">银行名称</view>
+      <input value="{{bankName}}" bindblur="addBankNumber" placeholder="请输入银行名称..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">银行卡号</view>
+      <input value="{{number}}" bindblur="addNumber" placeholder="请扫描或者手输银行卡号..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">有效期</view>
+      <picker mode="date" value="{{validDate}}" start="1900-09-01" end="2099-09-01" bindchange="validDateChange">
+        <view class="picker">
+          {{validDate}}
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view wx:if="{{cardTypeCode === 2}}">
+    <ocr-navigator bind:onSuccess="driverSuccess" certificateType="drivingLicense" selectedOptions="{{['plateNum','vehicleType','owner']}}">
+      <button class="cu-btn block bg-blue margin-tb-sm lg">行驶证识别</button>
+    </ocr-navigator>
+    <view class="cu-form-group">
+      <view class="title">号牌号码</view>
+      <input value="{{plateNum}}" bindblur="addPlateNum" placeholder="请输入号牌号码..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">车辆类型</view>
+      <input value="{{vehicleType}}" bindblur="addVehicleType"  placeholder="请输入车辆类型..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">所有人</view>
+      <input value="{{owner}}" bindblur="addOwner" placeholder="请输入所有人..."></input>
+    </view>
+  </view>
+  <view wx:if="{{cardTypeCode === 3}}">
+    <view class="cu-form-group">
+      <view class="title">名称</view>
+      <input placeholder="请输入名称..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">号码</view>
+      <input placeholder="请输入号码..."></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">备注</view>
+      <input placeholder="请输入备注..."></input>
+    </view>
+  </view>
+  <button bindtap="addCard" form-type="submit" class="cu-btn block bg-blue margin-tb-sm lg">添加到卡包</button>
+</view>
