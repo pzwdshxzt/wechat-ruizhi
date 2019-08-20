@@ -1,6 +1,7 @@
 // miniprogram/pages/cardPacket/addCard.js
 const app = getApp()
 const util = require('../../Utils/Util.js');
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -22,6 +23,9 @@ Page({
     owner: '',
     plateNum: '',
     vehicleType: '',
+    otherName: '',
+    otherNo: '',
+    otherNote: '',
     errorMsg: '输入有误',
     showTopTips: false
   },
@@ -62,7 +66,7 @@ Page({
     this.setData({
       idNo: e.detail.id,
       name: e.detail.name,
-      birthday: e.detail.birthday,
+      birthday: e.detail.birthday === '' ? this.data.birthday : e.detail.birthday,
       sexCode: e.detail.sex,
       address: e.detail.homePlace
     })
@@ -70,30 +74,126 @@ Page({
   bankSuccess(e) {
     console.log(e)
     this.setData({
-      number: e.detail.number,
-      bankName: e.detail.bankName,
-      validDate: e.detail.validDate
+      number: e.detail.number === '' ? this.data.number : e.detail.number,
+      bankName: e.detail.bankName === '' ? this.data.bankName : e.detail.bankName,
+      validDate: e.detail.validDate === '' ? this.data.validDate : e.detail.validDate
     })
   },
   driverSuccess(e) {
     console.log(e)
     this.setData({
-      owner: e.detail.owner,
-      plateNum: e.detail.plateNum,
-      vehicleType: e.detail.vehicleType
+      owner: e.detail.owner === '' ? this.data.owner : e.detail.owner,
+      plateNum: e.detail.plateNum === '' ? this.data.plateNum : e.detail.plateNum,
+      vehicleType: e.detail.vehicleType === '' ? this.data.vehicleType : e.detail.vehicleType
     })
   },
   addCard(e) {
+
     let type = this.data.cardTypeCode
     if (!this.checkInfo()) {
       return
     }
     if (type === 0) {
-      // idNo: e.detail.id,
-      // name: e.detail.name,
-      // birthday: e.detail.birthday,
-      // sexCode: e.detail.sex,
-      // address: e.detail.homePlace
+      util.openLoading('正在玩命添加中...')
+      db.collection('CardInfos').add({
+        data: {
+          type: 0,
+          idNo: this.data.idNo,
+          name: this.data.name,
+          birthday: this.data.birthday,
+          sexCode: this.data.sexCode,
+          address: this.data.address,
+        }
+      }).then(res => {
+        util.closeLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '添加成功',
+          duration: 3000
+        })
+        wx.navigateBack()
+      }).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '添加卡包失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      })
+    }
+    if (type === 1) {
+      util.openLoading('正在玩命添加中...')
+      db.collection('CardInfos').add({
+        data: {
+          type: 1,
+          number: this.data.number,
+          bankName: this.data.bankName,
+          validDate: this.data.validDate,
+        }
+      }).then(res => {
+        util.closeLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '添加成功',
+          duration: 3000
+        })
+        wx.navigateBack()
+      }).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '添加卡包失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      })
+    }
+    if (type === 2) {
+      util.openLoading('正在玩命添加中...')
+      db.collection('CardInfos').add({
+        data: {
+          type: 2,
+          owner: this.data.owner,
+          plateNum: this.data.plateNum,
+          vehicleType: this.data.vehicleType,
+        }
+      }).then(res => {
+        util.closeLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '添加成功',
+          duration: 3000
+        })
+        wx.navigateBack()
+      }).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '添加卡包失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      })
+    }
+    if (type === 3) {
+      util.openLoading('正在玩命添加中...')
+      db.collection('CardInfos').add({
+        data: {
+          type: 3,
+          otherName: this.data.otherName,
+          otherNo: this.data.otherNo,
+          otherNote: this.data.otherNote,
+        }
+      }).then(res => {
+        util.closeLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '添加成功',
+          duration: 3000
+        })
+        wx.navigateBack()
+      }).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '添加卡包失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      })
     }
   },
   checkInfo() {
@@ -164,18 +264,6 @@ Page({
     } else {
       let sexCode = this.getSexByIdCard(e.detail.value)
       let birthday = this.getBirthdayByIdCard(e.detail.value)
-      console.log(sexCode)
-      // if(sexCode === 1){
-      //   sexCode = 0
-      //   this.setData({
-      //     birthday: birthday,
-      //     sexCode: sexCode,
-      //     idNo: e.detail.value
-      //   })
-      // }
-      // if (sexCode === 0) {
-      //   sexCode = 1
-      // }
       this.setData({
         birthday: birthday,
         sexCode: sexCode,
@@ -212,7 +300,7 @@ Page({
       bankName: e.detail.value
     })
   },
-  addNumber(e) {
+  addBankNumber(e) {
     this.setData({
       number: e.detail.value
     })
@@ -237,6 +325,25 @@ Page({
       owner: e.detail.value
     })
   },
+  addOtherName(e) {
+    this.setData({
+      otherName: e.detail.value
+    })
+  },
+  addOtherNo(e) {
+    this.setData({
+      otherNo: e.detail.value
+    })
+  },
+  addOtherNote(e) {
+    this.setData({
+      otherNote: e.detail.value
+    })
+  },
+
+  /**
+   * 获取生日
+   */
   getBirthdayByIdCard(idCard) {
     var birthStr;
     if (15 == idCard.length) {
@@ -252,14 +359,17 @@ Page({
     }
     return birthStr;
   },
+  /**
+   * 获取性别
+   */
   getSexByIdCard(idCard) {
     if (idCard.length == 15) {
-      return idCard.substring(14, 15) % 2;
+      return idCard.substring(14, 15) % 2 === 0 ? 1 : 0;
     } else if (idCard.length == 18) {
-      return idCard.substring(14, 17) % 2;
+      return idCard.substring(16, 17) % 2 === 0 ? 1 : 0;
     } else {
       //不是15或者18,null
-      return 3;
+      return 0;
     }
   }
 })

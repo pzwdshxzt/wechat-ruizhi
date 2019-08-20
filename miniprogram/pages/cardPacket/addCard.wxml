@@ -54,11 +54,11 @@
     </ocr-navigator>
     <view class="cu-form-group">
       <view class="title">银行名称</view>
-      <input value="{{bankName}}" bindblur="addBankNumber" placeholder="请输入银行名称..."></input>
+      <input value="{{bankName}}" bindblur="addBankName" placeholder="请输入银行名称..."></input>
     </view>
     <view class="cu-form-group">
       <view class="title">银行卡号</view>
-      <input value="{{number}}" bindblur="addNumber" placeholder="请扫描或者手输银行卡号..."></input>
+      <input value="{{number}}" bindblur="addBankNumber" placeholder="请扫描或者手输银行卡号..."></input>
     </view>
     <view class="cu-form-group">
       <view class="title">有效期</view>
@@ -89,15 +89,15 @@
   <view wx:if="{{cardTypeCode === 3}}">
     <view class="cu-form-group">
       <view class="title">名称</view>
-      <input placeholder="请输入名称..."></input>
+      <input value="{{otherName}}" bindblur="addOtherName" placeholder="请输入名称..."></input>
     </view>
     <view class="cu-form-group">
       <view class="title">号码</view>
-      <input placeholder="请输入号码..."></input>
+      <input value="{{otherNo}}" bindblur="addOtherNo" placeholder="请输入号码..."></input>
     </view>
     <view class="cu-form-group">
       <view class="title">备注</view>
-      <input placeholder="请输入备注..."></input>
+      <input value="{{otherNote}}" bindblur="addOtherNote"  placeholder="请输入备注..."></input>
     </view>
   </view>
   <button bindtap="addCard" form-type="submit" class="cu-btn block bg-blue margin-tb-sm lg">添加到卡包</button>

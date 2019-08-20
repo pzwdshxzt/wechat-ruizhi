@@ -2,15 +2,49 @@
   <view slot="backText">返回</view>
   <view slot="content">卡包</view>
 </cu-custom>
-<scroll-view scroll-y class="scrollPage">
-<view class="cu-card">
- <!-- style="background-image:url({{item.img}})" -->
-  <view class="cu-item bg-img shadow-blur"  style="background-color:#0081ff" wx:for="{{list}}" wx:key>
-    <view class="cardTitle">
-      {{item.cardNo}}
+<view class="cu-card  cu-list">
+  <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#0081ff" wx:for="{{list}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
+    <view class="cardTitle " wx:if="{{item.type === 0}}">
+      <view class="content">
+        <text>{{item.idNo}}</text>
+        <view class="text-gray text-sm">
+          <text class="cuIcon-vipcard text-white ">身份证</text>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="cardTitle" wx:if="{{item.type === 1}}">
+      <view class="content">
+        <text> {{item.number}}</text>
+        <view class="text-gray text-sm">
+          <text class="cuIcon-vipcard text-white ">{{item.bankName}}银行卡</text>
+        </view>
+      </view>
+
+    </view>
+    <view class="cardTitle" wx:if="{{item.type === 2}}">
+      <view class="content">
+        <text>{{item.plateNum}}</text>
+        <view class="text-gray text-sm">
+          <text class="cuIcon-vipcard text-white ">驾驶证</text>
+        </view>
+      </view>
+
+    </view>
+    <view class="cardTitle" wx:if="{{item.type === 3}}">
+      <view class="content">
+        <text>{{item.otherNo}}</text>
+        <view class="text-gray text-sm">
+          <text class="cuIcon-vipcard text-white ">{{item.otherName}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="move" style="transform: translateX(112%);">
+      <view class="cu-btn  bg-red shadow-blur" bindtap="deleteCardInfo" data-id="{{item._id}}" style="border-radius: 10rpx;height:100%; ">删除</view>
     </view>
   </view>
-   <view class="cu-item bg-img shadow-blur" bindtap="addCard"  style="background-color:#0081ff" >
+  <view class="cu-item bg-img shadow-blur" bindtap="addCard" style="background-color:#0081ff">
     <view class="cardTitle">
       添加卡片
     </view>
@@ -26,5 +60,4 @@
     </view>
   </view>
 </view>
-  <view class="cu-tabbar-height"></view>
-</scroll-view>
+<view class="cu-tabbar-height"></view>
