@@ -29,7 +29,7 @@
 - [WuxUI](https://github.com/wux-weapp/wux-weapp "WuxUI")
 - [极点日历](https://github.com/czcaiwj/calendar/ "极点日历")
 - [wx-f2](https://github.com/antvis/wx-f2 "蚂蚁金服的charts")
-###  几种CSS框架混合使用，只用了WXUIUI的悬浮button，极点日历由于组件功能不能完全满足我得需求，并且农历的日历好像有问题，作者好像也没有在开发了，所以我单独拿出来重新改造下。
+###  几种CSS框架混合使用，只用了WXUIUI的悬浮button，极点日历由于组件功能不能完全满足我得需求，并且农历的日历好像有问题，作者好像也没有在开发了，所以我单独拿出来重新改造下。最后还用了蚂蚁金服得wx-f2图表框架来画运动折线图。
 ## 体验小程序
 ![睿智小程序](https://raw.githubusercontent.com/pzwdshxzt/wechat-ruizhi/master/images/scan_code.jpg)
 
