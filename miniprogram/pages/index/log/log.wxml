@@ -3,7 +3,18 @@
   <view slot="content">日志</view>
 </cu-custom>
 <view class="cu-timeline">
-
+<view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-blue">v1.1.2</view>
+        <view class="cu-tag line-white">2019/08/20</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.新增卡包</view>
+        <view>2.修改部分bug</view>
+      </view>
+    </view>
+  </view>
   <view class="cu-item text-blue">
     <view class="bg-blue content shadow">
       <view class="cu-capsule radius">
