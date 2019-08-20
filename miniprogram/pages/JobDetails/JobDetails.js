@@ -49,6 +49,7 @@ Page({
       }
     }
     dbConsole.updateJobDetails(this.data.jobDetails._id, authFlag, this.data.applyTextarea).then(res => {
+      debugger
       if (authFlag === 2) {
         db.collection('Jobs').doc(this.data.jobDetails.jobId).get().then(jobs => {
           let newCount = jobs.data.doneCount + this.data.jobDetails.applyCount
@@ -66,11 +67,14 @@ Page({
         })
       }
       if (authFlag === 1) {
-        util.successPage('审核成功', '您已经审核成功了')
-        this.callPlanFuncation(e.detail.formId, this.data.jobDetails._openid, '已拒绝', res.data.inviteName, res.data._id)
-        util.closeLoading()
+        db.collection('Jobs').doc(this.data.jobDetails.jobId).get().then(jobs => {
+          this.callPlanFuncation(this.data.jobDetails.formId, this.data.jobDetails._openid, '已拒绝', jobs.data.inviteName, jobs.data._id)
+          util.successPage('审核成功', '您已经审核成功了')
+          util.closeLoading()
+        })
       }
     }).catch(res => {
+      console.log(res)
       util.failPage('审核失败', '未提交数据，可以重新审核！！')
     });
 

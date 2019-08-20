@@ -10,8 +10,10 @@
     <view class="weui-form-preview__label" wx:if="{{plan.type === 0}}">计划期数</view>
     <view class="weui-form-preview__label" wx:if="{{plan.type === 1 || plan.type === 2 }}">运动期数</view>
     <view class="weui-form-preview__value_in-hd">{{plan.inviteCount}}</view>
-    <view class="weui-form-preview__label" wx:if="{{plan.type === 1 || plan.type === 2 }}">目标步数</view>
-    <view class="weui-form-preview__value_in-hd">{{plan.weRunNum}}</view>
+    <view wx:if="{{plan.type === 1 || plan.type === 2 }}">
+      <view class="weui-form-preview__label">目标步数</view>
+      <view class="weui-form-preview__value_in-hd">{{plan.weRunNum}}</view>
+    </view>
   </view>
   <view class="weui-form-preview__bd">
     <view class="weui-form-preview__label">计划状态</view>
@@ -40,6 +42,6 @@
   </view>
 </view>
 
-<view  wx:if="{{loading}}">
+<view wx:if="{{loading}}">
   <loading></loading>
 </view>

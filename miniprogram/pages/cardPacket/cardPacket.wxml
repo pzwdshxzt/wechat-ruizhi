@@ -2,7 +2,7 @@
   <view slot="backText">返回</view>
   <view slot="content">卡包</view>
 </cu-custom>
-<view class="cu-card  cu-list">
+<view class="cu-card  cu-list" wx:if="{{!loading}}">
   <view class="cu-item shadow-blur {{modalName=='move-box-'+ index?'move-cur':''}}" style="background-color:#0081ff" wx:for="{{list}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
     <view class="cardTitle " wx:if="{{item.type === 0}}">
       <view class="content">
@@ -18,7 +18,7 @@
       <view class="content">
         <text> {{item.number}}</text>
         <view class="text-gray text-sm">
-          <text class="cuIcon-vipcard text-white ">{{item.bankName}}银行卡</text>
+          <text class="cuIcon-vipcard text-white ">{{item.bankName}}</text>
         </view>
       </view>
 
@@ -49,15 +49,23 @@
       添加卡片
     </view>
   </view>
-</view>
-<view class="weui-msg">
-  <view class="weui-msg__extra-area">
-    <view class="weui-footer">
-      <view class="weui-footer__links">
-        <navigator url="" class="weui-footer__link">睿智小程序</navigator>
-      </view>
-      <view class="weui-footer__text">Copyright © 2018-2019 dwxqnswxl.cn</view>
+
+  <view wx:if="{{isloadmore}}">
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
     </view>
   </view>
+  <view wx:if="{{!isloadmore}}">
+    <view class="weui-loadmore weui-loadmore_line">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">我是有底线的</view>
+    </view>
+  </view>
+</view>
+
+
+
+<view wx:if="{{loading}}">
+  <loading></loading>
 </view>
 <view class="cu-tabbar-height"></view>

@@ -60,7 +60,7 @@ Page({
             success: res => {
               /** 校验成功 */
               if(res.errCode === 0){
-                wx.navigateTo({
+                wx.redirectTo({
                   url: 'cardPacket'
                 })
               }

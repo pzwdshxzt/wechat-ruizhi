@@ -24,7 +24,7 @@
       </view>
       <view class="cu-form-group">
         <view class="title">身份证号</view>
-        <input value="{{idNo}}" bindblur="addIdNo" placeholder="请扫描或者手输身份证号..."></input>
+        <input value="{{idNo}}" bindblur="addIdNo"  placeholder="请扫描或者手输身份证号..."></input>
       </view>
       <view class="cu-form-group">
         <view class="title">性别</view>
@@ -58,7 +58,7 @@
     </view>
     <view class="cu-form-group">
       <view class="title">银行卡号</view>
-      <input value="{{number}}" bindblur="addBankNumber" placeholder="请扫描或者手输银行卡号..."></input>
+      <input value="{{number}}" bindblur="addBankNumber"  bindinput="bankNumberSpace" placeholder="请扫描或者手输银行卡号..."></input>
     </view>
     <view class="cu-form-group">
       <view class="title">有效期</view>

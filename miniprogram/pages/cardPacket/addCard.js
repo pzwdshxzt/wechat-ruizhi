@@ -103,6 +103,7 @@ Page({
           birthday: this.data.birthday,
           sexCode: this.data.sexCode,
           address: this.data.address,
+          timestamp: util.getTimeStamp()
         }
       }).then(res => {
         util.closeLoading()
@@ -125,9 +126,10 @@ Page({
       db.collection('CardInfos').add({
         data: {
           type: 1,
-          number: this.data.number,
+          number: this.data.number.replace(/\s*/g, ""),
           bankName: this.data.bankName,
           validDate: this.data.validDate,
+          timestamp: util.getTimeStamp()
         }
       }).then(res => {
         util.closeLoading()
@@ -153,6 +155,7 @@ Page({
           owner: this.data.owner,
           plateNum: this.data.plateNum,
           vehicleType: this.data.vehicleType,
+          timestamp: util.getTimeStamp()
         }
       }).then(res => {
         util.closeLoading()
@@ -178,6 +181,7 @@ Page({
           otherName: this.data.otherName,
           otherNo: this.data.otherNo,
           otherNote: this.data.otherNote,
+          timestamp: util.getTimeStamp()
         }
       }).then(res => {
         util.closeLoading()
@@ -301,8 +305,21 @@ Page({
     })
   },
   addBankNumber(e) {
+    if (this.checkNum(e.detail.value.replace(/\s*/g, ""))) {
+      this.setData({
+        number: e.detail.value
+      })
+    } else {
+      this.setData({
+        number: ''
+      })
+    }
+  },
+  bankNumberSpace(e) {
+    let len = e.detail.value.length;
+    let number = e.detail.value
     this.setData({
-      number: e.detail.value
+      number: number.replace(/(\d{4})(?=\d)/g, "$1 ") //replace(/\s/g,'');
     })
   },
   validDateChange(e) {
@@ -340,7 +357,14 @@ Page({
       otherNote: e.detail.value
     })
   },
-
+  checkNum: function(num) {
+    var reg = /^[0-9]+$/;
+    if (!reg.test(num)) {
+      this.showTopTips('请填写数字')
+      return false
+    }
+    return true
+  },
   /**
    * 获取生日
    */
