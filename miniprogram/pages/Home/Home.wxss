@@ -24,4 +24,5 @@ image {
   justify-content: center;
   color: #fff;
   font-size: 36rpx;
+  background-color: #8799a3;
 }

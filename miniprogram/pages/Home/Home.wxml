@@ -16,11 +16,11 @@
       <block wx:for="{{otherPlans}}" wx:key="index">
         <swiper-item class='banner-show'>
           <navigator url='/pages/invited/invited?planId={{item._id}}' hover-class="changestyle">
-            <image mode="aspectFit" src='{{item.banner_url}}' />
-             <view class="bg-shadeBottom padding padding-top-xl flex-sub">
-                {{item.inviteName}}
+            <image class="bg-img flex align-end" mode="aspectFit" src='{{item.banner_url}}'>
+              <view class="swiper-item demo-text-1">
+                <text>{{item.inviteName}}</text>
               </view>
-           
+            </image>
           </navigator>
         </swiper-item>
       </block>
