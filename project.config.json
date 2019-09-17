@@ -17,11 +17,12 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"nodeModules": true
+		"nodeModules": true,
+		"enhance": true
 	},
 	"appid": "wx237fe6b2c2f69081",
 	"projectname": "睿智小程序",
-	"libVersion": "2.7.7",
+	"libVersion": "2.8.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

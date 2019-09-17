@@ -9,6 +9,7 @@
     "pages/invite/invite",
     "pages/Timer/Timer",
     "pages/Job/Apply",
+    "pages/room/room",
     "pages/success/success",
     "pages/fail/fail",
     "pages/JobDetails/JobDetails",
@@ -24,6 +25,7 @@
     "pages/cardPacket/cardPacket",
     "pages/cardPacket/index",
     "pages/cardPacket/addCard"
+   
   ],
   "tabBar": {
     "list": [
