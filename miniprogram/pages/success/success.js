@@ -7,7 +7,8 @@ Page({
    */
   data: {
     title: '交易成功',
-    content: '该交易已提交成功！'
+    content: '该交易已提交成功！',
+    backnum: 2
   },
 
   /**
@@ -24,9 +25,14 @@ Page({
         content: options.content
       })
     }
+    if (!util.checkObject(options.backnum)) {
+      this.setData({
+        backnum: options.backnum
+      })
+    }
   },
   backTohome: function() {
-    util.homePage()
+    util.backPage(this.data.backnum)
   }
 
 })

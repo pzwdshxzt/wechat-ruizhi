@@ -10,7 +10,7 @@ Page({
     // chatRoomEnvId: 'release-f8415a',
     chatRoomCollection: 'chatroom',
     chatRoomGroupId: 'demo',
-    chatRoomGroupName: '聊天室',
+    chatRoomGroupName: '深夜话题',
 
     // functions for used in chatroom components
     onGetUserInfo: null,

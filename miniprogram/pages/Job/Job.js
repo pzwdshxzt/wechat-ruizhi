@@ -23,17 +23,23 @@ Page({
     progress: 0,
     jobDetailsTotalCount: 0,
     isloadmore: false,
-    loading: true
+    loading: true,
+    jobId: ""
   },
   onLoad: function(options) {
+   this.setData({
+     jobId: options.JobId
+   })
+  },
+  onShow(options){
     db.collection('JobDetails').where({
-      jobId: options.JobId
+      jobId: this.data.jobId
     }).count().then(res => {
       this.setData({
         jobDetailsTotalCount: res.total
       })
     })
-    db.collection('Jobs').doc(options.JobId).get().then(res => {
+    db.collection('Jobs').doc(this.data.jobId).get().then(res => {
       this.setData({
         job: res.data,
       })
@@ -42,8 +48,8 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-          jobId: res.data._id
-        }).orderBy('date', 'desc')
+        jobId: res.data._id
+      }).orderBy('date', 'desc')
         .orderBy('time', 'desc')
         .limit(10)
         .get().then(res => {

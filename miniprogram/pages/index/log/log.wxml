@@ -3,7 +3,20 @@
   <view slot="content">日志</view>
 </cu-custom>
 <view class="cu-timeline">
-<view class="cu-item text-blue">
+  <view class="cu-item text-blue">
+    <view class="bg-blue content shadow">
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-white text-blue">v1.1.3</view>
+        <view class="cu-tag line-white">2019/09/18</view>
+      </view>
+      <view class="margin-top-sm text-content">
+        <view>1.修改部分bug</view>
+        <view>2.修改申请/审核返回界面</view>
+        <view>3.添加开发者体验即时通讯</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-item text-blue">
     <view class="bg-blue content shadow">
       <view class="cu-capsule radius">
         <view class="cu-tag bg-white text-blue">v1.1.2</view>

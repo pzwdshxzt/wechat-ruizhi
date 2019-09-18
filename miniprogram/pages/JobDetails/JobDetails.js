@@ -49,7 +49,6 @@ Page({
       }
     }
     dbConsole.updateJobDetails(this.data.jobDetails._id, authFlag, this.data.applyTextarea).then(res => {
-      debugger
       if (authFlag === 2) {
         db.collection('Jobs').doc(this.data.jobDetails.jobId).get().then(jobs => {
           let newCount = jobs.data.doneCount + this.data.jobDetails.applyCount

@@ -159,3 +159,7 @@ button.userinfo {
   border: 1px solid #ddd;
   border-radius: 20px;
 }
+.cuIcon-back:before {
+	content: "\e679";
+  margin-left: 20rpx;
+}

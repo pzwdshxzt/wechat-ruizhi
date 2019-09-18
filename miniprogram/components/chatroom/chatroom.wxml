@@ -1,13 +1,12 @@
 <view class="chatroom">
   <view class="header">
-    <!-- display number of people in the room -->
-    <view class="left"></view>
-    <!-- room name -->
+    <view class="left" bindtap="BackPage">
+      <text class="cuIcon-back"></text>
+      <text>返回</text>
+    </view>
     <view class="middle">{{groupName}}</view>
-    <!-- reserved -->
     <view class="right"></view>
   </view>
-
   <!-- chats -->
   <scroll-view 
     class="body" 

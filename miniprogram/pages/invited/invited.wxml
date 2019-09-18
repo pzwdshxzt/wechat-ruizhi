@@ -5,7 +5,7 @@
 <view class="container" wx:if="{{!loading}}">
   <view class="page__bd">
     <view class="weui-toptips weui-toptips_warn" style="top:{{CustomBar}}px;" wx:if="{{showTopTips}}">{{errorMsg}}</view>
-    <form class="list" bindsubmit="acceptPlan" report-submit>
+    <form class="list" bindsubmit="acceptPlan" report-submit  style="top:{{CustomBar+40}}px;">
       <view class="weui-form-preview__hd">
         <view class="weui-form-preview__label">计划名称</view>
         <view class="weui-form-preview__value_in-hd">{{plan.inviteName}}</view>
@@ -25,8 +25,6 @@
         <view class="weui-form-preview__value">{{plan.inviteLimitCount === 0 ? '无限制':plan.inviteLimitCount}}</view>
         <view class="weui-form-preview__label">是否展示</view>
         <view class="weui-form-preview__value">{{showCode[plan.show]}}</view>
-
-
         <view class="button-sp-area">
           <view wx:if="{{isSharePageIn}}">
             <button class="weui-btn" style="background-color:#1589eb;color:white" form-type="submit">接受</button>

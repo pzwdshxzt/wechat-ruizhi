@@ -29,10 +29,14 @@ Component({
   },
 
   methods: {
+    BackPage() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
     onGetUserInfo(e) {
       this.properties.onGetUserInfo(e)
     },
-
     getOpenID() { 
       return this.properties.getOpenID() 
     },

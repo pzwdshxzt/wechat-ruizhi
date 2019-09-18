@@ -59,12 +59,12 @@ const formatNumer = n => {
   return n[1] ? n : '0' + n
 }
 const successPage = (title, content) => {
-  wx.reLaunch({
+  wx.navigateTo({
     url: '../success/success?title=' + title + '&content=' + content
   })
 }
 const failPage = (title, content) => {
-  wx.reLaunch({
+  wx.navigateTo({
     url: '../fail/fail?title=' + title + '&content=' + content
   })
 }
@@ -76,7 +76,6 @@ const homePage = () => {
     }
   })
 }
-
 const backPage = (num) => {
   wx.navigateBack({
     delta: num

@@ -24,14 +24,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    db.collection('JobDetails').where({
+    this.setData({
       jobId: options.JobId
+    })
+    
+  },
+  onShow: function(){
+
+    db.collection('JobDetails').where({
+      jobId: this.data.jobId
     }).count().then(res => {
       this.setData({
         jobDetailsTotalCount: res.total
       })
     })
-    db.collection('Jobs').doc(options.JobId).get().then(res => {
+    db.collection('Jobs').doc(this.data.jobId).get().then(res => {
       this.setData({
         job: res.data,
       })
@@ -40,8 +47,8 @@ Page({
         progress: progress
       })
       db.collection('JobDetails').where({
-          jobId: res.data._id
-        })
+        jobId: res.data._id
+      })
         .limit(10)
         .orderBy('date', 'desc')
         .orderBy('time', 'desc')

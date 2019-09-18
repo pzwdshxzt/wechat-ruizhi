@@ -14,7 +14,7 @@ Page({
     openid: '',
     plan: {},
     isSharePageIn: false,
-    loading:true,
+    loading: true,
     errorMsg: '你已经接受了该计划!',
     statusCode: app.globalData.statusCode,
     typeCode: app.globalData.typeCode,
@@ -63,10 +63,8 @@ Page({
 
     let endTime = new Date(this.data.plan.endTime)
     endTime.setHours(23, 59, 59)
+    let show = this.data.isSharePageIn
     if (Date.parse(endTime) < Date.parse(new Date())) {
-      this.setData({
-        isSharePageIn: true
-      })
       this.showTopTips('该项目已经停止接受！!')
     }
 
@@ -79,9 +77,10 @@ Page({
         if (this.data.plan._openid === this.data.openid) {
           this.showTopTips('您不能参与自己的计划!')
         } else {
-          this.setData({
-            isSharePageIn: true
-          })
+          show = true;
+          // this.setData({
+          //   isSharePageIn: true
+          // })
         }
       } else {
         this.showTopTips('你已经加入该计划!')
@@ -98,13 +97,17 @@ Page({
       }).get().then(res => {
         let newCount = res.data.length + 1
         if (this.data.plan.inviteLimitCount < newCount) {
-          this.setData({
-            isSharePageIn: false
-          })
+          // this.setData({
+          //   isSharePageIn: false
+          // })
+          show = false;
           this.showTopTips('该项目接受人数已经达到最大限制了！!')
         }
       })
     }
+    this.setData({
+      isSharePageIn: show
+    })
 
   },
 
